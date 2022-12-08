@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block content %}
+    {# Features #}
+
+    <!-- End Navbar -->
+   
+        <div class="container rounded bg-white mt-5 mb-5">
+
+          <div class="card-body shadow-lg rounded ">
+          <div class="session-title row">
+               <h2>Add article</h2>
+             
+               <form class="form-group" method="POST" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }}
+             
+                
+                  <div class="form-group">
+                  {{ form.title.label(class="form-control-label") }}
+                  {{ form.title(class="form-control form-control-lg") }}
+                  </div>
+
+
+                    <div class="form-group">
+                      {{ form.content.label(class="form-control-label") }}
+                      {{ form.content(class="form-control form-control-lg") }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.image.label(class="form-control-label") }}
+                        {{ form.image(class="form-control form-control-lg") }}
+                      </div>
+                       
+                  <div class="form-group">
+                      {{ form.submit(class="btn btn-outline-info") }}
+                  </div>
+               </form>
+                          
+                  </div>
+                </div>
+                  <h2></h2>
+             
+                     
+                   </div>
+                   
+                   
+               
+               
+             
+
+              <div class="col-12">
+                <div class="card shadow-lg mb-4 p-3">
+                  <div class="card-header pb-0">
+                    
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="d-flex flex-column h-100">
+                          <h5 class="font-weight-bolder">article</h5>
+                          <p class="mb-5">Edit or delete articles</p>
+                        
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                      <table class="table align-items-center mb-0">
+                        <thead>
+                          <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Content</th> 
+
+                            <th class="text-left text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                            <th class="text-secondary opacity-7"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+
+                          {% for article in articles %}
+                          <tr>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                              
+                                <div class="d-flex flex-column justify-content-center">
+                                  <h6 class="mb-0 text-sm"><a href="{{url_for('core.article',article_id=article.id)}}">{{article.title}}</a></h6>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td>
+                                <div class="d-flex px-2 py-1">
+                                
+                                  <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{article.content}}</h6>
+                                  </div>
+                                </div>
+                              </td>
+                       
+                        
+                            <td class="center">
+                              <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit article">
+                                <a href="{{ url_for('core.editarticle',article_id=article.id) }}" class="btn btn-primary">Edit </a>
+                                <button data-toggle="modal" data-target="#deletearticle{{article.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
+                                <div class="modal fade" id="deletearticle{{article.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="deletearticle{{article.id}}">Delete article?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>this will delete  the article</p>
+
+                                        <form action="{{ url_for('core.delete_article',article_id=article.id) }}"
+                                        >
+                                          <input class='btn btn-danger' type="submit" value="Delete">
+                                          </div>
+                                        </form>
+                                      </div> 
+                                    </div>
+                                  </div>
+                                  </div>                  
+                                                
+                              
+                            
+                            </td>
+                          </tr>
+                          <tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              </div>
+              <br>
+           </div>
+      </div>    
+    </div>
+
+
+
+
+
+
+       
+    
+    
+      
+     
+
+    
+{% endblock %}

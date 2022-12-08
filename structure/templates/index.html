@@ -5,7 +5,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="{{ url_for('core.editui')}}">UI Editor</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="">UI Editor</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Admin</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Dashboard</h6>
@@ -124,7 +124,6 @@
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Features</p>
                     <h5 class="font-weight-bolder mb-0">
                  
-                      {{feature_count }}
                       <span class="text-success text-sm font-weight-bolder">Features</span>
 
                       
@@ -148,7 +147,6 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Testimonials</p>
                     <h5 class="font-weight-bolder mb-0">
-{{testimonial_count}}                
 <span class="text-success text-sm font-weight-bolder">Testimonials</span>
     </h5>
                   </div>
@@ -170,7 +168,6 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">FAQs</p>
                     <h5 class="font-weight-bolder mb-0">
-{{faq_count}}                      
 <span class="text-danger text-sm font-weight-bolder">FAQs</span>
                     </h5>
                   </div>
@@ -192,7 +189,6 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Team members</p>
                     <h5 class="font-weight-bolder mb-0">
-                      {{team_count}}
                       <span class="text-success text-sm font-weight-bolder">Team Members</span>
                     </h5>
                   </div>
@@ -216,7 +212,7 @@
                   <div class="d-flex flex-column h-100">
                     <p class="mb-1 pt-2 text-bold">Built by developers</p>
                     <h5 class="font-weight-bolder">CUSTOMIZATION SCREEN</h5>
-                  <a  href="{{ url_for('abouts.updateabout', about_id=about.id)}}"> <button class=' btn btn-primary btn-sm btn-icon'>Site Information</button></a>
+                  <a  href="'' url_for('abouts.updateabout', about_id=about.id)}}"> <button class=' btn btn-primary btn-sm btn-icon'>Site Information</button></a>
                     <p class="mb-5">Change content like Titles , Subtitles and paragraphs  on your website from here</p>
                     
                   </div>
@@ -239,7 +235,7 @@
               <span class="mask bg-gradient-dark"></span>
               <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
                 <h5 class="text-white font-weight-bolder mb-4 pt-2">ACTIVE TEMPLATE:</h5>
-                <p class="text-white">{{about.title}}</p>
+                <p class="text-white">''about.title}}</p>
                <a  href=""> <button class=' btn btn-primary btn-sm btn-icon'>Change template</button></a>
                <p class="text-white">Domain: None</p>
                <a  href=""> <button class=' btn btn-primary btn-sm btn-icon'>Browse Domains</button></a>
@@ -272,15 +268,17 @@
                   </div>
               </div>
             </div>
-            <a href="{{ url_for('web_features.create_post') }}" class="btn btn-primary btn-sm" style="float:right; vertical-align: top;">Add features</a>
+            <a href="'' url_for('web_features.create_post') }}" class="btn btn-primary btn-sm" style="float:right; vertical-align: top;">Add features</a>
 
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Feature</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Location</th>
                    
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                       <th class="text-secondary opacity-7"></th>
@@ -289,36 +287,47 @@
                   <tbody>
 
 
-                    {% for feature in web_features.items %}
+                    {% for event in events %}
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                          
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{feature.title}}</h6>
+                            <h6 class="mb-0 text-sm"><img src="{{event.image1}}"  alt="{{event.image1}}" /></h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ feature.wtext }}</p>
+                        <div class="d-flex px-2 py-1">
+                         
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"> {{event.name}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{event.date}}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{event.location}}</p>
                       </td>
                    
                       <td class="align-middle">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <a href="{{ url_for('web_features.update', web_feature_id=feature.id) }}" class="btn btn-primary">Edit Feature</a>
-                          
-                          <button data-toggle="modal" data-target="#deletefeature{{feature.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
-                          <div class="modal fade" id="deletefeature{{feature.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
+                          <a href="{{ url_for('core.editevent',event_id=event.id) }}" class="btn btn-primary">Edit Event</a>
+                          <a href="{{ url_for('core.addticket',event_id=event.id) }}" class="btn btn-primary">Add ticket </a>
+                          <button data-toggle="modal" data-target=""  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
+                          <div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="deletefeature{{feature.id}}">Modal title</h5>
+                                  <h5 class="modal-title" id="">Modal title</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                  <form action="{{ url_for('web_features.delete_post', web_feature_id=feature.id) }}"
+                                  <form action=""
                                   >
                                     <input class='btn btn-danger' type="submit" value="Delete">
                                     </div>
@@ -342,383 +351,108 @@
     </div>
 <br>
 
-
-
-<div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card mb-4">
-        <div class="card-header pb-0">
+<div class="col-12">
+  <div class="card shadow-lg mb-4 p-3">
+    <div class="card-header pb-0">
+      
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="d-flex flex-column h-100">
+            <h5 class="font-weight-bolder">article</h5>
+            <p class="mb-5">Edit or delete articles</p>
           
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="d-flex flex-column h-100">
-                <h5 class="font-weight-bolder">Faqs</h5>
-                <p class="mb-5">Edit existing faqs or add new faqs to be displayed on your website</p>
-               
-              </div>
           </div>
-        </div>
-          <a href="{{ url_for('faqs.create_faq') }}" class="btn btn-primary btn-sm" style="float:right; vertical-align: top;">Add FAQs</a>
-  
-        </div>
-        <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
-              <thead>
-                <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Question</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Answer</th>
-               
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
-                  <th class="text-secondary opacity-7"></th>
-                </tr>
-              </thead>
-              <tbody>
+      </div>
+    </div>
+
+    <div class="card-body px-0 pt-0 pb-2">
+      <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
+
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Content</th> 
+
+              <th class="text-left text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          <tbody>
 
 
-                {% for faqs in faq %}
-                                <tr>
-                  <td>
-                    <div class="d-flex px-2 py-1">
-                     
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">{{faqs.question}}</h6>
+            {% for article in articles %}
+            <tr>
+              <td>
+                <div class="d-flex px-2 py-1">
+                
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm"><img src="{{article.image}}"  alt="{{article.image}}" /></h6> 
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex px-2 py-1">
+                
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm"><a href="{{url_for('core.article',article_id=article.id)}}">{{article.title}}</a></h6>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                  <div class="d-flex px-2 py-1">
+                  
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{article.content}}</h6>
+                    </div>
+                  </div>
+                </td>
+         
+          
+              <td class="center">
+                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit article">
+                  <a href="{{ url_for('core.editarticle',article_id=article.id) }}" class="btn btn-primary">Edit </a>
+                  <button data-toggle="modal" data-target="#deletearticle{{article.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
+                  <div class="modal fade" id="deletearticle{{article.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deletearticle{{article.id}}">Delete article?</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>this will delete  the article</p>
+
+                          <form action="{{ url_for('core.delete_article',article_id=article.id) }}"
+                          >
+                            <input class='btn btn-danger' type="submit" value="Delete">
+                            </div>
+                          </form>
+                        </div> 
                       </div>
                     </div>
-                  </td>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ faqs.answer }}</p>
-                  </td>
-               
-                  <td class="align-middle">
-                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                      <a href="{{ url_for('faqs.updatefaq',faq_id=faqs.id) }}" class="btn btn-primary">Edit Faq</a>
-                      <button data-toggle="modal" data-target="#deletefaq{{faqs.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
-                      <div class="modal fade" id="deletefaq{{faqs.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="deletefaq{{faqs.id}}">Delete FAQ</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form action="{{ url_for('faqs.delete_faq',faq_id=faqs.id) }}"
-                              >
-                                <input class='btn btn-danger' type="submit" value="Delete">
-                                </div>
-                              </form>
-                            </div> 
-                          </div>
-                        </div>
-                        </div>
-                  </td>
-                </tr>
-                <tr>
-                  {% endfor %}
-                  
-              </tbody>
-            </table>
-          </div>
-        </div>
+                    </div>                  
+                                  
+                
+              
+              </td>
+            </tr>
+            <tr>
+              {% endfor %}
+              
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-  <div class="container-fluid py-4">
-    <div class="row">
-      <div class="col-12">
-        <div class="card mb-4">
-          <div class="card-header pb-0">
-            
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="d-flex flex-column h-100">
-                  <h5 class="font-weight-bolder">Team</h5>
-                  <p class="mb-5">Edit existing teammates or add new teammates to be displayed on your website</p>
-                 
-                </div>
-            </div>
-          </div>            <a href="{{ url_for('teams.create_team') }}" class="btn btn-primary btn-sm" style="float:right; vertical-align: top;">Add Team</a>
-    
-          </div>
-          <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
-                <thead>
-                  <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Feature</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Facebook</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Twitter</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">instagram</th>
-                 
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
-                    <th class="text-secondary opacity-7"></th>
-                  </tr>
-                </thead>
-                <tbody>
-  
-  
-                  {% for teammate in team %}
-                                  <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="{{teammate.picture}}" class="avatar avatar-sm me-3" alt="user6">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{teammate.name}}</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">{{ teammate.position }}</p>
-                    </td>
-                  </td>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ teammate.faceboook }}</p>
-                  </td>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ teammate.twitter }}</p>
-                  </td>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ teammate.instagram }}</p>
-                  </td>
-                    <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                      <a href="{{ url_for('teams.update_team',team_id=teammate.id) }}" class="btn btn-primary">Edit Team Member</a>
-                      <button data-toggle="modal" data-target="#deleteteammate{{teammate.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
-                      <div class="modal fade" id="deleteteammate{{teammate.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="deleteteammate{{teammate.id}}}">Delete Teammate?</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form action="{{ url_for('teams.delete_post',team_id=teammate.id) }}"
-                              >
-                                <input class='btn btn-danger' type="submit" value="Delete">
-                                </div>
-                              </form>
-                            </div> 
-                          </div>
-                        </div>
-                        </div>                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    {% endfor %}
-                    
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-
-
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="d-flex flex-column h-100">
-                    <h5 class="font-weight-bolder">Pricings</h5>
-                    <p class="mb-5">Edit existing pricings or add new pricings to be displayed on your website</p>
-                   
-                  </div>
-              </div>
-            </div>
-              <a href="{{ url_for('pricings.create_post') }}" class="btn btn-primary btn-sm" style="float:right; vertical-align: top;">Add Team</a>
-      
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Feature</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Features</th>
-                   
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-    
-    
-                    {% for pricings in pricing %}
-                                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{pricings.title}}</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ pricings.amount }}</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ pricings.features[:75] }}...</p>
-                      </td>
-                   
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <a href="{{ url_for('pricings.update_pricing',price_id=pricings.id) }}" class="btn btn-primary">Edit Pricing</a>
-                          <button data-toggle="modal" data-target="#deletepricing{{pricings.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
-                          <div class="modal fade" id="deletepricing{{pricings.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="deletepricing{{pricings.id}}">Delete Pricing?</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <form action="{{ url_for('pricings.delete_post',price_id=pricings.id) }}"
-                                  >
-                                    <input class='btn btn-danger' type="submit" value="Delete">
-                                    </div>
-                                  </form>
-                                </div> 
-                              </div>
-                            </div>
-                            </div>         
-
-
-
-                      </td>
-                    </tr>
-                    <tr>
-                      {% endfor %}
-                      
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <br>
-
-
-
-
-
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="d-flex flex-column h-100">
-                    <h5 class="font-weight-bolder">Testimonials</h5>
-                    <p class="mb-5">Edit existing testimonials  or add new testimonials to be displayed on your website</p>
-                   
-                  </div>
-              </div>
-            </div>
-                       <a href="{{ url_for('testimonials.create_testimonial') }}" class="btn btn-primary btn-sm" style="float:right; vertical-align: top;">Add Testimonial</a>
-      
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Company</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Text</th>
-                   
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-    
-    
-                    {% for testimonials in testimonial %}
-                                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{testimonials.name}}</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ testimonials.company }}</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ testimonials.text[:75] }}...</p>
-                      </td>
-                   
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        <a href="{{ url_for('testimonials.updatetestimonial',testimonial_id=testimonials.id) }}" class="btn btn-primary">Edit Testimonial</a>
-                        <button data-toggle="modal" data-target="#deletetestimonial{{testimonials.id}}"  class="btn btn-danger"><i class="fa fa-edit"></i>Delete</button>
-                        <div class="modal fade" id="deletetestimonial{{testimonials.id}}" tabindex="-1" role="dialog" aria-labelledby="edittestimonial" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="deletetestimonial{{testimonials.id}}">Delete Testimonial?</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <form action="{{ url_for('testimonials.delete_testimonial',testimonial_id=testimonials.id) }}"
-                                >
-                                  <input class='btn btn-danger' type="submit" value="Delete">
-                                  </div>
-                                </form>
-                              </div> 
-                            </div>
-                          </div>
-                          </div>         
-
-
-
-                      </td>
-                    </tr>
-                    <tr>
-                      {% endfor %}
-                      
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+</div>
+</div>
+<br>
 
 
 

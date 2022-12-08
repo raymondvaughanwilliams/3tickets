@@ -91,3 +91,18 @@
     scrollTo(document.documentElement);
   };
 })();
+
+
+
+
+var el;                                                    
+
+function countCharacters(e) {                                    
+  var textEntered, countRemaining, counter;          
+  textEntered = document.getElementById('message').value;  
+  counter = (150 - (textEntered.length));
+  countRemaining = document.getElementById('charactersRemaining'); 
+  countRemaining.textContent = counter;       
+}
+el = document.getElementById('message');                   
+el.addEventListener('keyup', countCharacters, false);

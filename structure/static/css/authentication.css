@@ -71,7 +71,8 @@ button.ghost {
 
 form {
 	background-color: #FFFFFF;
-	display: flex;
+/* A comment. */
+	/* display: flex; */
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;

@@ -1,21 +1,22 @@
-from flask import render_template,request,Blueprint
-from structure.models import User,About,Price, WebFeature,Faq,Testimonial,Team,Appearance,Block
-# from structure.team.views import team
-from structure.web_features.forms import WebFeatureForm
-from structure.team.forms import UpdateTeamForm
-from structure.about.forms import UpdateAboutForm
-from structure.faq.forms import FaqForm
-from structure.pricing.forms import PriceForm
-from structure.testimonial.forms import TestimonialForm
-from structure.about.forms import AboutForm
-from structure.block.forms import BlockForm
+from flask import render_template,request,Blueprint,redirect,url_for,session,current_app
+from structure.models import User ,WebFeature,Event , Ticket ,Article
+from structure import db,photos
+from structure.core.forms import AddEvent,AddTicket,AddArticle
 from sqlalchemy.orm import load_only
 from flask_login import login_required
-from structure.appearance.forms import AppearanceForm
-from structure.block.forms import BlockForm
-from structure.appearance.views import appearance
-from structure.models import Appearance
+import secrets
+import os
+
+
 core = Blueprint('core',__name__)
+
+
+
+
+allowed_extensions = ['png', 'jpg', 'jpeg', 'gif','mp4']
+def check_file_extension(filename):
+    return filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
 
 @core.route('/')
 @login_required
@@ -25,18 +26,10 @@ def index():
     number of posts by limiting its query size and then calling paginate.
     '''
     page = request.args.get('page', 1, type=int)
-    about = About.query.get(1)
-    faq = Faq.query.all()
-    team = Team.query.all()
-    pricing = Price.query.all()
-    testimonial = Testimonial.query.all()
-    feature_count = WebFeature.query.count()
-    faq_count = Faq.query.count()
-    team_count = Team.query.count()
-    pricing_count = Price.query.count()
-    testimonial_count = Testimonial.query.count()
+    events = Event.query.all()
+    articles = Article.query.all()
     web_features = WebFeature.query.order_by(WebFeature.date.desc()).paginate(page=page, per_page=10)
-    return render_template('index.html',web_features=web_features,about=about,faq=faq,team=team,pricing=pricing,testimonial=testimonial,feature_count=feature_count,faq_count=faq_count,team_count=team_count,pricing_count=pricing_count,testimonial_count=testimonial_count)
+    return render_template('index.html',web_features=web_features,events=events,articles=articles)
 
 @core.route('/base')
 def base():
@@ -44,108 +37,377 @@ def base():
     Example view of any other "core" page. Such as a info page, about page,
     contact page. Any page that doesn't really sync with one of the models.
     '''
-    about = About.query.all()
-    return render_template('base.html',about=about)
+    return render_template('base.html')
 
 
-@core.route('/hmsui')
-def hmsui():
+
+# All events
+@core.route('/events')
+def events():
+    events = Event.query.all()
+    return render_template('events/events.html',events=events)
+
+
+# Add event 
+@core.route('/addevent',methods=['GET', 'POST'])
+def addevent():
+    events = Event.query.all()
     '''
     Example view of any other "core" page. Such as a info page, about page,
     contact page. Any page that doesn't really sync with one of the models.
     '''
+    user_id = session['id']
+    print(user_id)
+    form = AddEvent()
+    #process data and save it to db 
+    if request.method == 'POST' :
+        name = form.name.data
+        date = form.date.data
+        time = form.time.data
+        location = form.location.data
+        description = form.description.data
+        days = form.days.data
+        email = form.email.data
+        number = form.number.data
+        if request.files.get('image1'):
+            image1 = photos.save(request.files['image1'], name=secrets.token_hex(10) + ".")
+            image1= "static/images/events/"+image1
+        else:
+            image1 = "static/images/noimage.JPG"      
+        # image_1 = photos.save(request.files['image1'], name=secrets.token_hex(10) + ".")
+        # image1= "static/images/events/"+image_1
+        image_2 = photos.save(request.files['image2'], name=secrets.token_hex(10) + ".")
+        image2= "static/images/events/"+image_2
+        image_3 = photos.save(request.files['image3'], name=secrets.token_hex(10) + ".")
+        image3= "static/images/events/"+image_3
 
-    page = request.args.get('page', 1, type=int)
-    web_features = WebFeature.query.order_by(WebFeature.date.desc()).paginate(page=page, per_page=10)
-    about = About.query.get(1)
-    price = Price.query.all()
-    faq = Faq.query.all()
-    testimonial = Testimonial.query.all()
-    team= Team.query.all()
-    serv = Price.features
-    Blockform= BlockForm()
-    team= Team.query.all()
-    block= Block.query.all()
-    Appearanceform = AppearanceForm()
-    appearance=Appearance.query.all()
-    # services=[]
-    # service= serv.split(',')
-    # services.append(service)
-    return render_template('base2.html',web_features=web_features, about=about,pricing=price,faq=faq,testimonial=testimonial,team=team,serv=serv,Blockform=Blockform,appearance=appearance,Appearanceform=Appearanceform,block=block)
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3)
+        db.session.add(event)
+        db.session.commit()
+        # flash(f'Meme added successfully','success')
+        return redirect(url_for('core.index'))
+
+
+    return render_template('events/addevent.html',events=events,form=form)
 
 
 
-@core.route('/editui')
+
+# Edit Event
+@core.route('/editevent/<int:event_id>', methods=['GET', 'POST'])
 @login_required
-def editui():
+def editevent(event_id):
+    event = Event.query.get_or_404(event_id)
+
+
+    form = AddEvent()
+    if request.method == 'POST':     
+        event.name = form.name.data
+        event.date = form.date.data
+        event.time = form.time.data
+        event.description = form.description.data
+        event.location = form.location.data
+        event.days = form.days.data
+        event.number = form.number.data
+        event.email = form.email.data
+        if request.files.get('image1'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "static/images/events/" + event.image_1))
+                image1 = photos.save(request.files.get('image1'), name=secrets.token_hex(10) + ".")
+                event.image1 = "static/images/events/"+image1
+            except:
+                image1 = photos.save(request.files.get('image1'), name=secrets.token_hex(10) + ".")
+                event.image1 = "static/images/events/"+image1
+        db.session.commit() 
+        print('updated')
+        return redirect(url_for('core.addevent'))
+
+    elif request.method == 'GET':
+        form.name.data = event.name
+        form.date.data = event.date
+        form.time.data = event.time
+        form.description.data = event.description
+        form.location.data = event.location
+        form.days.data = event.days
+        form.number.data = event.number
+        form.email.data = event.email
+    return render_template('events/editevent.html', form=form,event=event)
+
+
+# An Event
+@core.route('/event/<int:event_id>')
+@login_required
+def event(event_id):
+    user = User.query.filter_by(email=session['email']).first()
+
+    event = Event.query.filter_by(event_id=event_id).first()
+    return render_template('event.html', event=event,user=user)
+
+
+
+# Delete Event
+@core.route("/delete_event/<int:event_id>", methods=['POST','GET'])
+@login_required
+def delete_event(event_id):
+    events = Event.query.filter_by(phonebook_id=event_id).all()
+    event = Event.query.get_or_404(event_id)
+    db.session.delete(event)
+    db.session.commit()
+    # for contact in contacts:
+    #     db.session.delete(contact)
+    #     db.session.commit()
+
+
+    # flash('Post has been deleted')
+    return redirect(url_for('core.index'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# All tickets
+@core.route('/tickets')
+def tickets():
+    tickets = Ticket.query.all()
+    return render_template('tickets/tickets.html',tickets=tickets)
+
+
+
+# Add event 
+@core.route('/addticket/<int:event_id>',methods=['GET', 'POST'])
+def addticket(event_id):
+    tickets = Ticket.query.all()
     '''
     Example view of any other "core" page. Such as a info page, about page,
     contact page. Any page that doesn't really sync with one of the models.
     '''
-    Webfeatureform= WebFeatureForm()
-    Teammateform = UpdateTeamForm()
-    Faqform = FaqForm() 
-    Testimonialform = TestimonialForm()
-    Pricingform = PriceForm()
-    Aboutform = AboutForm()
-    page = request.args.get('page', 1, type=int)
-    web_features = WebFeature.query.order_by(WebFeature.date.desc()).paginate(page=page, per_page=10)
-    about = About.query.get(1)
-    price = Price.query.all()
-    faq = Faq.query.all()
-    Blockform= BlockForm()
-    testimonial = Testimonial.query.all()
-    team= Team.query.all()
-    block= Block.query.all()
-    Appearanceform = AppearanceForm()
-    appearance=Appearance.query.all()
+    user_id = session['id']
+    print(user_id)
+    form = AddTicket()
+    #process data and save it to db 
+    if request.method == 'POST' :
+        # name = form.name.data
+        price = form.price.data
+        day = form.day.data
+        quantity = form.quantity.data
+        name = form.name.data
+        if request.files.get('image'):
+            image = photos.save(request.files['image'], name=secrets.token_hex(10) + ".")
+            image= "static/images/events/"+image
+        else:
+            image = "static/images/noimage.JPG"
+       
 
 
-    # fields = ['id']
-    # data = Testimonial.options(load_only(*fields)).all()
-    emplist = []
-    for faqs in faq:
-        emplist.append("row:" +str(faqs.id))
-    print(emplist)
+        # image_1 = photos.save(request.files['image_1'], name=secrets.token_hex(10) + ".")
+        # img= "/static/images/events/"+image_1
+        #check file format 
+        # if check_file_extension(image_1):
+        ticket = Ticket(day=day,price=price,quantity=quantity,event_id=event_id,name=name,image=image)
+        db.session.add(ticket)
+        db.session.commit()
+        # flash(f'Meme added successfully','success')
+        return redirect(url_for('core.index'))
 
 
-    templist = []
-    for testimonials in testimonial:
-        templist= "row:" +str(testimonials.id)
-    #     templist.append("row:" +str(testimonials.id))
-    # print(templist)
+    return render_template('tickets/addticket.html',tickets=tickets,form=form)
 
 
-    # testimonialdata1 = Testimonial.query.all().id
-    # for testimonialss in testimonialdata1:
-    #     testimonialdata= testimonialss
 
-    # for teams in team:
-    #     teamdata = str(teams.id)+'tmm'
 
-    # for prices in price:
-    #     pricedata = str(prices.id)+'pr'
+# Edit ticket
+@core.route('/editticket/<int:ticket_id>', methods=['GET', 'POST'])
+@login_required
+def editticket(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
 
-    # for faqs in faq:
-    #     faqdata = str(faqs.id)+'faq'
-    #     print(Faq.query.count())
+
+    form = AddTicket()
+    if request.method == 'POST':     
+        ticket.price = form.price.data
+        ticket.day = form.day.data
+        ticket.quantity = form.quantity.data
+        ticket.name = form.name.data
+        if request.files.get('image'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "static/images/tickets/" + ticket.image_1))
+                image = photos.save(request.files.get('image'), name=secrets.token_hex(10) + ".")
+                ticket.image = "static/images/events/"+image
+            except:
+                image = photos.save(request.files.get('image'), name=secrets.token_hex(10) + ".")
+                ticket.image = "static/images/events/"+image
+        db.session.commit() 
+        print('updated')
+        return redirect(url_for('core.index'))
+
+    elif request.method == 'GET':
+        form.price.data = ticket.price
+        form.quantity.data = ticket.quantity
+        form.day.data = ticket.day
+        form.name.data = ticket.name
+    return render_template('tickets/editticket.html', form=form,ticket=ticket)
+
+
+# An ticket
+@core.route('/ticket/<int:ticket_id>')
+@login_required
+def ticket(ticket_id):
+    user = User.query.filter_by(email=session['email']).first()
+    ticket = Ticket.query.filter_by(ticket_id=ticket_id).first()
+    return render_template('tickets/ticket.html', ticket=ticket,user=user)
+
+
+# Delete ticket
+@core.route("/delete_ticket/<int:ticket_id>", methods=['POST','GET'])
+@login_required
+def delete_ticket(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    db.session.delete(ticket)
+    db.session.commit()
+    # for contact in contacts:
+    #     db.session.delete(contact)
+    #     db.session.commit()
+
+
+    # flash('Post has been deleted')
+    return redirect(url_for('core.index'))
+
+
+
+
+
+# All articles
+@core.route('/articles')
+def articles():
+    articles = Article.query.all()
+    return render_template('articles/articles.html',articles=articles)
+
+# Add article 
+@core.route('/addarticle',methods=['GET', 'POST'])
+def addarticle():
+    articles = Article.query.all()
+    '''
+    Example view of any other "core" page. Such as a info page, about page,
+    contact page. Any page that doesn't really sync with one of the models.
+    '''
+    user_id = session['id']
+    print(user_id)
+    form = AddArticle()
+    #process data and save it to db 
+    if request.method == 'POST' :
+        # name = form.name.data
+        title = form.title.data
+        content = form.content.data
+        if request.files.get('image'):
+            image = photos.save(request.files['image'], name=secrets.token_hex(10) + ".")
+            image= "static/images/events/"+image
+        else:
+            image = "static/images/noimage.JPG"
+        # image = photos.save(request.files['image'], name=secrets.token_hex(10) + ".")
+        # image= "static/images/events/"+image
+        article = Article(title=title, content=content,image=image)
+        db.session.add(article)
+        db.session.commit()
+        # flash(f'Meme added successfully','success')
+        return redirect(url_for('core.index'))
+
+
+    return render_template('articles/addarticle.html',articles=articles,form=form)
+
+
+
+
+# Edit article
+@core.route('/editarticle/<int:article_id>', methods=['GET', 'POST'])
+@login_required
+def editarticle(article_id):
+    article = Article.query.get_or_404(article_id)
+
+
+    form = AddArticle()
+    if request.method == 'POST':     
+        article.title = form.title.data
+        article.content = form.content.data
+        if request.files.get('image'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "static/images/articles/" + article.image_1))
+                image = photos.save(request.files.get('image'), name=secrets.token_hex(10) + ".")
+                article.image = "static/images/events/"+image
+            except:
+                image = photos.save(request.files.get('image'), name=secrets.token_hex(10) + ".")
+                article.image = "static/images/events/"+image
+        db.session.commit() 
+        print('updated')
+        return redirect(url_for('core.index'))
+
+    elif request.method == 'GET':
+        form.title.data = article.title
+        form.content.data = article.content
+    return render_template('articles/editarticle.html', form=form,article=article)
+
+
+# An article
+@core.route('/article/<int:article_id>')
+@login_required
+def article(article_id):
+    user = User.query.filter_by(email=session['email']).first()
+    article = Article.query.filter_by(article_id=article_id).first()
+    return render_template('articles/article.html', article=article,user=user)
+
+
+# Delete article
+@core.route("/delete_article/<int:article_id>", methods=['POST','GET'])
+@login_required
+def delete_article(article_id):
+    article = Article.query.get_or_404(article_id)
+    db.session.delete(article)
+    db.session.commit()
+
+
+    # flash('Post has been deleted')
+    return redirect(url_for('core.index'))
+
+
+
+
+
+
+
+
+
+
+# @core.route('/add-to-cart/<event_id>')
+# def add_to_cart(event_id):
+#     # Retrieve the details of the selected ticket from the database
+#     event = Event.objects.get(id=event_id)
+#     ticket = event.tickets.get(id=request.args.get('ticket_id'))
     
-    # for web_features in web_features.items:
-    #     web_featuredata = str(web_features.id)+'wf'
-
-    print(faq)
-    context={
-        'about':about,
-        'web_features':web_features,
-        'price':price,
-        'faq':faq,
-        'testimonial':testimonial,
-        'team':team,
-    }
-
-    serv = Price.features
-    # services=[]
-    # service= serv.split(',')
-    # services.append(service)
-    return render_template('editui.html',block = block,web_features=web_features,about=about,webfeatureform = Webfeatureform,teammateform=Teammateform,faqform = Faqform,testimonialform=Testimonialform,priceform=Pricingform,aboutform=Aboutform,team=team,pricing=price,faq=faq,testimonial=testimonial,templist=templist,emplist=emplist,blockform=Blockform,appearanceform=Appearanceform,appearance=appearance)
-    # return render_template('info.html',context=context,faq=faq)
+#     # Check if the user is logged in
+#     if not current_user.is_authenticated:
+#         flash('Please log in or create an account to purchase tickets.')
+#         return redirect(url_for('login'))
+    
+#     # Check if the user already has a shopping cart
+#     if not hasattr(current_user, 'shopping_cart'):
+#         current_user.shopping_cart = ShoppingCart()
+    
+#     # Add the selected ticket to the user's shopping cart
+#     current_user.shopping_cart.add_ticket(ticket)
+    
+#     # Update the total cost of the shopping cart
+#     current_user.shopping_cart.update_total()
+    
+#     # Save the updated shopping cart to the database
+#     current_user.save()
+    
+#     flash('Ticket added to shopping cart.')
+#     return redirect(url_for('view_cart'))
