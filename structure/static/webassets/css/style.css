@@ -720,7 +720,7 @@ body{
 	line-height:22px;
 	color:#ff6600;
 	text-transform:uppercase;
-	font-family: font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	position:relative;
 	padding:0 0 0 25px;
 	display:inline-block;
@@ -762,7 +762,7 @@ body{
 .section-todays-schedule .section-content ul li{
 	float:left;
 	padding:0 25px 20px;
-	border-bottom:1px solid #464646;
+	/* border-bottom:1px solid #464646; */
 	position:relative;
 	height:93px;
 }
@@ -791,7 +791,7 @@ body{
 	content: "";
 	width:20px;
 	height:19px;
-	background:url(../images/events-clock.png);
+	/* background:url(../images/events-clock.png); */
 	display:block;
 	position:absolute;
 	bottom:-10px;
@@ -804,7 +804,7 @@ body{
 	content: "";
 	width:7px;
 	height:8px;
-	background:url(../images/events-dot.png);
+	/* background:url(../images/events-dot.png); */
 	display:block;
 	position:absolute;
 	bottom:-4px;
@@ -900,7 +900,7 @@ body{
 	line-height:22px;
 	color:#373737;
 	text-transform:uppercase;
-	font-family: font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	display:block;
 	margin:0 0 25px;
 	font-weight:700;
@@ -1103,14 +1103,14 @@ body{
 }
 
 .section-calendar-events .section-header .scrtabs-tabs-fixed-container{
-	height:190px;
+	height:150px;
 	padding:0 6px;
 	width:100%!important
 }
 
 .section-calendar-events .section-header .scrtabs-tab-container{
 	position:relative;
-	height:190px;
+	height:0px;
 }
 
 .section-calendar-events .section-header .scrtabs-tab-scroll-arrow-right span,
@@ -1247,7 +1247,7 @@ body{
 	line-height:22px;
 	color:#373737;
 	text-transform:uppercase;
-	font-family: font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	padding:0 0 0 25px;
 	display:block;
 	margin:0 0 35px;
@@ -1408,7 +1408,7 @@ body{
 	line-height:22px;
 	color:#373737;
 	text-transform:uppercase;
-	font-family: font-family: 'Open Sans', sans-serif;
+	font-family:  'Open Sans', sans-serif;
 	position:relative;
 	padding:0 0 0 25px;
 	display:block;
@@ -1600,7 +1600,7 @@ body{
 	line-height:22px;
 	color:#373737;
 	text-transform:uppercase;
-	font-family: font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	position:relative;
 	padding:0 0 0 25px;
 	display:block;
@@ -3601,7 +3601,8 @@ body{
 
 .section-select-payment-method .scrtabs-tab-container,
 .section-select-payment-method .scrtabs-tabs-fixed-container{
-	height:117px;!important
+	height:117px;
+	/* !important */
 }
 
 .section-select-payment-method .tab-content{

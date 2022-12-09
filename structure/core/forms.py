@@ -18,6 +18,7 @@ class AddEvent(FlaskForm):
     days = StringField('Days')
     number = StringField('Number')
     email = StringField('Email',validators=[DataRequired(),Email()])
+    tags = StringField('Tags')
     time  = TimeField('Time',default=datetime.datetime.now)
     image1 = FileField('Image 1', validators=[FileRequired(), FileAllowed(['jpg','png','gif','jpeg'])])
     image2 = FileField('Image 2', validators=[FileRequired(), FileAllowed(['jpg','png','gif','jpeg'])])

@@ -71,10 +71,19 @@ h3,
 h4,
 h5,
 h6 {
-    clear: both;
+    /* clear: both;
     font-weight: 500;
     color: #484848;
-    font-family: "Montserrat-Regular";
+    font-family: "Montserrat-Regular"; */
+    font-size: 22px;
+    line-height: 22px;
+    color: #373737;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    display: block;
+    margin: 0 0 25px;
+    font-weight: 700;
+    position: relative;
     
 }
 

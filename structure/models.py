@@ -59,6 +59,8 @@ class Event(db.Model):
     status = db.Column(db.String(20), nullable=True)
     number = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(100), nullable=True)
+    tags = db.Column(db.JSON,nullable=True)
+
 
 # Define the database schema for tickets
 class Ticket(db.Model):
@@ -82,6 +84,8 @@ class Article(db.Model):
     views = db.Column(db.Integer)
     likes = db.Column(db.Integer)
     image = db.Column(db.String(50))
+    date = db.Column(db.Date,nullable=True,default=datetime.utcnow)
+
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=True)
     event = db.relationship('Event', backref=db.backref('articles', lazy=True))
 

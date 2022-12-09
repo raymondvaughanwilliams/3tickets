@@ -56,8 +56,8 @@ def addevent():
     Example view of any other "core" page. Such as a info page, about page,
     contact page. Any page that doesn't really sync with one of the models.
     '''
-    user_id = session['id']
-    print(user_id)
+    # user_id = session['id']
+    # print(user_id)
     form = AddEvent()
     #process data and save it to db 
     if request.method == 'POST' :
@@ -295,12 +295,6 @@ def articles():
 @core.route('/addarticle',methods=['GET', 'POST'])
 def addarticle():
     articles = Article.query.all()
-    '''
-    Example view of any other "core" page. Such as a info page, about page,
-    contact page. Any page that doesn't really sync with one of the models.
-    '''
-    user_id = session['id']
-    print(user_id)
     form = AddArticle()
     #process data and save it to db 
     if request.method == 'POST' :

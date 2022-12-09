@@ -5,33 +5,22 @@
 			<div class="container">
 				<div class="row">
 					<div class="section-header">
-						<h2>Today's Schedule</h2>
-						<span class="todays-date"><i class="fa fa-calendar" aria-hidden="true"></i> <strong>12</strong> August 2016 </span>
+						<h2>Upcoming Events</h2>
+						<span class="todays-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}}</span>
 					</div>
 					<div class="section-content">
 						<ul class="clearfix">
+							{% for event in events[0:7] %}
 							<li class="event-1">
-								<span class="event-time">08:00 <strong>AM</strong></span>
-								<strong class="event-name">Kiai Kanjeng Orchestra</strong>
+								<img src="{{event.image1}}"  alt="image" style="height:50px;">
+								<strong class="event-name">{{event.name}}</strong>
+								<strong class="event-name">{{event.date.strftime("%m %b %Y")}}</strong>
 								<a href="#" class="get-ticket">Get Ticket</a>
 							</li>
-							<li class="event-2">
-								<span class="event-time">08:00 <strong>AM</strong></span>
-								<strong class="event-name">Envato Author Meetup</strong>
-								<a href="#" class="get-ticket">Get Ticket</a>
-							</li>
-							<li class="event-3">
-								<span class="event-time">10:00 <strong>AM</strong></span>
-								<strong class="event-name">BMW Open Championship</strong>
-								<a href="#" class="sold-ticket">Sold Out</a>
-							</li>
-							<li class="event-4">
-								<span class="event-time">09:00 <strong>PM</strong></span>
-								<strong class="event-name">UEFA Champions League: Barca v Arsenal</strong>
-								<a href="#" class="sold-ticket">Sold Out</a>
-							</li>	
+							{% endfor %}
 						</ul>
-						<strong class="event-list-label">Full Event <span>Schedules</span></strong>
+					
+						<a href="" ><strong class="event-list-label">Full Event <span>Schedule</span></strong></a>
 					</div>
 				</div>
 			</div>
@@ -39,347 +28,131 @@
 		
 
 
-		<section class="section-upcoming-events">
-			<div class="container">
-				<div class="row">
-					<div class="section-header">
-						<h2>Upcoming Events</h2>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.</p>
-						<a href="#">See all upcoming events</a>
-					</div>				
-					<br>
-					<br>
-					<br>
-					<div class="section-content">
-						<ul class="clearfix">
-							<li>
-								<div class="date">
-									<a href="#">
-										<span class="day">25</span>
-										<span class="month">August</span>
-										<span class="year">2016</span>
-									</a>
-								</div>
-								<a href="#">
-									<img src="images/upcoming-event-1.jpg" alt="image">
-								</a>
-								<div class="info">
-									<p>BMW Open Championship <span>San Francisco</span></p>
-									<a href="#" class="get-ticket">Get Ticket</a>
-								</div>
-							</li>
-							<li>
-								<div class="date">
-									<a href="#">
-										<span class="day">26</span>
-										<span class="month">August</span>
-										<span class="year">2016</span>
-									</a>
-								</div>
-								<a href="#">
-									<img src="images/upcoming-event-2.jpg" alt="image">
-								</a>
-								<div class="info">
-									<p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-									<a href="#" class="get-ticket">Get Ticket</a>
-								</div>
-							</li>
-							<li>
-								<div class="date">
-									<a href="#">
-										<span class="day">27</span>
-										<span class="month">August</span>
-										<span class="year">2016</span>
-									</a>
-								</div>
-								<a href="#">
-									<img src="images/upcoming-event-3.jpg" alt="image">
-								</a>
-								<div class="info">
-									<p>Envato Author SF Meetup <span>San Francisco</span></p>
-									<a href="#" class="get-ticket">Get Ticket</a>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
 
 <br>
 <br>
-<br>
+<br>		
+<section class="section-upcoming-events">
+	<div class="container">
+		<div class="row">
+			<div class="section-header">
+				<h2>Featured Events</h2>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.</p>
+				<a href="#">See all upcoming events</a>
+			</div>				
+			<br>
+			<br>
+			<br>
+			<div class="section-content">
+				<ul class="clearfix">
+					{%for event in events %}
+					<li>
+						<div class="date">
+							<a href="#">
+								<span style="font-size:12px;" class="day">{{event.date.strftime("%m %b %Y") }}</span>
+								<span class="month">August</span>
+								<span class="year">2016</span>
+							</a>
+						</div>
+						<a href="#">
+							<img src="{{event.image1}}" alt="image" style="height:300px;">
+						</a>
+						<div class="info">
+							<p>{{event.name}}<span>{{event.location}}</span></p>
+							<a href="#" class="get-ticket">Get Ticket</a>
+						</div>
+					</li>
+					{% endfor %}
+		
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
 
 		<section class="section-calendar-events">
-			<div class="container">
-				EVENTS BY MONTH
-				<div class="row">
-					<div class="section-header">
+			<div class="container"> 
+				<div class="row ">
+					<div class="section-header ">
+						<h2>Events by Month</h2>
+
 						<ul class="nav nav-tabs event-tabs" role="tablist">
-							<li role="presentation" class="active">
-								<a href="#tab1" role="tab" data-toggle="tab">May <span>2016</span></a>
-							</li>
+							{%for month in upcoming_months%}
+ 
 							<li role="presentation">
-								<a href="#tab2" role="tab" data-toggle="tab">Jun <span>2016</span></a>
+								<a style="font-size:18px;background-color: antiquewhite;" href="#{{month}}" role="tab" data-toggle="tab">{{month}}</a>
 							</li>
-							<li role="presentation">
-								<a href="#tab3" role="tab" data-toggle="tab">Jul <span>2016</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab4" role="tab" data-toggle="tab">Aug <span>2016</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab5" role="tab" data-toggle="tab">Sep <span>2016</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab6" role="tab" data-toggle="tab">Oct <span>2016</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab7" role="tab" data-toggle="tab">Nov <span>2016</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab8" role="tab" data-toggle="tab">Dec <span>2016</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab9" role="tab" data-toggle="tab">Jan <span>2017</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab10" role="tab" data-toggle="tab">Feb <span>2017</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab11" role="tab" data-toggle="tab">Mar <span>2017</span></a>
-							</li>
-							<li role="presentation">
-								<a href="#tab12" role="tab" data-toggle="tab">Apr <span>2017</span></a>
-							</li>
+							{% endfor %}
+						
 						</ul>
 					</div>
+
+
+
 					<div class="section-content">
 						<div class="tab-content">
-						    <div role="tabpanel" class="tab-pane active" id="tab1">
+						    <div role="tabpanel" class="tab-pane active" id="{{upcoming_months[0]}}">
+							
 								<ul class="clearfix">
+									
+									{% for event in current_month_events %}
 									<li>
 										<div class="date">
 											<a href="#">
-												<span class="day">25</span>
-												<span class="month">May</span>
-												<span class="year">2016</span>
+												{{event.date.strftime("%m %b %Y")}}
 											</a>
 										</div>
 										<a href="#">
-											<img src="images/upcoming-event-1.jpg" alt="image">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
 										</a>
 										<div class="info">
-											<p>BMW Open Championship <span>San Francisco</span></p>
+											<p>{{event.name}}<span>{{event.location}}</span></p>
 											<a href="#" class="get-ticket">Get Ticket</a>
 										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">26</span>
-												<span class="month">May</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-2.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">27</span>
-												<span class="month">May</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-3.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Envato Author SF Meetup <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">28</span>
-												<span class="month">May</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-4.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>FIFA WORLD CUP 2016 <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">May</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-5.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Prep Football America <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">May</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-6.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>UEFA Champions League <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
+									</li> 
+									{% endfor %}
+									
 								</ul>
 							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab2">
+						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[1]}}">
 								<ul class="clearfix">
+									{% for event in one_month_events %}
 									<li>
 										<div class="date">
 											<a href="#">
-												<span class="day">25</span>
-												<span class="month">Jun</span>
-												<span class="year">2016</span>
+												{{event.date.strftime("%m %b %Y")}}
 											</a>
 										</div>
 										<a href="#">
-											<img src="images/upcoming-event-1.jpg" alt="image">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
 										</a>
 										<div class="info">
-											<p>BMW Open Championship <span>San Francisco</span></p>
+											<p>{{event.name}}<span>{{event.location}}</span></p>
 											<a href="#" class="get-ticket">Get Ticket</a>
 										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">26</span>
-												<span class="month">Jun</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-2.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">27</span>
-												<span class="month">Jun</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-3.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Envato Author SF Meetup <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
+									</li> 
+									{% endfor %}
 								</ul>
 							
 							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab3">
+						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[2]}}">
 								<ul class="clearfix">
+									{% for event in two_month_events %}
 									<li>
 										<div class="date">
 											<a href="#">
-												<span class="day">28</span>
-												<span class="month">Jul</span>
-												<span class="year">2016</span>
+												{{event.date.strftime("%m %b %Y")}}
 											</a>
 										</div>
 										<a href="#">
-											<img src="images/upcoming-event-4.jpg" alt="image">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
 										</a>
 										<div class="info">
-											<p>FIFA WORLD CUP 2016 <span>San Francisco</span></p>
+											<p>{{event.name}}<span>{{event.location}}</span></p>
 											<a href="#" class="get-ticket">Get Ticket</a>
 										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Jul</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-5.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Prep Football America <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Jul</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-6.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>UEFA Champions League <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							
-							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab4">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Aug</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-6.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>UEFA Champions League <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
+									</li> 
+									{% endfor %}
 								</ul>
 							</div>
 						    <div role="tabpanel" class="tab-pane" id="tab5">
@@ -577,162 +350,13 @@
 								</ul>
 							
 							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab9">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">28</span>
-												<span class="month">Jan</span>
-												<span class="year">2017</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-4.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>FIFA WORLD CUP 2016 <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							
-							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab10">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">27</span>
-												<span class="month">Feb</span>
-												<span class="year">2017</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-3.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Envato Author SF Meetup <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							</div>
-				
-							<div role="tabpanel" class="tab-pane" id="tab11">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Mar</span>
-												<span class="year">2017</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-5.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Prep Football America <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Mar</span>
-												<span class="year">2017</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-6.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>UEFA Champions League <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							</div>
-							
-						    <div role="tabpanel" class="tab-pane" id="tab12">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">25</span>
-												<span class="month">Apr</span>
-												<span class="year">2017</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-1.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>BMW Open Championship <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">26</span>
-												<span class="month">Apr</span>
-												<span class="year">2017</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-2.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							</div>
+						   
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 		
-		<section class="section-todays-schedule">
-			<div class="container">
-				<div class="row">
-					<div class="section-header">
-						<h2>Today's Schedule</h2>
-						<span class="todays-date"><i class="fa fa-calendar" aria-hidden="true"></i> <strong>12</strong> August 2016 </span>
-					</div>
-					<div class="section-content">
-						<ul class="clearfix">
-							<li class="event-1">
-								<span class="event-time">08:00 <strong>AM</strong></span>
-								<strong class="event-name">Kiai Kanjeng Orchestra</strong>
-								<a href="#" class="get-ticket">Get Ticket</a>
-							</li>
-							<li class="event-2">
-								<span class="event-time">08:00 <strong>AM</strong></span>
-								<strong class="event-name">Envato Author Meetup</strong>
-								<a href="#" class="get-ticket">Get Ticket</a>
-							</li>
-							<li class="event-3">
-								<span class="event-time">10:00 <strong>AM</strong></span>
-								<strong class="event-name">BMW Open Championship</strong>
-								<a href="#" class="sold-ticket">Sold Out</a>
-							</li>
-							<li class="event-4">
-								<span class="event-time">09:00 <strong>PM</strong></span>
-								<strong class="event-name">UEFA Champions League: Barca v Arsenal</strong>
-								<a href="#" class="sold-ticket">Sold Out</a>
-							</li>	
-						</ul>
-						<strong class="event-list-label">Full Event <span>Schedules</span></strong>
-					</div>
-				</div>
-			</div>
-		</section>
 		
 		<section class="section-event-category">
 			<div class="spacer-35"></div>
@@ -744,23 +368,23 @@
 					<div class="section-content">
 						<ul class="row clearfix">
 							<li class="category-1 col-sm-4">
-								<img src="images/event-category-1.jpg" alt="image">
+								<img style="height: 270px;"src="static/images/festivals.jpg" alt="image">
 								<a href="#"><span>Concerts</span></a>
 							</li>
 							<li class="category-2 col-sm-4">
-								<img src="images/event-category-2.jpg" alt="image">
-								<a href="#"><span>Sports</span></a>
-							</li>
-							<li class="category-3 col-sm-4">
-								<img src="images/event-category-3.jpg" alt="image">
-								<a href="#"><span>Threaters</span></a>
-							</li>
-							<li class="category-4 col-sm-4">
-								<img src="images/event-category-4.jpg" alt="image">
+								<img style="height: 270px;" src="static/images/parties.jpg" alt="image">
 								<a href="#"><span>Parties</span></a>
 							</li>
+							<li class="category-3 col-sm-4">
+								<img style="height: 270px;" src="static/images/beach.jpg" alt="image">
+								<a href="#"><span>Beach</span></a>
+							</li>
+							<li class="category-4 col-sm-4">
+								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
+								<a href="#"><span>Hangouts</span></a>
+							</li>
 							<li class="category-5 col-sm-4">
-								<img src="images/event-category-5.jpg" alt="image">
+								<img style="height: 270px;" src="images/event-category-5.jpg" alt="image">
 								<a href="#"><span>Communities</span></a>
 							</li>
 							<li class="category-6 col-sm-4">
@@ -873,23 +497,23 @@
 							</div>
 							<div class="section-content">
 								<ul class="clearfix">
+									{% for article in articles %}
 									<li class="row news-item">
 										<div class="col-sm-5 news-item-img">
 											<div class="date">
 												<a href="#">
-													<span class="day">25</span>
-													<span class="month">August</span>
-													<span class="year">2016</span>
+													<span class="day">{{article.date}}</span>
 												</a>
 											</div>
-											<a href="#"><img src="images/latest-news-1.jpg" alt="image"></a>
+											<a href="#"><img src="{{article.image}}" alt="image"></a>
 										</div>
 										<div class="col-sm-7 news-item-info">
-											<h3><a href="#">Attending the Indonesian Envato Authors National Meetup</a></h3>
-											<span class="meta-data">6 hours ago  |  By <a href="#">Admin</a></span>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesenlup.</p>
+											<h3><a href="#">{{article.title}}</a></h3>
+									<span class="meta-data">{{article.date}} <a href="#">Admin</a></span>
+											<p>{{article.content}}</p>
 										</div>
 									</li>
+									{%endfor%}
 									<li class="row news-item">
 										<div class="col-sm-5 news-item-img">
 											<div class="date">
@@ -1017,31 +641,6 @@
 			</div>
 		</section>
 		
-		<section class="section-stats">
-			<div class="container">
-				<div class="row">
-					<div class="section-content">
-						<ul class="row clearfix">
-							<li class="col-sm-4">
-								<span class="count">598</span>
-								<hr>
-								<p>Events Active</p>
-							</li>
-							<li class="col-sm-4">
-								<span class="count">16,173</span>
-								<hr>
-								<p>Active User</p>
-							</li>
-							<li class="col-sm-4">
-								<span class="count">136,874</span>
-								<hr>
-								<p>Ticket Sold</p>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
 		
 		<section class="section-sponsors">
 			<div class="container">
