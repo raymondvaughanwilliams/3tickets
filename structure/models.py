@@ -59,7 +59,10 @@ class Event(db.Model):
     status = db.Column(db.String(20), nullable=True)
     number = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(100), nullable=True)
+    views = db.Column(db.Integer, nullable=True)
     tags = db.Column(db.JSON,nullable=True)
+    eventtags = db.Column(db.String(200))
+    baseprice = db.Column(db.Integer, nullable=True)
 
 
 # Define the database schema for tickets
@@ -72,7 +75,7 @@ class Ticket(db.Model):
     quantity = db.Column(db.Integer, nullable=True)
     day = db.Column(db.String, nullable=True)
     image = db.Column(db.String(50))
-    event = db.relationship('Event', backref=db.backref('tickets', lazy=True))
+    event = db.relationship('Event', backref=db.backref('tickets', lazy=True,uselist=False))
 
 
 
@@ -90,6 +93,29 @@ class Article(db.Model):
     event = db.relationship('Event', backref=db.backref('articles', lazy=True))
 
 
+
+class About(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    address = db.Column(db.String(50))
+    number = db.Column(db.String(20), nullable=True)
+    instagram = db.Column(db.String(50))
+    twitter = db.Column(db.String(50))
+    email = db.Column(db.String(30))
+    
+    
+class NewsletterEmails(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=True)
+    status = db.Column(db.String(5),nullable=True)
+    
+
+class Newsletter(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    subject = db.Column(db.String(60))
+    body = db.Column(db.String(20))
+    recepients = db.Column(db.JSON)
+    date = db.Column(db.Date, nullable=True,default=datetime.utcnow)
 
 @login_manager.user_loader
 def load_user(user_id):

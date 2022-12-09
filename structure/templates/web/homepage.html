@@ -1,5 +1,5 @@
 
-{% extends "web/base.html" %}
+{% extends "web/homebase.html" %}
 {% block content %}
 		<section class="section-todays-schedule">
 			<div class="container">
@@ -64,6 +64,29 @@
 					</li>
 					{% endfor %}
 		
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<br>
+<br>
+<br>
+
+
+
+<section class="section-call-to-action">
+	<div class="container">
+		<div class="row">
+			<div class="section-content">
+				<ul class="row clearfix">
+					<li class="col-sm-12 col-md-9">
+						<h3>AD space</h3>
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</p>
+					</li>
+					<li class="col-sm-12 col-md-3">
+						<a href="#" class="action-btn">Learn More</a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -155,127 +178,7 @@
 									{% endfor %}
 								</ul>
 							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab5">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">25</span>
-												<span class="month">Sep</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-1.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>BMW Open Championship <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">26</span>
-												<span class="month">Sep</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-2.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">27</span>
-												<span class="month">Sep</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-3.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Envato Author SF Meetup <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">28</span>
-												<span class="month">Sep</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-4.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>FIFA WORLD CUP 2016 <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							
-							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab6">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">28</span>
-												<span class="month">Oct</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-4.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>FIFA WORLD CUP 2016 <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Oct</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-5.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Prep Football America <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Oct</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-6.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>UEFA Champions League <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							</div>
+						   
 						    <div role="tabpanel" class="tab-pane" id="tab7">
 								<ul class="clearfix">
 									<li>
@@ -363,7 +266,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="section-header">
-						<h2>Event by Categories</h2>
+						<h2>Events by Categories</h2>
 					</div>
 					<div class="section-content">
 						<ul class="row clearfix">
@@ -383,14 +286,7 @@
 								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
 								<a href="#"><span>Hangouts</span></a>
 							</li>
-							<li class="category-5 col-sm-4">
-								<img style="height: 270px;" src="images/event-category-5.jpg" alt="image">
-								<a href="#"><span>Communities</span></a>
-							</li>
-							<li class="category-6 col-sm-4">
-								<img src="images/event-category-6.jpg" alt="image">
-								<a href="#"><span>Classes</span></a>
-							</li>
+							
 						</ul>
 					</div>
 				</div>
@@ -400,74 +296,14 @@
 		<section class="section-video-parallax">
 			<div class="container">
 				<div class="section-content">
-					<h2>LIVE THERE</h2>
+					<h2>3Tickets</h2>
 					<p>Book events from anywhere in 191+ countries and get awesome experience Lorem ipsum dolor sit amet, consectetuer adipiscing elit,</p>
 					<a href="#"><img src="images/play-btn.png" alt="image"></a>
 				</div>
 			</div>
 		</section>
 		
-		<section class="section-recent-videos">
-			<div class="container">
-				<div class="row">
-					<div class="section-header">
-						<h2>Recent Videos</h2>
-					</div>
-					<div class="section-content">
-						<ul class="row clearfix">
-							<li class="col-sm-3">
-								<div class="video">
-									<img src="images/recent-video-1.jpg" alt="image">
-									<div class="video-player">
-										<a href="#"><i class="fa fa-play" aria-hidden="true"></i></a> 
-										<span>2:33</span>
-									</div>
-								</div>
-								<h3 class="video-title">
-									<a href="#">Envato Author Community Fun Hiking at Semeru Mountaint</a>
-								</h3>
-							</li>
-							<li class="col-sm-3">
-								<div class="video">
-									<img src="images/recent-video-2.jpg" alt="image">
-									<div class="video-player">
-										<a href="#"><i class="fa fa-play" aria-hidden="true"></i></a> 
-										<span>2:33</span>
-									</div>
-								</div>
-								<h3 class="video-title">
-									<a href="#">Nike Urban Running Chalenge with Kobe 2016</a>
-								</h3>
-							</li>
-							<li class="col-sm-3">
-								<div class="video">
-									<img src="images/recent-video-3.jpg" alt="image">
-									<div class="video-player">
-										<a href="#"><i class="fa fa-play" aria-hidden="true"></i></a> 
-										<span>2:33</span>
-									</div>
-								</div>
-								<h3 class="video-title">
-									<a href="#">Entrepreneurial Think Thank: Shifting the Education Paradigm</a>
-								</h3>
-							</li>
-							<li class="col-sm-3">
-								<div class="video">
-									<img src="images/recent-video-4.jpg" alt="image">
-									<div class="video-player">
-										<a href="#"><i class="fa fa-play" aria-hidden="true"></i></a> 
-										<span>2:33</span>
-									</div>
-								</div>
-								<h3 class="video-title">
-									<a href="#">Southeast Asia Weekend Festival 2016</a>
-								</h3>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
+		<br>
 		
 		<section class="section-call-to-action">
 			<div class="container">
@@ -475,7 +311,7 @@
 					<div class="section-content">
 						<ul class="row clearfix">
 							<li class="col-sm-12 col-md-9">
-								<h3>Share experiences with your friends</h3>
+								<h3>Ad Space</h3>
 								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</p>
 							</li>
 							<li class="col-sm-12 col-md-3">
@@ -493,61 +329,33 @@
 					<div class="col-sm-12 col-md-8">
 						<div class="latest-news">
 							<div class="section-header">
-								<h2>Latest News</h2>
+								<h2>Articles</h2>
 							</div>
 							<div class="section-content">
 								<ul class="clearfix">
 									{% for article in articles %}
 									<li class="row news-item">
 										<div class="col-sm-5 news-item-img">
-											<div class="date">
+											<!----<div class="date">
 												<a href="#">
-													<span class="day">{{article.date}}</span>
+													<span class="day"></span>
 												</a>
-											</div>
-											<a href="#"><img src="{{article.image}}" alt="image"></a>
+											</div>-->
+
+											{% if article.image%}
+											<a href="#"><img style="height:230px;"src="{{article.image}}" alt="image"></a>
+											{%else%}
+											<a href="#"><img src="static/images/nm.jpg" alt="image"></a>
+											{% endif%}
 										</div>
 										<div class="col-sm-7 news-item-info">
 											<h3><a href="#">{{article.title}}</a></h3>
-									<span class="meta-data">{{article.date}} <a href="#">Admin</a></span>
+									<span class="meta-data">{{article.date}} by <a href="#">Admin</a></span>
 											<p>{{article.content}}</p>
 										</div>
 									</li>
 									{%endfor%}
-									<li class="row news-item">
-										<div class="col-sm-5 news-item-img">
-											<div class="date">
-												<a href="#">
-													<span class="day">25</span>
-													<span class="month">August</span>
-													<span class="year">2016</span>
-												</a>
-											</div>
-											<a href="#"><img src="images/latest-news-2.jpg" alt="image"></a>
-										</div>
-										<div class="col-sm-7 news-item-info">
-											<h3><a href="#">How to Join The Biggest Event Total Transverse Half Marathon</a></h3>
-											<span class="meta-data">08:00 AM  |  By <a href="#">Admin</a></span>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesenlup.</p>
-										</div>
-									</li>
-									<li class="row news-item">
-										<div class="col-sm-5 news-item-img">
-											<div class="date">
-												<a href="#">
-													<span class="day">25</span>
-													<span class="month">August</span>
-													<span class="year">2016</span>
-												</a>
-											</div>
-											<a href="#"><img src="images/latest-news-3.jpg" alt="image"></a>
-										</div>
-										<div class="col-sm-7 news-item-info">
-											<h3><a href="#">Ramayana Ballet at Prambanan Temple Klaten, Central of Java</a></h3>
-											<span class="meta-data">10:00 AM  |  By <a href="#">Admin</a></span>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesenlup.</p>
-										</div>
-									</li>
+									
 								</ul>
 								<div class="new-item-pagination">
 									<nav aria-label="Page navigation">
@@ -567,15 +375,15 @@
 					<div class="col-sm-12 col-md-4">
 						<div class="latest-tweets">
 							<div class="section-header">
-								<h2>Latest Tweets</h2>
+								<h2>Our Tweets</h2>
 							</div>
 							<div class="section-content">
 								<div class="twitter-header clearfix">
 									<div class="twitter-name">
-										<a href="#">
-											<img src="images/twitter-avatar.png" alt="image">
+										<a href="{{about.twitter}}" target="_blank">
+											<img style="height:50px;"src="static/images/3img.jpg" alt="image">
 											<strong>myticket.com</strong>
-											<span>@myticket</span>
+											<span>@{{about.twitter[12:]}}</span>
 										</a>
 									</div>
 									<div class="twitter-btn">
@@ -648,22 +456,22 @@
 					<ul class="row">
 						<li class="col-sm-3">
 							<a href="#">
-								<img src="images/sponsor-1.png" alt="image">
+								<img src="static/images/sponsor1.jpg" alt="image">
 							</a>
 						</li>
 						<li class="col-sm-3">
 							<a href="#">
-								<img src="images/sponsor-2.png" alt="image">
+								<img src="static/images/sponsor2.jpg"  alt="image">
 							</a>
 						</li>
 						<li class="col-sm-3">
 							<a href="#">
-								<img src="images/sponsor-3.png" alt="image">
+								<img src="static/images/sponsor3.png"  alt="image">
 							</a>
 						</li>
 						<li class="col-sm-3">
 							<a href="#">
-								<img src="images/sponsor-4.png" alt="image">
+								<img src="static/images/sponsor4.jpg"  alt="image">
 							</a>
 						</li>
 					</ul>
@@ -677,8 +485,11 @@
 					<h2>Stay Up to date With Your Favorite Events!</h2>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh <br> euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
 					<div class="newsletter-form clearfix">
-						<input type="email" placeholder="Your Email Address">
+						<form method="POST" enctype="multipart/form-data" action="{{url_for('web.suscribetonewsletter')}}">
+							{{ newsletterform.hidden_tag() }}
+						<input type="email" name = "email" placeholder="Your Email Address">
 						<input type="submit" value="Subscribe">
+						</form>
 					</div>
 				</div>
 			</div>

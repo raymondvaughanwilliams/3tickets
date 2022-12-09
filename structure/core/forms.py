@@ -19,6 +19,7 @@ class AddEvent(FlaskForm):
     number = StringField('Number')
     email = StringField('Email',validators=[DataRequired(),Email()])
     tags = StringField('Tags')
+    baseprice = IntegerField('Lowest Price.Enter 0 if event is free',validators=[DataRequired()])
     time  = TimeField('Time',default=datetime.datetime.now)
     image1 = FileField('Image 1', validators=[FileRequired(), FileAllowed(['jpg','png','gif','jpeg'])])
     image2 = FileField('Image 2', validators=[FileRequired(), FileAllowed(['jpg','png','gif','jpeg'])])

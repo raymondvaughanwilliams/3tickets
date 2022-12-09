@@ -69,6 +69,8 @@ def addevent():
         days = form.days.data
         email = form.email.data
         number = form.number.data
+        tags = form.tags.data
+        baseprice = form.baseprice.data
         if request.files.get('image1'):
             image1 = photos.save(request.files['image1'], name=secrets.token_hex(10) + ".")
             image1= "static/images/events/"+image1
@@ -81,7 +83,7 @@ def addevent():
         image_3 = photos.save(request.files['image3'], name=secrets.token_hex(10) + ".")
         image3= "static/images/events/"+image_3
 
-        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3)
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice)
         db.session.add(event)
         db.session.commit()
         # flash(f'Meme added successfully','success')
@@ -110,6 +112,7 @@ def editevent(event_id):
         event.days = form.days.data
         event.number = form.number.data
         event.email = form.email.data
+        event.baseprice = form.baseprice.data
         if request.files.get('image1'):
             try:
                 os.unlink(os.path.join(current_app.root_path, "static/images/events/" + event.image_1))
@@ -131,6 +134,7 @@ def editevent(event_id):
         form.days.data = event.days
         form.number.data = event.number
         form.email.data = event.email
+        form.baseprice.data = event.baseprice
     return render_template('events/editevent.html', form=form,event=event)
 
 
@@ -405,3 +409,7 @@ def delete_article(article_id):
     
 #     flash('Ticket added to shopping cart.')
 #     return redirect(url_for('view_cart'))
+
+
+# GUESTLIST MANAGEMENT
+# LINK.TO 
