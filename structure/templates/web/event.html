@@ -24,27 +24,7 @@
 			<div class="container">
 				<div class="row">
 					<div id="primary" class="col-sm-12 col-md-12">
-						<div class="event-features">
-							<ul>
-								<li>
-									<i class="fa fa-mobile fa-3x" aria-hidden="true"></i>
-									Smartphone <br> tickets accepted
-								</li>
-								<li>
-									<i class="fa fa-hourglass-o fa-2x" aria-hidden="true"></i>
-									Duration: 1 hour <br> and 30 minutes
-								</li>
-								<li>
-									<i class="fa fa-subway fa-2x" aria-hidden="true"></i>
-									Metro Line 3: stop Palau <br> Reial or Les Corts
-								</li>
-								<li>
-									<i class="fa fa-car fa-2x" aria-hidden="true"></i>
-
-									Car Parking:<br> Available
-								</li>
-							</ul>
-						</div>
+						
 						<div class="event-info">
 							<div class="row">
 								<div class="col-md-6">
@@ -110,9 +90,8 @@
                                                     <div class="item-box-blog">
                                                       <div class="item-box-blog-image">
                                                         <!--Date-->
-                                                        <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
                                                         <!--Image-->
-                                                        <figure> <img alt="" src="{{ticket.image}}"> </figure>
+                                                        <figure> <img alt="" style="max-width:200px;height:200px;" src="/{{ticket.image}}"> </figure>
                                                       </div>
                                                       <div class="item-box-blog-body">
                                                         <!--Heading-->
@@ -123,164 +102,24 @@
                                                         </div>
                                                         <!--Data-->
                                                         <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
+                                                          <p> {{ticket.quantity}} left</p>
                                                         </div>
                                                         <!--Text-->
                                                         <div class="item-box-blog-text">
+                                                            <ul>
+                                                                {% for val in ticket.features | split(",") %}
+                                                                    <li>{{ val }}</li>
+                                                                {% endfor %}
+                                                                </ul>
                                                           <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
                                                         </div>
-                                                        <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
+                                                        <div class="mt"> <a href="/add_to_cart?name={{ ticket.name }}&price={{ ticket.price }}&id={{ ticket.id }}" tabindex="0" class="btn bg-blue-ui white read">Add to cart</a> </div>
                                                         <!--Read More Button-->
                                                       </div>
                                                     </div>
                                                   </div>
                                                   {% endfor %}
-                                                  <div class="col-md-4" >
-                                                    <div class="item-box-blog">
-                                                      <div class="item-box-blog-image">
-                                                        <!--Date-->
-                                                        <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                                                        <!--Image-->
-                                                        <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                                                      </div>
-                                                      <div class="item-box-blog-body">
-                                                        <!--Heading-->
-                                                        <div class="item-box-blog-heading">
-                                                          <a href="#" tabindex="0">
-                                                            <h5>News Title</h5>
-                                                          </a>
-                                                        </div>
-                                                        <!--Data-->
-                                                        <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                                                        </div>
-                                                        <!--Text-->
-                                                        <div class="item-box-blog-text">
-                                                          <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
-                                                        </div>
-                                                        <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                                                        <!--Read More Button-->
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-md-4" >
-                                                    <div class="item-box-blog">
-                                                      <div class="item-box-blog-image">
-                                                        <!--Date-->
-                                                        <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                                                        <!--Image-->
-                                                        <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                                                      </div>
-                                                      <div class="item-box-blog-body">
-                                                        <!--Heading-->
-                                                        <div class="item-box-blog-heading">
-                                                          <a href="#" tabindex="0">
-                                                            <h5>News Title</h5>
-                                                          </a>
-                                                        </div>
-                                                        <!--Data-->
-                                                        <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                                                        </div>
-                                                        <!--Text-->
-                                                        <div class="item-box-blog-text">
-                                                          <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
-                                                        </div>
-                                                        <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                                                        <!--Read More Button-->
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <!--.row-->
-                                              </div>
-                                              <!--.item-->
-                                              <div class="carousel-item ">
-                                                <div class="row">
-                                                  <div class="col-md-4" >
-                                                    <div class="item-box-blog">
-                                                      <div class="item-box-blog-image">
-                                                        <!--Date-->
-                                                        <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                                                        <!--Image-->
-                                                        <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                                                      </div>
-                                                      <div class="item-box-blog-body">
-                                                        <!--Heading-->
-                                                        <div class="item-box-blog-heading">
-                                                          <a href="#" tabindex="0">
-                                                            <h5>News Title</h5>
-                                                          </a>
-                                                        </div>
-                                                        <!--Data-->
-                                                        <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                                                        </div>
-                                                        <!--Text-->
-                                                        <div class="item-box-blog-text">
-                                                          <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
-                                                        </div>
-                                                        <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                                                        <!--Read More Button-->
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-md-4" >
-                                                    <div class="item-box-blog">
-                                                      <div class="item-box-blog-image">
-                                                        <!--Date-->
-                                                        <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                                                        <!--Image-->
-                                                        <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                                                      </div>
-                                                      <div class="item-box-blog-body">
-                                                        <!--Heading-->
-                                                        <div class="item-box-blog-heading">
-                                                          <a href="#" tabindex="0">
-                                                            <h5>News Title</h5>
-                                                          </a>
-                                                        </div>
-                                                        <!--Data-->
-                                                        <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                                                        </div>
-                                                        <!--Text-->
-                                                        <div class="item-box-blog-text">
-                                                          <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
-                                                        </div>
-                                                        <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                                                        <!--Read More Button-->
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-md-4" >
-                                                    <div class="item-box-blog">
-                                                      <div class="item-box-blog-image">
-                                                        <!--Date-->
-                                                        <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                                                        <!--Image-->
-                                                        <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                                                      </div>
-                                                      <div class="item-box-blog-body">
-                                                        <!--Heading-->
-                                                        <div class="item-box-blog-heading">
-                                                          <a href="#" tabindex="0">
-                                                            <h5>News Title</h5>
-                                                          </a>
-                                                        </div>
-                                                        <!--Data-->
-                                                        <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                                                        </div>
-                                                        <!--Text-->
-                                                        <div class="item-box-blog-text">
-                                                          <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
-                                                        </div>
-                                                         <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                                                        <!--Read More Button-->
-                                                      </div>
-                                                    </div>
-                                                  </div>
+                                                  
                                                 </div>
                                                 <!--.row-->
                                               </div>
@@ -290,6 +129,7 @@
                                           </div>
                                           <!--.Carousel-->
                                         </div>
+                                    </div>
 
 
                         </div>
@@ -304,3 +144,10 @@
 		</section>
 	
 {% endblock %}
+
+
+       <!----<form action="/add_to_cart" method="post">
+                                                            <input type="hidden" name="item_name" value=" ticket.name ">
+                                                            <input type="hidden" name="item_price" value="ticket.price ">
+                                                            <button type="submit">Add to Cart</button>
+                                                        </form>                                                        -Read More Button-->

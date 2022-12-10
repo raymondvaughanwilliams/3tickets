@@ -3,7 +3,8 @@ from structure import db,login_manager,app
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-
+from sqlalchemy import create_engine, Table, MetaData
+metadata = MetaData()
 
 class User(db.Model,UserMixin):
 
@@ -12,14 +13,22 @@ class User(db.Model,UserMixin):
     id = db.Column(db.Integer,primary_key=True)
     profile_image = db.Column(db.String(64),nullable=False,default='default_profile.png')
     email = db.Column(db.String(64),unique=True,index=True)
+    name = db.Column(db.String(64),nullable=True)
+    role = db.Column(db.String(64),nullable=True)
     username = db.Column(db.String(64),unique=True,index=True)
     password_hash = db.Column(db.String(128))
+    verification = db.Column(db.String(5))
+    verification_code = db.Column(db.String(100))
 
 
-    def __init__(self,email,username,password):
+    def __init__(self,email,username,password,name,role,verification_code,verification):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
+        self.name = name
+        self.role = role
+        self.verification = verification
+        self.verification_code = verification_code
 
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)
@@ -46,6 +55,8 @@ class WebFeature(db.Model):
 
 
 class Event(db.Model):
+    # __table__ = Table('event', metadata, schema='public')
+    __tablename__ = "event"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=True)
     date = db.Column(db.Date, nullable=True)
@@ -59,7 +70,7 @@ class Event(db.Model):
     status = db.Column(db.String(20), nullable=True)
     number = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(100), nullable=True)
-    views = db.Column(db.Integer, nullable=True)
+    views = db.Column(db.Integer, nullable=True,default=0)
     tags = db.Column(db.JSON,nullable=True)
     eventtags = db.Column(db.String(200))
     baseprice = db.Column(db.Integer, nullable=True)
@@ -74,6 +85,7 @@ class Ticket(db.Model):
     price = db.Column(db.Float, nullable=True)
     quantity = db.Column(db.Integer, nullable=True)
     day = db.Column(db.String, nullable=True)
+    features = db.Column(db.String(255), nullable=True)
     image = db.Column(db.String(50))
     event = db.relationship('Event', backref=db.backref('tickets', lazy=True,uselist=False))
 
@@ -116,6 +128,76 @@ class Newsletter(db.Model):
     body = db.Column(db.String(20))
     recepients = db.Column(db.JSON)
     date = db.Column(db.Date, nullable=True,default=datetime.utcnow)
+
+
+# class Purchase(db.Model):
+#     __tablename__ = 'purchases'
+#     id = db.Column(db.Integer, primary_key=True)
+#     ticket_id = db.Column(db.Integer,db.ForeignKey('ticket.id'))
+#     ticket = db.relationship('Ticket', backref=db.backref('purchases', lazy=True))
+    
+
+class Cart(db.Model):
+    __tablename__ = "carts"
+
+    cart_id = db.Column(db.Integer, primary_key=True)
+    total_price = db.Column(db.Float)
+    transaction_id = db.Column(db.String(100))
+    items = db.relationship("Item", backref="cart")
+    status = db.Column(db.String(15))
+    reference = db.Column(db.String(200))
+
+    def __init__(self, total_price,status,transaction_id,reference):
+        self.total_price = total_price
+        self.status = status
+        self.transaction_id = transaction_id
+        self.reference = reference
+
+    def to_dict(self):
+        return {
+            "cart_id": self.cart_id,
+            "total_price": self.total_price,
+            "status": self.status,
+            "items": [item.to_dict() for item in self.items]
+        }
+
+
+class Item(db.Model):
+    __tablename__ = "items"
+
+    item_id = db.Column(db.Integer, primary_key=True)
+    cart_id = db.Column(db.Integer, db.ForeignKey("carts.cart_id"))
+    event_id = db.Column(db.Integer)
+    ticket_id = db.Column(db.Integer)
+    quantity = db.Column(db.Integer)
+    price = db.Column(db.Float)
+    reference = db.Column(db.String(200))
+    users = db.relationship('User',backref='items',lazy=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
+    
+    def __init__(self, cart_id, event_id, quantity, price,ticket_id,reference,user_id):
+        self.cart_id = cart_id
+        self.event_id = event_id
+        self.quantity = quantity
+        self.price = price
+        self.ticket_id = ticket_id
+        self.reference = reference
+        self.user_id = user_id
+
+    def total_price(self):
+        return self.quantity * self.price
+
+    def to_dict(self):
+        return {
+            "item_id": self.item_id,
+            "cart_id": self.cart_id,
+            "event_id": self.event_id,
+            "quantity": self.quantity,
+            "price": self.price,
+            "total_price": self.total_price()
+        }
+
+table = Table('event', metadata, schema='public')
 
 @login_manager.user_loader
 def load_user(user_id):

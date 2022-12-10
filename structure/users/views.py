@@ -1,25 +1,56 @@
 # users/views.py
-from flask import render_template,url_for,flash,redirect,request,Blueprint
+from flask import render_template,url_for,flash,redirect,request,Blueprint,session
 from flask_login import login_user, current_user, logout_user, login_required
-from structure import db
+from structure import db,app
 from structure.models import User, WebFeature
 from structure.users.forms import RegistrationForm,LoginForm,UpdateUserForm
 from structure.users.picture_handler import add_profile_pic
+from flask_mail import Message,Mail
+import random
 
 users = Blueprint('users',__name__)
 
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = "raymondvaughanwilliams@gmail.com"
+app.config["MAIL_PASSWORD"] = "fwlxpuuiqvjwcxoz"
+
+mail = Mail(app)
+
+def send_verification_email():
+    # Get the email address from the request
+    email = request.form["email"]
+
+    # Create the message
+    msg = Message(
+        subject="Verify your email address",
+        recipients=[email],
+        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='http://www.example.com/verify?verification_code={}'>http://www.example.com/verify?verification_code={}</a></p>".format( request.form["email"],  request.form["email"]),
+    )
 # register
 @users.route('/register',methods=['GET','POST'])
 def register():
     form = RegistrationForm()
+    
 
     if form.validate_on_submit():
+        vcode  = form.email.data[0:6]+ str(random.randint(1,10000)) 
         user = User(email=form.email.data,
                     username=form.username.data,
-                    password=form.password.data)
+                    password=form.password.data,verification_code=vcode,role="user",name=form.name.data,
+                    verification="no")
 
         db.session.add(user)
         db.session.commit()
+        msg = Message(
+        sender = "no-reply@3ticket.com",
+        subject="Ticket Details",
+        recipients=[form.email.data],
+        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='http://127.0.0.1:5000/accountverification?verification_code={}'>http://127.0.0.1:5000/accountverification?verification_code={}</a></p>".format( vcode,  vcode),
+        )
+        mail.send(msg)
+        
         flash('Thanks for registration!')
         return redirect(url_for('users.login'))
 
@@ -35,6 +66,8 @@ def login():
     if form.validate_on_submit():
         # Grab the user from our User Models table
         user = User.query.filter_by(email=form.email.data).first()
+        session['id'] = user.id
+        # session['role'] = user.role
 
         # Check that the user was supplied and the password is right
         # The verify_password method comes from the User object
@@ -42,7 +75,9 @@ def login():
 
         if user.check_password(form.password.data) and user is not None:
             #Log in the user
-
+            if user.verification == "no":
+                return redirect(url_for('users.verifyaccount'))
+            
             login_user(user)
             flash('Logged in successfully.')
 
@@ -62,9 +97,31 @@ def login():
 @users.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("core.index"))
+    session.clear()
+    return redirect(url_for("web.homepage"))
 
 
+@users.route("/verify-account")
+def verify_account():
+    
+
+        return render_template('web/verify.html')
+    
+    
+
+@users.route("/accountverification")
+def account_verification():
+    verification_code = request.args.get('verification_code')
+    user = User.query.filter_by(verification_code=verification_code).first()
+    
+    user.verification = "yes"
+    db.session.commit()
+    return redirect(url_for('users.login'))
+    
+    
+    
+    
+    
 # account (update UserForm)
 # @users.route("/account", methods=['GET', 'POST'])
 # @login_required

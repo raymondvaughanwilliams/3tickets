@@ -1046,7 +1046,9 @@ body{
 
 .section-calendar-events{
 	padding:70px 0;
-	background:#fff
+	background:#fff;
+	width: 1200px;
+
 }
 
 .section-calendar-events .section-header{
@@ -4459,7 +4461,7 @@ body{
 	position:relative;
 	padding:0 0 0 45px;
 	margin:0 0 30px;
-	display:inline-block;
+	/* display:inline-block; */
 	vertical-align:top
 }
 

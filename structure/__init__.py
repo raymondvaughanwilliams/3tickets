@@ -7,7 +7,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from sqlalchemy import MetaData
-
+from jinja2 import Environment, select_autoescape
 app = Flask(__name__)
 
 
@@ -52,11 +52,19 @@ login_manager.login_view = 'users.login'
 
 
 
+def split(value, separator):
+    return value.split(separator)
+
+@app.before_request
+def add_filters():
+    app.jinja_env.filters['split'] = split
+
 ##################################################
 
 
 from structure.core.views import core
 from structure.users.views import users
+from structure.userportal.views import userportal
 from structure.web.views import web
 from structure.error_pages.handlers import error_pages
 
@@ -65,4 +73,5 @@ app.register_blueprint(core)
 app.register_blueprint(users)
 app.register_blueprint(error_pages)
 app.register_blueprint(web)
+app.register_blueprint(userportal)
 

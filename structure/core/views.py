@@ -413,3 +413,4 @@ def delete_article(article_id):
 
 # GUESTLIST MANAGEMENT
 # LINK.TO 
+# Allow hosts send mails to attendees

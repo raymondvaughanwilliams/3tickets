@@ -161,6 +161,8 @@
             {# This hidden_tag is a CSRF security feature. #}
             {{ form.hidden_tag() }}
             {{ form.email.label }} {{ form.email() }}<br>
+            {{ form.name.label }} {{ form.name() }}<br>
+
             {{ form.username.label }} {{ form.username() }}<br>
             {{ form.password.label }} {{ form.password() }}<br>
             {{ form.pass_confirm.label }} {{ form.pass_confirm() }}<br>
