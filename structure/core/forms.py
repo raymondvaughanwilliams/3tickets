@@ -32,6 +32,7 @@ class AddTicket(FlaskForm):
     day = StringField('Day',validators=[])
     quantity = IntegerField('Quantity',validators=[])
     price = FloatField('Price',validators=[])
+    features = StringField('Features')
     image = FileField('Image', validators=[FileRequired(), FileAllowed(['jpg','png','gif','jpeg'])])
 
     submit = SubmitField('Submit')

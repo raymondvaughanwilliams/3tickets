@@ -15,12 +15,12 @@
 								<img src="{{event.image1}}"  alt="image" style="height:50px;">
 								<strong class="event-name">{{event.name}}</strong>
 								<strong class="event-name">{{event.date.strftime("%m %b %Y")}}</strong>
-								<a href="#" class="get-ticket">Get Ticket</a>
+								<a href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
 							</li>
 							{% endfor %}
 						</ul>
 					
-						<a href="" ><strong class="event-list-label">Full Event <span>Schedule</span></strong></a>
+						<a href="{{ url_for('web.eventsschedule')}}" ><strong class="event-list-label">Full Event <span>Schedule</span></strong></a>
 					</div>
 				</div>
 			</div>
@@ -38,7 +38,7 @@
 			<div class="section-header">
 				<h2>Featured Events</h2>
 				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.</p>
-				<a href="#">See all upcoming events</a>
+				<a  href="{{ url_for('web.eventsschedule')}}" >See all upcoming events</a>
 			</div>				
 			<br>
 			<br>
@@ -49,17 +49,19 @@
 					<li>
 						<div class="date">
 							<a href="#">
-								<span style="font-size:12px;" class="day">{{event.date.strftime("%m %b %Y") }}</span>
-								<span class="month">August</span>
-								<span class="year">2016</span>
+								<a href="#">
+									<span style="font-size:12px;" class="day">{{event.baseprice}} cedis</span>
+	
+									<span  class="month">{{event.date.strftime("%m %b %Y") }}</span>
+								</a>
 							</a>
 						</div>
-						<a href="#">
+						<a href="{{ url_for('web.event',event_id=event.id)}}">
 							<img src="{{event.image1}}" alt="image" style="height:300px;">
 						</a>
 						<div class="info">
 							<p>{{event.name}}<span>{{event.location}}</span></p>
-							<a href="#" class="get-ticket">Get Ticket</a>
+							<a  href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
 						</div>
 					</li>
 					{% endfor %}
@@ -130,7 +132,7 @@
 										</a>
 										<div class="info">
 											<p>{{event.name}}<span>{{event.location}}</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
+											<a href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
 										</div>
 									</li> 
 									{% endfor %}
@@ -143,6 +145,7 @@
 									<li>
 										<div class="date">
 											<a href="#">
+												
 												{{event.date.strftime("%m %b %Y")}}
 											</a>
 										</div>
@@ -151,7 +154,7 @@
 										</a>
 										<div class="info">
 											<p>{{event.name}}<span>{{event.location}}</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
+											<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
 										</div>
 									</li> 
 									{% endfor %}
@@ -172,87 +175,14 @@
 										</a>
 										<div class="info">
 											<p>{{event.name}}<span>{{event.location}}</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
+											<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
 										</div>
 									</li> 
 									{% endfor %}
 								</ul>
 							</div>
 						   
-						    <div role="tabpanel" class="tab-pane" id="tab7">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">25</span>
-												<span class="month">Nov</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-1.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>BMW Open Championship <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">26</span>
-												<span class="month">Nov</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-2.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">27</span>
-												<span class="month">Nov</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-3.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Envato Author SF Meetup <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							
-							</div>
-						    <div role="tabpanel" class="tab-pane" id="tab8">
-								<ul class="clearfix">
-									<li>
-										<div class="date">
-											<a href="#">
-												<span class="day">29</span>
-												<span class="month">Dec</span>
-												<span class="year">2016</span>
-											</a>
-										</div>
-										<a href="#">
-											<img src="images/upcoming-event-5.jpg" alt="image">
-										</a>
-										<div class="info">
-											<p>Prep Football America <span>San Francisco</span></p>
-											<a href="#" class="get-ticket">Get Ticket</a>
-										</div>
-									</li>
-								</ul>
-							
-							</div>
+						  
 						   
 						</div>
 					</div>
@@ -272,21 +202,24 @@
 						<ul class="row clearfix">
 							<li class="category-1 col-sm-4">
 								<img style="height: 270px;" src="static/images/festivals.jpg" alt="image">
-								<a href="#"><span>Concerts</span></a>
+								<a href="/events/filter?categories=yes&tags=concerts"><span>Concerts</span></a>
 							</li>
 							<li class="category-2 col-sm-4">
 								<img style="height: 270px;" src="static/images/parties.jpg" alt="image">
-								<a href="#"><span>Parties</span></a>
+								<a href="/events/filter?categories=yes&tags=parties"><span>Parties</span></a>
 							</li>
 							<li class="category-3 col-sm-4">
 								<img style="height: 270px;" src="static/images/beach.jpg" alt="image">
-								<a href="#"><span>Beach</span></a>
+								<a href="/events/filter?categories=yes&tags=beach"><span>Beach</span></a>
 							</li>
 							<li class="category-4 col-sm-4">
 								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
-								<a href="#"><span>Hangouts</span></a>
+								<a href="/events/filter?categories=yes&tags=hangouts"><span>Hangouts</span></a>
 							</li>
-							
+							<li class="category-4 col-sm-4">
+								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
+								<a href="/events/filter?categories=yes&tags=music"><span>Music</span></a>
+							</li>
 						</ul>
 					</div>
 				</div>

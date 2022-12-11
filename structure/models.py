@@ -3,8 +3,8 @@ from structure import db,login_manager,app
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-from sqlalchemy import create_engine, Table, MetaData
-metadata = MetaData()
+# from sqlalchemy import create_engine, Table, MetaData
+# metadata = MetaData()
 
 class User(db.Model,UserMixin):
 
@@ -74,6 +74,8 @@ class Event(db.Model):
     tags = db.Column(db.JSON,nullable=True)
     eventtags = db.Column(db.String(200))
     baseprice = db.Column(db.Integer, nullable=True)
+    users = db.relationship('User',backref='event',lazy=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
 
 
 # Define the database schema for tickets
@@ -168,6 +170,11 @@ class Item(db.Model):
     item_id = db.Column(db.Integer, primary_key=True)
     cart_id = db.Column(db.Integer, db.ForeignKey("carts.cart_id"))
     event_id = db.Column(db.Integer)
+    events_id  = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=True)
+    event = db.relationship('Event', backref=db.backref('items', lazy=True,uselist=False))
+    tickets_id  = db.Column(db.Integer, db.ForeignKey('tickets.id'), nullable=True)
+    ticket = db.relationship('Event', backref=db.backref('ticketitems', lazy=True,uselist=False,overlaps="event,items"))
+    tickets = db.relationship('Ticket', backref=db.backref('items', lazy=True,uselist=False))
     ticket_id = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     price = db.Column(db.Float)
@@ -175,7 +182,7 @@ class Item(db.Model):
     users = db.relationship('User',backref='items',lazy=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
     
-    def __init__(self, cart_id, event_id, quantity, price,ticket_id,reference,user_id):
+    def __init__(self, cart_id, event_id, quantity, price,ticket_id,reference,user_id,events_id,tickets_id):
         self.cart_id = cart_id
         self.event_id = event_id
         self.quantity = quantity
@@ -183,6 +190,8 @@ class Item(db.Model):
         self.ticket_id = ticket_id
         self.reference = reference
         self.user_id = user_id
+        self.tickets_id = tickets_id
+        self.events_id = events_id
 
     def total_price(self):
         return self.quantity * self.price
@@ -197,8 +206,7 @@ class Item(db.Model):
             "total_price": self.total_price()
         }
 
-table = Table('event', metadata, schema='public')
-
+# s
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

@@ -1,0 +1,113 @@
+
+{% extends "userportal/base.html" %}
+{% block content %}
+<section class="section-page-header">
+    <div class="container">
+        <h1 class="entry-title">Add Event</h1>
+    </div>
+</section>
+
+<section class="section-page-content">
+    <div class="container">
+        <div class="row">
+            <div id="primary" class="col-sm-12 col-md-12">
+                <div class="section-select-payment-method">
+
+                   
+                    <!-- Tab panes -->
+                    <div class="tab-content clearfix">
+                        <div role="tabpanel" class="tab-pane active" id="credit-card">
+                            <form class="form-group" method="POST" enctype="multipart/form-data" action="/hostevent">
+                                {{ form.hidden_tag() }}
+                                                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Event Name</label>
+                                        {{ form.name(class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Description</label>
+                                        {{ form.description(class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Location</label>
+                                        {{ form.location(class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <label>Date</label>
+                                        {{ form.date(class="form-control ") }}
+
+                                    </div>
+                                    <div class="cvv col-sm-4">
+                                        <label>Time</label>
+                                        {{ form.time(class="form-control ") }}
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Days</label>
+                                        {{ form.days(class="form-control ") }}
+
+                                    </div>
+                                    <div class=" col-sm-6">
+                                        <label>Lowest Ticket Price. Enter 0 for free</label>
+                                        {{ form.baseprice(class="form-control ") }}
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <label>Email</label>
+                                        {{ form.email(class="form-control ") }}
+
+                                    </div>
+                                    <div class="cvv col-sm-4">
+                                        <label>Number</label>
+                                        {{ form.number(class="form-control ") }}
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Tags</label>
+                                        {{ form.tags(class="form-control") }}
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Image 1-Cover photo</label>
+                                        {{ form.image1(class="form-control ") }}
+
+                                    </div>
+                                    <div class=" col-sm-6">
+                                        <label>Image 2</label>
+                                        {{ form.image2(class="form-control ") }}
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Image 3</label>
+                                        {{ form.image3(class="form-control") }}
+                                    </div>
+                                </div><br>
+                                <div class="section-select-payment-method-action">
+                                <div class="col-xs-6 col-sm-6">
+                                    <button class="primary-link">Confirm Payment</button>
+                                </div>
+                            </div>
+                                 
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="paypal"></div>
+                    </div>
+                    <div class="section-select-payment-method-action">
+                        
+                </div>
+            </div>	
+        </div>	
+    </div>	
+</section>
+{% endblock %}

@@ -1047,7 +1047,7 @@ body{
 .section-calendar-events{
 	padding:70px 0;
 	background:#fff;
-	width: 1200px;
+	width: 1700px;
 
 }
 
@@ -3614,6 +3614,7 @@ body{
 .section-select-payment-method .tab-content #credit-card{
 	padding:40px 70px;
 	border-top:1px solid #b3b3b3;
+	width:700px;
 }
 
 .section-select-payment-method .tab-content  label{

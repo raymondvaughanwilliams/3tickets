@@ -8,14 +8,13 @@
 				<h1>{{event.name}}</h1>
 				<ul class="ticket-purchase">
 					<li>
-						Tickets from
+						<a href="#">Edit</a>
 					</li>
+
 					<li>
-						<span>{{event.baseprice}} cedis</span>
+						<a href="#">Delete</a>
 					</li>
-					<li>
-						<a href="#">Purchase Ticket</a>
-					</li>
+				
 				</ul>
 			</div>
 		</section>
@@ -74,8 +73,19 @@
 							</div>
 						</div>
 						<div class="event-highlights">
-							<h2>Tickets</h2>
-                            <section class="section-calendar-events" style="width: 100%;">
+							<div class="row">
+								<div class="col-sm-8">
+
+							<h2>Tickets </h2> 
+							</div>
+							<div class="col-sm-4">
+							
+
+								<a href="{{url_for('userportal.addmyticket',event_id=event.id)}}" class="get-ticket"><button class=' btn btn-primary btn-sm btn-icon' style="	color: #fff;background-color: #b77733;border-color: #402f23;float: right; "> Add Ticket</button></a>
+
+							</div>
+							</div>
+                            <section class="section-calendar-events">
                                 <div class="container"> 
                                     <div class="row blog">
                                         <div class="col-md-12">
@@ -106,23 +116,21 @@
                                                         </div>
                                                         <!--Text-->
                                                         <div class="item-box-blog-text">
-                                                            <ul>{%if ticket.features %}
+                                                            <ul>
                                                                 {% for val in ticket.features | split(",") %}
                                                                     <li>{{ val }}</li>
                                                                 {% endfor %}
-																{%else%}
-																<li> Features/Grants not listed </li>
-																{% endif %}
                                                                 </ul>
                                                           <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
                                                         </div>
-                                                        <div class="mt"> <a href="/add_to_cart?name={{ ticket.name }}&price={{ ticket.price }}&id={{ ticket.id }}" tabindex="0" class="btn bg-blue-ui white read">Add to cart</a> </div>
+                                                        <div class="mt"> <a href="{{url_for('userportal.editticket',ticket_id=ticket.id)}}" tabindex="0" class="btn bg-blue-ui white read">Edit</a> </div>
+                                                        <div class="mt"> <a href="/add_to_cart?name={{ ticket.name }}&price={{ ticket.price }}&id={{ ticket.id }}" tabindex="0" class="btn bg-blue-ui white read">Delete</a> </div>
                                                         <!--Read More Button-->
                                                       </div>
                                                     </div>
                                                   </div>
                                                   {% endfor %}
-                                                  
+                                                 
                                                 </div>
                                                 <!--.row-->
                                               </div>

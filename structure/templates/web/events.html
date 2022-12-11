@@ -1,0 +1,389 @@
+
+{% extends "web/base.html" %}
+{% block content %}
+
+
+
+
+<section class="section-refine-search">
+    <div class="container">
+        <div class="row">
+<form method="post" action="/events/filter">
+    <div class="keyword col-sm-6 col-md-4">
+    <label for="name">Event name:</label><br>
+    <input type="text" id="name" name="name" class="form-control hasclear"><br>
+    <span class="clearer"><img src="images/clear.png" alt="clear"></span>
+</div>
+<div class="location col-sm-6 col-md-3">
+    <label for="location">Event location:</label><br>
+    <input type="text" id="location" name="location"><br>
+</div>
+<div class="event-date col-sm-6 col-md-3">
+
+    <label for="price_min">Event price range:</label><br>
+    <input type="number" id="price_min" name="price_min" placeholder="min">
+    <input type="number" id="price_max" name="price_max" placeholder="max"><br>
+</div>
+<div class="event-date col-sm-6 col-md-2">
+
+    <label for="date">Event date:</label><br>
+    <input type="date" id="date" name="date"><br>
+</div>
+</div>
+<div class="row">
+<div class="location col-sm-6 col-md-3">
+
+    <label for="tags">Event tags (comma-separated):</label><br>
+    <input type="text" id="tags" name="tags"><br>
+    </div>
+   
+<div class="col-sm-6 col-md-2">
+    <input type="submit" value="Search">
+</div></form>
+</div>
+
+
+
+
+<section class="section-upcoming-events">
+	<div class="container">
+		<div class="row">
+			
+			<div class="section-content">
+				<ul class="clearfix">
+					{%for event in events %}
+					<li>
+						<div class="date">
+							<a href="#">
+                                <span style="font-size:12px;" class="day">{{event.baseprice}} cedis</span>
+
+								<span  class="month">{{event.date.strftime("%m %b %Y") }}</span>
+							</a>
+						</div>
+						<a href="#">
+							<img src="{{event.image1}}" alt="image" style="height:300px;">
+						</a>
+						<div class="info">
+							<p>{{event.name}}<span>{{event.location}}</span></p>
+							<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
+						</div>
+					</li>
+					{% endfor %}
+		
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<br>
+<br>
+<br>
+
+
+<section class="section-search-content col-lg-12">
+    <div class="container">
+        <div class="row">
+            
+            <div id="primary" class="col-md-8 col-lg-11">
+
+
+                <div class="search-result-header">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <h2>ALL EVENTS</h2>
+                            <span>Showing 1-10 of 32 Results</span>
+                        </div>
+                        <div class="col-sm-5">
+                            <label>Sort By</label>
+                            <select class="selectpicker dropdown">
+                              <option>Price: Low-High</option>
+                              <option>Price: High-Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                {% if events |length < 1 %}
+                <h2>No results found</h2>
+                {%else %}
+
+                {% for event in events %}
+                <div class="search-result-item">
+                    <div class="row">
+                        <div class="search-result-item-info col-sm-9">
+                            <h3>{{event.name}}</h3>
+                            <ul class="row">
+                                <li class="col-sm-5 col-lg-6">
+                                    <a href="images/order-details-img.jpg" style="height:50px ;"data-featherlight="image"><img  style="height:120px ;" class="event-img" src="/{{event.image1}}" alt="image"></a>
+                                </li>
+                                <li class="col-sm-4 col-lg-3">
+                                    <span>  Date
+                                    </span>
+                                   {{event.date.strftime("%m %b %Y")}}
+                                </li>
+                                <li class="col-sm-3">
+                                    <span>Venue</span>
+                                    {{event.location}}
+                                </li>
+                            </ul>
+                        </div>
+
+                       
+                            <div class="search-result-item-price col-sm-3">
+                                <span>Price From</span>
+                                <strong>{{event.baseprice}}cedis</strong>
+                                <a href="{{url_for('web.event',event_id=event.id)}}">View Event</a>
+                            </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif%}
+            
+
+                
+                <div class="search-result-footer">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Previous</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li class="active"><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">Next <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- events-filter.html
+
+<style>
+    /* Custom styles for the filter form */
+    form {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    form > label {
+      display: flex;
+      flex-direction: column;
+      margin: 0.5em;
+    }
+  
+    form > label > input,
+    form > label > select {
+      margin-top: 0.5em;
+    }
+  
+    form > label > input[type="number"] {
+      width: 6em;
+    }
+  
+    form > label > select {
+      width: 8em;
+    }
+  
+    form > button {
+      margin: 0.5em;
+    }
+  
+    /* Custom styles for the events table */
+    table {
+      border-collapse: collapse;
+    }
+  
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 0.5em;
+    }
+  
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  
+    th {
+      background-color: #ddd;
+    }
+  </style>
+  
+  
+ 
+  <h1>Filter events</h1>
+
+  <form id="events-filter">
+    <label>
+      Event name:
+      <input type="text" name="name" placeholder="name">
+    </label>
+  
+    <label>
+      Event location:
+      <input type="text" name="location" placeholder="location">
+    </label>
+  
+    <label>
+      Event price range:
+      <input type="number" name="price_min" placeholder="min">
+      <input type="number" name="price_max" placeholder="max">
+    </label>
+  
+    <label>
+      Event tags (comma-separated):
+      <input type="text" name="tags" placeholder="tags">
+    </label>
+  
+    <label>
+      Event date:
+      <input type="date" name="date" placeholder="date">
+    </label>
+  
+    <button type="submit">Filter</button>
+  </form>
+  
+  <-- The events table will be inserted here by the JavaScript code --
+
+<div id="events-table"></div>
+
+<script>
+  // Get the filter form element
+  const form = document.getElementById("events-filter");
+
+  // Add an event listener that submits the form using the Fetch API
+  // when the form is submitted
+  form.addEventListener("submit", (event) => {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get the form data as a JavaScript object
+    const data = new FormData(form);
+
+    // Send a POST request to the /events/filter route
+    // with the form data as the request body
+    fetch("/events/filter", {
+      method: "POST",
+      body: data,
+    })
+      // When the response is received, parse it as JSON
+      .then((response) => response.json())
+      // When the JSON data is available, insert it into the events table
+      .then((data) => {
+        // Get the events table element
+        const table = document.getElementById("events-table");
+
+        // Create a new HTML table element
+        const newTable = document.createElement("table");
+
+        // Create a new HTML tr element for the table header
+        const headerRow = document.createElement("tr");
+
+        // Create a new HTML th element for each table column
+        const nameHeader = document.createElement("th");
+        nameHeader.textContent = "Name";
+        const locationHeader = document.createElement("th");
+        locationHeader.textContent = "Location";
+        const priceHeader = document.createElement("th");
+        priceHeader.textContent = "Price";
+        const tagsHeader = document.createElement("th");
+        tagsHeader.textContent = "Tags";
+        const dateHeader = document.createElement("th");
+        dateHeader.textContent = "Date";
+
+        // Append the th elements to the tr element
+        headerRow.append(nameHeader, locationHeader,priceHeader,tagsHeader,dateHeader);
+
+            // Append the tr element to the table element
+    newTable.append(headerRow);
+
+    // Iterate over the events data and create a new HTML tr element
+    // for each event
+    for (const event of data) {
+      // Create a new HTML tr element
+      const row = document.createElement("tr");
+
+      // Create a new HTML td element for each table column
+      const nameColumn = document.createElement("td");
+      nameColumn.textContent = event.name;
+      const locationColumn = document.createElement("td");
+      locationColumn.textContent = event.location;
+      const priceColumn = document.createElement("td");
+      priceColumn.textContent = event.price;
+      const tagsColumn = document.createElement("td");
+      tagsColumn.textContent = event.tags;
+      const dateColumn = document.createElement("td");
+      dateColumn.textContent = event.date;
+
+      // Append the td elements to the tr element
+      row.append(nameColumn, locationColumn, priceColumn, tagsColumn, dateColumn);
+
+      // Append the tr element to the table element
+      newTable.append(row);
+    }
+
+    // Replace the existing events table with the new table
+    table.innerHTML = "";
+    table.append(newTable);
+  });
+});
+</script> -->

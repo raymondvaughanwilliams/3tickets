@@ -103,9 +103,21 @@ def logout():
 
 @users.route("/verify-account")
 def verify_account():
+    form = RegistrationForm()
+    if request.method == 'POST':
+        email = form.email.data
+
+        vcode  = str(random.randint(1,10000)) 
+        msg = Message(
+        sender = "no-reply@3ticket.com",
+        subject="Ticket Details",
+        recipients=[form.email.data],
+        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='http://127.0.0.1:5000/accountverification?verification_code={}'>http://127.0.0.1:5000/accountverification?verification_code={}</a></p>".format( vcode,  vcode),
+        )
+        mail.send(msg)
     
 
-        return render_template('web/verify.html')
+    return render_template('web/verify.html',form=form)
     
     
 

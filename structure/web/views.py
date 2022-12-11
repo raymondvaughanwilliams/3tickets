@@ -6,13 +6,13 @@ from sqlalchemy.orm import load_only
 from flask_login import login_required
 import secrets
 import os
-import datetime 
+import datetime
 import calendar
 from sqlalchemy import extract,func,and_,text
 from sqlalchemy.types import Unicode
 from flask_mail import Message,Mail
 import random
-
+from sqlalchemy import  and_, or_
 web = Blueprint('web',__name__)
 
 
@@ -54,6 +54,7 @@ def homepage():
         # Append each of the next four months to the list of upcoming months
         upcoming_months.append(months[i])
     records = Event.query.all()
+    print(records)
     current_month_events = []
     for record in records:
         if record.date.strftime('%Y-%m-%d %H:%M:%S') > curr_date.strftime('%Y-%m-%d %H:%M:%S') and int(record.date.strftime('%m')) == current_month:
@@ -118,6 +119,10 @@ def suscribetonewsletter():
 def event(event_id):
     form = NewsletterSubForm()
     event =  Event.query.filter(Event.id == event_id).first()
+    # if event.date < datetime.datetime.now():
+    #     finished = "yes"
+    # else:
+    #     finished = "no"
     tickets = Ticket.query.filter(Ticket.event_id == event_id).all()
     print(event)
     event.views =event.views + 1
@@ -240,3 +245,108 @@ def confirmravepayment():
         session.pop('cart')            
     
         return redirect(url_for('web.cart'))
+    
+    
+    
+@web.route("/events/filter", methods=["GET", "POST"])
+def filter_events():
+    tags = request.args.get('tags')
+    print("tags")
+    print(tags)
+    if request.args.get('categories'):
+        print("getting categories for:")
+        tags = request.args.get('tags')
+        print(tags)
+        x = '%{0}%'.format(tags)
+        events= Event.query.filter(Event.eventtags.like(x)).all()
+        print(events)
+        return render_template("web/filter.html", events=events)
+        
+    if request.method == "POST":
+        # Get the filter values from the form
+        name = request.form.get("name")
+        location = request.form.get("location")
+        price_min = request.form.get("price_min")
+        price_max = request.form.get("price_max")
+        tags = request.form.get("tags")
+        date = request.form.get("date")
+
+        # Build the SQLAlchemy filter conditions
+        conditions = []
+        if name:
+            # Build a list of conditions that match the name field
+            # using the LIKE operator and the % wildcard
+            name_conditions = [
+                Event.name.like(f"%{name}%"),
+                Event.name.like(f"{name}%"),
+                Event.name.like(f"%{name}"),
+            ]
+            # Use the OR operator to combine the conditions into a single
+            # condition that matches any of the name variations
+            conditions.append(or_(*name_conditions))
+        if location:
+            # Build a list of conditions that match the location field
+            # using the LIKE operator and the % wildcard
+            location_conditions = [
+                Event.location.like(f"%{location}%"),
+                Event.location.like(f"{location}%"),
+                Event.location.like(f"%{location}"),
+            ]
+            # Use the OR operator to combine the conditions into a single
+            # condition that matches any of the location variations
+            conditions.append(or_(*location_conditions
+            ))
+            if price_min and price_max:
+            # Filter for events with prices within the specified range
+                conditions.append(and_(Event.baseprice >= price_min, Event.baseprice <= price_max))
+            elif price_min:
+            # Filter for events with prices greater than or equal to the specified minimum
+                conditions.append(Event.baseprice >= price_min)
+            elif price_max:
+            # Filter for events with prices less than or equal to the specified maximum
+                conditions.append(Event.baseprice <= price_max)
+            if tags:
+            # Convert the comma-separated tags string into a list of tags
+                tags = tags.split(",")
+            # Trim any whitespace from the tags
+            tags = [tag.strip() for tag in tags]
+            # Build a list of conditions that match the tags field
+            # using the LIKE operator and the % wildcard
+            tag_conditions = []
+            for tag in tags:
+                tag_conditions.append(
+            Event.tags.like(f"%{tag}%"),
+            Event.tags.like(f"{tag}%"),
+            Event.tags.like(f"%{tag}"),
+            )
+            # Use the OR operator to combine the conditions into a single
+            # condition that matches any of the tags
+            conditions.append(or_(*tag_conditions))
+            if date:
+                conditions.append(Event.date == date)
+            # Filter the events based on the conditions
+        events = Event.query.filter(and_(*conditions)).all()
+    else:
+        events = []
+
+
+
+    print (events)
+# Render the events-filter.html template, passing the events as a variable
+    return render_template("web/filter.html", events=events)
+
+
+
+
+@web.route('/eventsschedule')
+def eventsschedule():
+    events= Event.query.order_by(Event.date).all()
+    
+    return render_template("web/events.html",events=events)
+
+
+@web.route('/readarticle/<int:article_id>')
+def article(article_id):
+    article = Article.query.filter_by(id=article_id).first()
+    
+    return render_template("web/article.html",article=article)

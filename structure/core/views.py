@@ -83,7 +83,7 @@ def addevent():
         image_3 = photos.save(request.files['image3'], name=secrets.token_hex(10) + ".")
         image3= "static/images/events/"+image_3
 
-        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice)
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,user_id=session['id'])
         db.session.add(event)
         db.session.commit()
         # flash(f'Meme added successfully','success')
@@ -204,6 +204,7 @@ def addticket(event_id):
         day = form.day.data
         quantity = form.quantity.data
         name = form.name.data
+        features = form.features.data
         if request.files.get('image'):
             image = photos.save(request.files['image'], name=secrets.token_hex(10) + ".")
             image= "static/images/events/"+image
@@ -216,7 +217,7 @@ def addticket(event_id):
         # img= "/static/images/events/"+image_1
         #check file format 
         # if check_file_extension(image_1):
-        ticket = Ticket(day=day,price=price,quantity=quantity,event_id=event_id,name=name,image=image)
+        ticket = Ticket(day=day,price=price,quantity=quantity,event_id=event_id,name=name,image=image,features=features)
         db.session.add(ticket)
         db.session.commit()
         # flash(f'Meme added successfully','success')
@@ -241,6 +242,7 @@ def editticket(ticket_id):
         ticket.day = form.day.data
         ticket.quantity = form.quantity.data
         ticket.name = form.name.data
+        ticket.features = form.features.data
         if request.files.get('image'):
             try:
                 os.unlink(os.path.join(current_app.root_path, "static/images/tickets/" + ticket.image_1))
@@ -258,6 +260,7 @@ def editticket(ticket_id):
         form.quantity.data = ticket.quantity
         form.day.data = ticket.day
         form.name.data = ticket.name
+        form.features.data = ticket.features
     return render_template('tickets/editticket.html', form=form,ticket=ticket)
 
 
