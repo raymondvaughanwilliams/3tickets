@@ -123,25 +123,32 @@
 								<li>
 									<a href="#">
 										<i class="fa fa-phone"></i>
-										+62274 889767
+										{{about.number}}
 									</a>
 								</li>
 								<li>
 									<a href="mailto:hello@myticket.com"> 
 										<i class="fa fa-envelope-o"></i>
-										hello@myticket.com
+										{{about.email}}
 									</a>
 								</li>
 							</ul>
 						</div>
 						<div class="top-right">
 							<ul>
+								{% if current_user.is_authenticated%}
 								<li>
-									<a href="#">Sign In</a>
+									<a href="{{ url_for('users.logout')}}">Log Out</a>
+								</li>
+								
+								{%else%}
+								<li>
+									<a href="{{ url_for('users.login')}}">Sign In</a>
 								</li>
 								<li>
-									<a href="#">Sign Up</a>
+									<a href="{{ url_for('users.register')}}">Sign Up</a>
 								</li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -171,14 +178,13 @@
 									</button>
 									
 									<ul class="nav navbar-nav navbar-right">
-										<li class="active"><a href="full-event-schedule.html">Schedule</a></li>
-										<li><a href="artist-page.html">Concerts</a></li>
-										<li><a href="upcoming-events.html">Sports</a></li>
-										<li><a href="order-ticket-without-seat.html">Parties</a></li>
-										<li><a href="event-by-category.html">Theater</a></li>
-										<li><a href="gallery.html">Gallery</a></li>
-										<li><a href="select-seat-2.html">Ticekts</a></li>
-										<li class="cart"><a href="#">0</a></li>
+										<li class="active"><a href="{{ url_for('web.homepage')}}">Home</a></li>
+										<li><a href="{{ url_for('web.eventsschedule')}}">Events</a></li>
+										<li><a href="">Articles</a></li>
+										<li><a href="{{ url_for('userportal.hostevent')}}">Host Event</a></li>
+										<li><a href="{{ url_for('userportal.hostedevents')}}">My Events</a></li>
+										<li><a href="{{ url_for('userportal.mytickets')}}">MyTickets</a></li>
+										<li class="cart"><a href="{{ url_for('web.cart')}}"> {{globalcart}}</a></li>
 									</ul>
 								</div>
 							</nav>
@@ -198,10 +204,10 @@
 							<p>Explore Events</p>
 						</div>
 						<div class="hero-purchase-ticket">
-							<a href="#">View All Events</a>
+							<a href="{{ url_for('web.eventsschedule')}}">View All Events</a>
 						</div>
 					</div>
-					<div style="text-align:right;position:relative;margin:auto;z-index:900;top:300px;height:700px;margin-top:-100px;">
+					<div style="text-align:right;position:relative;margin:auto;z-index:100;top:300px;height:700px;margin-top:-100px;">
 						<div class="slideshow-container">
 
 							<div class="mySlides fade">
@@ -289,8 +295,6 @@
 									<li><a href="#">Our Company</a></li>
 									<li><a href="#">Careers</a></li>
 									<li><a href="#">Advertising</a></li>
-									<li><a href="#">Press Room</a></li>
-									<li><a href="#">Trademarks</a></li>
 									<li><a href="#">Terms of Service</a></li>
 									<li><a href="#">Privacy Policy</a></li>
 								</ul>

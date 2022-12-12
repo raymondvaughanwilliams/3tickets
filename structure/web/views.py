@@ -12,7 +12,7 @@ from sqlalchemy import extract,func,and_,text
 from sqlalchemy.types import Unicode
 from flask_mail import Message,Mail
 import random
-from sqlalchemy import  and_, or_
+from sqlalchemy import  and_, or_ ,desc ,asc
 web = Blueprint('web',__name__)
 
 
@@ -21,9 +21,9 @@ app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USERNAME"] = "raymondvaughanwilliams@gmail.com"
-app.config["MAIL_PASSWORD"] = "fwlxpuuiqvjwcxoz"
+app.config["MAIL_PASSWORD"] = "mowfdigzaouywugg"
 
-mail = Mail(app)
+mail = Mail(app) 
 
 @web.route('/homepage')
 def homepage():
@@ -38,12 +38,14 @@ def homepage():
     day = daysoftheweek[day]
     date = date.strftime("%m %b %Y")
     page = request.args.get('page', 1, type=int)
-    events = Event.query.all()
+    # events = Event.query.all()
+    events = Event.query.filter(and_(Event.date > datetime.date.today())).order_by(desc(Event.date)).all()
+
     articles = Article.query.all()
     web_features = WebFeature.query.order_by(WebFeature.date.desc()).paginate(page=page, per_page=10)
     about = About.query.filter_by(id=1).first()
     
-
+    eventsschedulelink = " url_for('web.eventsschedule')"
     curr_date= datetime.datetime.now()
     current_year = datetime.datetime.now().year
     current_month = datetime.datetime.now().month
@@ -77,7 +79,7 @@ def homepage():
     
 
     return render_template('web/homepage.html',web_features=web_features,events=events,articles=articles,date=date,upcoming_months=upcoming_months,current_month_events=current_month_events,one_month_events=one_month_events,two_month_events
-                           =two_month_events,newsletterform=newsletterform,about=about)
+                           =two_month_events,newsletterform=newsletterform,about=about,eventsschedulelink=eventsschedulelink)
     
 
 
@@ -258,7 +260,9 @@ def filter_events():
         tags = request.args.get('tags')
         print(tags)
         x = '%{0}%'.format(tags)
-        events= Event.query.filter(Event.eventtags.like(x)).all()
+            # events = Event.query.filter(and_(Event.date > datetime.date.today())).order_by(desc(Event.date)).all()
+
+        events= Event.query.filter(Event.eventtags.like(x)).order_by(desc(Event.date)).all()
         print(events)
         return render_template("web/filter.html", events=events)
         
@@ -340,13 +344,47 @@ def filter_events():
 
 @web.route('/eventsschedule')
 def eventsschedule():
-    events= Event.query.order_by(Event.date).all()
+    # events= Event.query.order_by(Event.date).all()
+    events = Event.query.filter(and_(Event.date > datetime.date.today())).order_by(desc(Event.date)).all()
+
     
     return render_template("web/events.html",events=events)
 
 
+@web.route('/allarticles')
+def articles():
+    articles= Article.query.all()
+    
+    return render_template("web/articles.html",articles=articles)
+
 @web.route('/readarticle/<int:article_id>')
 def article(article_id):
     article = Article.query.filter_by(id=article_id).first()
+    title = article.title
     
-    return render_template("web/article.html",article=article)
+    return render_template("web/article.html",article=article,title=title)
+
+
+@web.context_processor
+def inject_cartlength():
+    about = About.query.filter_by(id=1).first()
+    context = {
+        "siteinfo": {
+            "name": about.name,
+            "number": about.number,
+            "email": about.email,
+            "url": "https://example.com",
+            "globalcart" : len(session['cart'])
+        }
+    }
+    # if len(session['id']) > 0:
+    #     logged_in = "yes"
+    # else:
+    #     logged_in = "no"
+    return dict(globalcart=len(session['cart']))
+
+
+@web.context_processor
+def inject_about():
+    about = About.query.filter_by(id=1).first()
+    return dict(siteabout=about)

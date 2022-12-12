@@ -120,28 +120,52 @@
 					<div class="row">
 						<div class="top-left">
 							<ul>
+								{% if siteinfo %}
 								<li>
 									<a href="#">
 										<i class="fa fa-phone"></i>
-										+62274 889767
+										
+										{{siteinfo.number}}
 									</a>
 								</li>
 								<li>
 									<a href="mailto:hello@myticket.com"> 
 										<i class="fa fa-envelope-o"></i>
-										hello@myticket.com
+										{{siteinfo.email}}
 									</a>
 								</li>
+								{%else%}
+								<li>
+									<a href="#">
+										<i class="fa fa-phone"></i>
+										
+										number
+									</a>
+								</li>
+								<li>
+									<a href="mailto:hello@myticket.com"> 
+										<i class="fa fa-envelope-o"></i>
+										email
+									</a>
+								</li>
+								{%endif%}
 							</ul>
 						</div>
 						<div class="top-right">
 							<ul>
+								{% if current_user.is_authenticated%}
 								<li>
-									<a href="#">Sign In</a>
+									<a href="{{ url_for('users.logout')}}">Log Out</a>
+								</li>
+								
+								{%else%}
+								<li>
+									<a href="{{ url_for('users.login')}}">Sign In</a>
 								</li>
 								<li>
-									<a href="#">Sign Up</a>
+									<a href="{{ url_for('users.register')}}">Sign Up</a>
 								</li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -151,7 +175,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="site-branding col-md-3">
-							<h1 class="site-title"><a href="#home" title="myticket" rel="home"><img src="static/images/3img.jpg" alt="logo"></a></h1>
+							<h1 class="site-title"><a href="#home" rel="home"><img src="/static/images/3img.jpg" alt="logo"></a></h1>
 						</div>
 
 						<div class="col-md-9">
@@ -171,14 +195,13 @@
 									</button>
 									
 									<ul class="nav navbar-nav navbar-right">
-										<li class="active"><a href="full-event-schedule.html">Schedule</a></li>
-										<li><a href="artist-page.html">Concerts</a></li>
-										<li><a href="upcoming-events.html">Sports</a></li>
-										<li><a href="order-ticket-without-seat.html">Parties</a></li>
-										<li><a href="event-by-category.html">Theater</a></li>
-										<li><a href="gallery.html">Gallery</a></li>
-										<li><a href="select-seat-2.html">Ticekts</a></li>
-										<li class="cart"><a href="#">0</a></li>
+										<li class="active"><a href="{{ url_for('web.homepage')}}">Home</a></li>
+										<li><a href="{{ url_for('web.eventsschedule')}}">Events</a></li>
+										<li><a href="{{ url_for('web.articles')}}">Articles</a></li>
+										<li><a href="{{ url_for('userportal.hostevent')}}">Host Event</a></li>
+										<li><a href="{{ url_for('userportal.hostedevents')}}">My Events</a></li>
+										<li><a href="{{ url_for('userportal.mytickets')}}">MyTickets</a></li>
+										<li class="cart" style="height: 45px;"><a   style="height: 35px;"href="{{ url_for('web.cart')}}"> {{globalcart}}</a></li>
 									</ul>
 								</div>
 							</nav>
@@ -191,7 +214,7 @@
         <section class="section-featured-header all-sports-events">
 			<div class="container">
 				<div class="section-content">
-					<h1>All Sports Events</h1>
+					<h1>{{title}}</h1>
 				</div>
 			</div>
 		</section>
@@ -230,7 +253,7 @@
 					<div class="row">
 						
 						<div class="col-md-8">
-							<a href="#"><img src="static/images/3img.jpg" alt="logo"></a>
+							<a href="#"><img src="/static/images/3img.jpg" alt="logo"></a>
 						</div>
 						<div class="col-sm-4 col-md-4">
 						
@@ -250,8 +273,6 @@
 									<li><a href="#">Our Company</a></li>
 									<li><a href="#">Careers</a></li>
 									<li><a href="#">Advertising</a></li>
-									<li><a href="#">Press Room</a></li>
-									<li><a href="#">Trademarks</a></li>
 									<li><a href="#">Terms of Service</a></li>
 									<li><a href="#">Privacy Policy</a></li>
 								</ul>

@@ -156,17 +156,37 @@
 
     <div class="container" id="container">
       <div class="form-container sign-in-container">
+        <br>
+        <br>
           <form method="POST">
            
             {# This hidden_tag is a CSRF security feature. #}
             {{ form.hidden_tag() }}
-            {{ form.email.label }} {{ form.email() }}<br>
-            {{ form.name.label }} {{ form.name() }}<br>
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+             {{ form.email(class="form-control") }}<br>
 
-            {{ form.username.label }} {{ form.username() }}<br>
-            {{ form.password.label }} {{ form.password() }}<br>
-            {{ form.pass_confirm.label }} {{ form.pass_confirm() }}<br>
-            {{ form.submit() }}
+            </div>
+            <div class="mb-3">
+              <label for="exampleUser1" class="form-label">Username</label>
+            {{ form.username(class="form-control") }}<br>
+            </div>
+            <div class="mb-3">
+
+              <label for="exampleInputName1" class="form-label">Full Name</label>
+              {{ form.name(class="form-control") }}<br>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              {{ form.password(class="form-control") }}<br>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+              {{ form.pass_confirm(class="form-control") }}<br>
+            </div>
+            {{ form.submit(class="form-control") }}
+
+  
         </form>
         
       </div>
@@ -181,6 +201,7 @@
           <div class="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
             <p>Enter your personal details and start journey with us</p>
+            <p>Or</p>
            <a href="{{ url_for('users.login') }}" > <button id="signUp">Sign In</button></a>
           </div>
         </div>
@@ -189,10 +210,9 @@
     
     <footer>
       <p>
-        Created with <i class="fa fa-heart"></i> by
-        <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-        - Read how I created this and how you can join the challenge
-        <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+        Created  <i class="fa fa-heart"></i> by
+        <a target="_blank" href="">TSL</a>
+
       </p>
     </footer>
     <!-- ====== Login End ====== -->

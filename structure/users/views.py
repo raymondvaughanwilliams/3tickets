@@ -1,7 +1,7 @@
 # users/views.py
 from flask import render_template,url_for,flash,redirect,request,Blueprint,session
 from flask_login import login_user, current_user, logout_user, login_required
-from structure import db,app
+from structure import db,app,emailpassword
 from structure.models import User, WebFeature
 from structure.users.forms import RegistrationForm,LoginForm,UpdateUserForm
 from structure.users.picture_handler import add_profile_pic
@@ -14,7 +14,7 @@ app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USERNAME"] = "raymondvaughanwilliams@gmail.com"
-app.config["MAIL_PASSWORD"] = "fwlxpuuiqvjwcxoz"
+app.config["MAIL_PASSWORD"] = emailpassword
 
 mail = Mail(app)
 
@@ -76,7 +76,7 @@ def login():
         if user.check_password(form.password.data) and user is not None:
             #Log in the user
             if user.verification == "no":
-                return redirect(url_for('users.verifyaccount'))
+                return redirect(url_for('users.verify_account'))
             
             login_user(user)
             flash('Logged in successfully.')
@@ -88,9 +88,11 @@ def login():
             # So let's now check if that next exists, otherwise we'll go to
             # the welcome page.
             if next == None or not next[0]=='/':
-                next = url_for('core.index')
+                next = url_for('web.homepage')
 
             return redirect(next)
+        else:
+            return render_template('login2.html',error=True,form=form)
     return render_template('login2.html', form=form)
 
 # logout
@@ -101,7 +103,7 @@ def logout():
     return redirect(url_for("web.homepage"))
 
 
-@users.route("/verify-account")
+@users.route("/verify-account", methods=['POST','GET'])
 def verify_account():
     form = RegistrationForm()
     if request.method == 'POST':
@@ -121,8 +123,20 @@ def verify_account():
     
     
 
-@users.route("/accountverification")
+@users.route("/accountverification",methods=['POST','GET'])
 def account_verification():
+    form = RegistrationForm()
+    if request.method == "POST":
+        email = form.email.data
+        v_user = User.query.filter_by(email=email).first()
+        msg = Message(
+        sender = "no-reply@3ticket.com",
+        subject="Ticket Details",
+        recipients=[form.email.data],
+        html="<p> Please click the following link to verify your email address:</p><p><a href='http://127.0.0.1:5000/accountverification?verification_code={}'>http://127.0.0.1:5000/accountverification?verification_code={}</a></p>".format( v_user.verification_code,  v_user.verification_code),
+        )
+        mail.send(msg)
+        return render_template('web/verify.html',sent= True,form=form)
     verification_code = request.args.get('verification_code')
     user = User.query.filter_by(verification_code=verification_code).first()
     

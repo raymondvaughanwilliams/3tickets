@@ -81,31 +81,39 @@
      </div> 
     </section> -->
 
+
+    {% if error %}
+  <div class="alert alert-danger" role="alert">
+    <strong>Oh snap!</strong> Your login credentials are incorrect. Please try again.
+  </div>
+{% endif %}
+
     <div class="container" id="container">
-      <div class="form-container sign-up-container">
-        <form action="#">
-          <h1>Create Account</h1>
-          <div class="social-container">
-            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <span>or use your email for registration</span>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
-        </form>
-      </div>
+ 
       <div class="form-container sign-in-container">
-        <form method="POST">
-          <h1>Sign in</h1>
+        <form method="POST" >
+          <h1 style="align:center">Sign in</h1>
+          <br>
+          <br>
         
-          <span>or use your account</span>
+        
             {{form.hidden_tag()}}
-            {{form.email.label}}{{form.email}}<br>
-            {{form.password.label}}{{form.password}}<br>
-            {{form.submit()}}
+            <div class="mb-3">
+
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            
+            {{form.email(class="form-control")}}
+</div>
+<div class="mb-3">
+<label for="exampleInputPassword1" class="form-label">Password</label>
+            
+            {{form.password}}
+        
+          </div>
+
+            {{form.submit(class="btn btn-primary")}}
+
+            
           </form>
         
        
@@ -119,7 +127,8 @@
           </div>
           <div class="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start journey with us</p>
+            <p>Enter your credentials to login</p>
+            <p>OR </p>
             <a href="{{ url_for('users.register') }}" > <button id="signUp">Sign Up</button></a>
           </div>
         </div>
@@ -128,10 +137,9 @@
     
     <footer>
       <p>
-        Created with <i class="fa fa-heart"></i> by
-        <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-        - Read how I created this and how you can join the challenge
-        <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+        Created  <i class="fa fa-heart"></i> by
+        <a target="_blank" href="">TSL</a>
+
       </p>
     </footer>
     <!-- ====== Login End ====== -->

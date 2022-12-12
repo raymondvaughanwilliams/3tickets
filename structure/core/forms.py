@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 from flask_wtf.file import FileField,FileAllowed,FileRequired
 from wtforms_components import TimeField
-from wtforms.fields.html5 import DateField,DateTimeField
+from wtforms.fields.html5 import DateField
 import datetime
 from flask_login import current_user
 from structure.models import User
@@ -13,7 +13,7 @@ from structure.models import User
 class AddEvent(FlaskForm):
     name = StringField('Name',validators=[DataRequired()])
     location = StringField('Location',validators=[])
-    date = DateField('Choose Date', [validators.DataRequired()] ,format='%m/%d/%Y',default=datetime.datetime.now)
+    date = DateField('Choose Date', [validators.DataRequired()] )
     description = StringField('Description')
     days = StringField('Days')
     number = StringField('Number')

@@ -6,8 +6,7 @@ from sqlalchemy.orm import load_only
 from flask_login import login_required
 import secrets
 import os
-
-
+import datetime
 core = Blueprint('core',__name__)
 
 
@@ -16,6 +15,10 @@ core = Blueprint('core',__name__)
 allowed_extensions = ['png', 'jpg', 'jpeg', 'gif','mp4']
 def check_file_extension(filename):
     return filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+
+
+
 
 
 @core.route('/')
@@ -71,6 +74,24 @@ def addevent():
         number = form.number.data
         tags = form.tags.data
         baseprice = form.baseprice.data
+        
+        print('date')
+        print(date)
+        print(name)
+        
+        # Get the current date and time
+        now = datetime.date.today()
+
+        # Check if the date has passed
+        if date < now:
+            status = "passed"
+        else:
+            status = "pending"
+
+        # Print the result
+        print(status)
+
+        
         if request.files.get('image1'):
             image1 = photos.save(request.files['image1'], name=secrets.token_hex(10) + ".")
             image1= "static/images/events/"+image1
@@ -83,7 +104,7 @@ def addevent():
         image_3 = photos.save(request.files['image3'], name=secrets.token_hex(10) + ".")
         image3= "static/images/events/"+image_3
 
-        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,user_id=session['id'])
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,user_id=session['id'],status=status)
         db.session.add(event)
         db.session.commit()
         # flash(f'Meme added successfully','success')

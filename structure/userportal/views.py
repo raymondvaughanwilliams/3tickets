@@ -1,10 +1,10 @@
 from flask import render_template,request,Blueprint,redirect,url_for,session,current_app
 from structure.models import User ,WebFeature,Event , Ticket ,Article ,NewsletterEmails ,Newsletter ,About, Cart,Item
-from structure import db,app,photos
-from structure.web.forms import NewsletterSubForm
-from structure.core.forms import AddEvent, AddTicket
-from sqlalchemy.orm import load_only
-from flask_login import login_required
+from structure import db,app,photos 
+from structure.web.forms import NewsletterSubForm 
+from structure.core.forms import AddEvent, AddTicket 
+from sqlalchemy.orm import load_only 
+from flask_login import login_required 
 import secrets
 import os
 import datetime 
@@ -72,7 +72,19 @@ def hostevent():
         image_3 = photos.save(request.files['image3'], name=secrets.token_hex(10) + ".")
         image3= "static/images/events/"+image_3
 
-        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice)
+        
+        # Get the current date and time
+        now = datetime.date.today()
+
+        # Check if the date has passed
+        if date < now:
+            status = "passed"
+        else:
+            status = "pending"
+
+        # Print the result
+        print(status)
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,status=status)
         db.session.add(event)
         db.session.commit()
         # flash(f'Meme added successfully','success')
@@ -269,4 +281,5 @@ def delete_ticket(ticket_id):
 
 @userportal.route("/not-allowed")
 def not_allowed():
-    return render_template('userportal/notallowed.html')
+    test = "test"
+    return render_template('userportal/notallowed.html',test=test)

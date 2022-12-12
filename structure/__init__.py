@@ -8,6 +8,12 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from sqlalchemy import MetaData
 from jinja2 import Environment, select_autoescape
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+
 app = Flask(__name__)
 
 
@@ -58,6 +64,11 @@ def split(value, separator):
 @app.before_request
 def add_filters():
     app.jinja_env.filters['split'] = split
+    
+    
+emailpassword = os.environ.get('MAIL_PASSWORD')
+print(emailpassword)
+
 
 ##################################################
 

@@ -10,10 +10,10 @@
 					</div>
 					<div class="section-content">
 						<ul class="clearfix">
-							{% for event in events[0:7] %}
+							{% for event in events[0:5] %}
 							<li class="event-1">
 								<img src="{{event.image1}}"  alt="image" style="height:50px;">
-								<strong class="event-name">{{event.name}}</strong>
+								<strong class="event-name">{{event.name}} </strong>
 								<strong class="event-name">{{event.date.strftime("%m %b %Y")}}</strong>
 								<a href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
 							</li>
@@ -230,7 +230,7 @@
 			<div class="container">
 				<div class="section-content">
 					<h2>3Tickets</h2>
-					<p>Book events from anywhere in 191+ countries and get awesome experience Lorem ipsum dolor sit amet, consectetuer adipiscing elit,</p>
+					<p>Book events from anywhere</p>
 					<a href="#"><img src="images/play-btn.png" alt="image"></a>
 				</div>
 			</div>
@@ -276,13 +276,13 @@
 											</div>-->
 
 											{% if article.image%}
-											<a href="#"><img style="height:230px;"src="{{article.image}}" alt="image"></a>
+											<a href="{{ url_for('web.article',article_id=article.id)}}"><img style="height:230px;"src="{{article.image}}" alt="image"></a>
 											{%else%}
 											<a href="#"><img src="static/images/nm.jpg" alt="image"></a>
 											{% endif%}
 										</div>
 										<div class="col-sm-7 news-item-info">
-											<h3><a href="#">{{article.title}}</a></h3>
+											<h3><a href="{{ url_for('web.article',article_id=article.id)}}">{{article.title}}</a></h3>
 									<span class="meta-data">{{article.date}} by <a href="#">Admin</a></span>
 											<p>{{article.content}}</p>
 										</div>
