@@ -21,7 +21,7 @@ def check_file_extension(filename):
 
 
 
-@core.route('/')
+@core.route('/dashboard')
 @login_required
 def index():
     '''

@@ -26,7 +26,7 @@ def send_verification_email():
     msg = Message(
         subject="Verify your email address",
         recipients=[email],
-        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='http://www.example.com/verify?verification_code={}'>http://www.example.com/verify?verification_code={}</a></p>".format( request.form["email"],  request.form["email"]),
+        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='https://tickets-n9oa.onrender.com/verify?verification_code={}'>https://tickets-n9oa.onrender.com/verify?verification_code={}</a></p>".format( request.form["email"],  request.form["email"]),
     )
 # register
 @users.route('/register',methods=['GET','POST'])
@@ -47,7 +47,7 @@ def register():
         sender = "no-reply@3ticket.com",
         subject="Ticket Details",
         recipients=[form.email.data],
-        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='http://127.0.0.1:5000/accountverification?verification_code={}'>http://127.0.0.1:5000/accountverification?verification_code={}</a></p>".format( vcode,  vcode),
+        html="<p>Thank you for signing up. Please click the following link to verify your email address:</p><p><a href='https://tickets-n9oa.onrender.com/accountverification?verification_code={}'>https://tickets-n9oa.onrender.com/accountverification?verification_code={}</a></p>".format( vcode,  vcode),
         )
         mail.send(msg)
         
@@ -133,7 +133,7 @@ def account_verification():
         sender = "no-reply@3ticket.com",
         subject="Ticket Details",
         recipients=[form.email.data],
-        html="<p> Please click the following link to verify your email address:</p><p><a href='http://127.0.0.1:5000/accountverification?verification_code={}'>http://127.0.0.1:5000/accountverification?verification_code={}</a></p>".format( v_user.verification_code,  v_user.verification_code),
+        html="<p> Please click the following link to verify your email address:</p><p><a href='https://tickets-n9oa.onrender.com/accountverification?verification_code={}'>https://tickets-n9oa.onrender.com/accountverification?verification_code={}</a></p>".format( v_user.verification_code,  v_user.verification_code),
         )
         mail.send(msg)
         return render_template('web/verify.html',sent= True,form=form)

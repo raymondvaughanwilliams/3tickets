@@ -25,7 +25,7 @@ app.config["MAIL_PASSWORD"] = "mowfdigzaouywugg"
 
 mail = Mail(app) 
 
-@web.route('/homepage')
+@web.route('/')
 def homepage():
     '''
     This is the home page view. Notice how it uses pagination to show a limited
