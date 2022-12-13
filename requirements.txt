@@ -43,3 +43,4 @@ gunicorn==20.1.0
 flask-reuploaded
 python-dotenv==0.21.0
 WTForms-Components
+Flask-Mail==0.9.1
