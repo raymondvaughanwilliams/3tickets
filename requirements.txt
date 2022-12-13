@@ -40,3 +40,4 @@ zipp==3.6.0
 gunicorn==20.1.0
 # Flask-Uploads==0.2.1
 flask-reuploaded
+python-dotenv==0.21.0
