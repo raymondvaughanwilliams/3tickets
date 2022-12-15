@@ -15,7 +15,7 @@ import random
 from sqlalchemy import  and_, or_ ,desc ,asc
 web = Blueprint('web',__name__)
 
-
+ 
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
