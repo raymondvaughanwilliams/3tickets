@@ -44,3 +44,4 @@ flask-reuploaded
 python-dotenv==0.21.0
 WTForms-Components
 Flask-Mail==0.9.1
+qrcode==7.3.1
