@@ -10,30 +10,30 @@
         <div class="row">
 <form method="post" action="/events/filter">
     <div class="keyword col-sm-6 col-md-4">
-    <label for="name">Event name:</label><br>
+    <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" class="form-control hasclear"><br>
     <span class="clearer"><img src="images/clear.png" alt="clear"></span>
 </div>
 <div class="location col-sm-6 col-md-3">
-    <label for="location">Event location:</label><br>
+    <label for="location">Location:</label><br>
     <input type="text" id="location" name="location"><br>
 </div>
 <div class="event-date col-sm-6 col-md-3">
 
-    <label for="price_min">Event price range:</label><br>
-    <input type="number" id="price_min" name="price_min" placeholder="min">
-    <input type="number" id="price_max" name="price_max" placeholder="max"><br>
+    <label for="price_min">Price range:</label><br>
+    <input type="number" id="price_min" name="price_min" placeholder="min" style="height: 52px;">
+    <input type="number" id="price_max" name="price_max" placeholder="max" style="height: 52px;"><br>
 </div>
 <div class="event-date col-sm-6 col-md-2">
 
-    <label for="date">Event date:</label><br>
-    <input type="date" id="date" name="date"><br>
+    <label for="date">Date:</label><br>
+    <input type="date" id="date" name="date" style="height: 52px;"><br>
 </div>
 </div>
 <div class="row">
 <div class="location col-sm-6 col-md-3">
 
-    <label for="tags">Event tags (comma-separated):</label><br>
+    <label for="tags">Tags(comma-separated):</label><br>
     <input type="text" id="tags" name="tags"><br>
     </div>
    
@@ -54,7 +54,7 @@
                 <div class="search-result-header">
                     <div class="row">
                         <div class="col-sm-7">
-                            <h2>ALL EVENTS</h2>
+                            <h2>Event Results</h2>
                             <span>Showing 1-10 of 32 Results</span>
                         </div>
                         <div class="col-sm-5">
@@ -70,40 +70,36 @@
                 <h2>No results found</h2>
                 {%else %}
 
-                {% for event in events %}
-                <div class="search-result-item">
-                    <div class="row">
-                        <div class="search-result-item-info col-sm-9">
-                            <h3>{{event.name}}</h3>
-                            <ul class="row">
-                                <li class="col-sm-5 col-lg-6">
-                                    <a href="images/order-details-img.jpg" style="height:50px ;width: 150px;"data-featherlight="image"><img  style="height:120px ;" class="event-img" src="/{{event.image1}}" alt="image"></a>
-                                </li>
-                                <li class="col-sm-4 col-lg-3">
-                                    <span>  Date
-                                    </span>
-                                   {{event.date.strftime("%m %b %Y")}}
-                                </li>
-                                <li class="col-sm-3">
-                                    <span>Venue</span>
-                                    {{event.location}}
-                                </li>
-                            </ul>
-                        </div>
-
-                       
-                            <div class="search-result-item-price col-sm-3">
-                                <span>Price From</span>
-                                <strong>{{event.baseprice}}cedis</strong>
-                                <a href="{{url_for('web.event',event_id=event.id)}}">View Event</a>
-                            </div>
-                    </div>
-                </div>
-                {% endfor %}
-                {% endif%}
+        
             
-
+                {%for event in events %}
+                {% if event.hastickets == "yes" %}
+                <div class="col-lg-4 col-md-12" style="margin-bottom:3%;">
+                  <div class="card">
+                    <div class="row">
+                      <h4  style="position: absolute;padding: 15px;background: rgba(36,36,36, 0.8);position: absolute;top: 0;left: 20px;text-align: center;text-transform: uppercase;color: #fff;width: 20%;font-size: 12px;">₵{{event.baseprice}} </h4>
+                      <h4  style="position: absolute;padding: 15px;background: rgba(36,36,36, 0.8);position: absolute;top: 0;right: 20px;text-align: center;text-transform: uppercase;color: #fff;width: 40%;font-size: 12px;">{{event.date.strftime("%m %b %Y") }}</h4>
                 
+                    </div>
+              
+                    <img class="" src="/{{event.image1}}"  alt="Card image cap" style="height:200px;">
+                    <div class="card-body" style="background-color: rgba(0,0,0,.03);">
+                      <div class="row">
+                      <h4 class="card-title col-sm-6" style="font-size: 12px;font-family: Montserrat-Regular">{{event.name[0:15]}}...</h4>
+                      <h6 class="card-subtitle col-sm-6 text-right" style="float:right font-size: 12px;font-family: Montserrat-Regular">{{event.location[0:12]}}...</h6>
+                      </div>
+                      <div class="text-center" style="margin-right:auto;margin-left:auto">
+                      <a  href="{{ url_for('web.event',event_id=event.id)}}" class="ud-main-btn ud-link-btn text-center"  style="background-color:black;color:white">Get Ticket</a>
+                    </div>
+                  </div>
+                    
+                      </div>
+                    </div>
+               
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                  </div>
                 <div class="search-result-footer">
                     <ul class="pagination">
                         <li>

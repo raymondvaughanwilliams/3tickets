@@ -580,15 +580,19 @@ p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  
 }
 
 .ud-hero-buttons .ud-main-btn {
   margin: 8px;
+  background-color: #ff6600;
 }
 
 @media (max-width: 767px) {
   .ud-hero-buttons .ud-main-btn {
     margin: 5px;
+    background-color: #ff6600;
+    
   }
 }
 
@@ -2730,3 +2734,7 @@ p {
       }
   }}
 /*# sourceMappingURL=ud-styles.css.map */
+.ud-main-btn {
+  margin: 8px;
+  background-color: #ff6600;
+}

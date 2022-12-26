@@ -43,7 +43,9 @@
 									<span class="meta-data">{{event.date}} by <a href="#">Admin</a></span>
 											<p>{{event.baseprice}} cedis</p>
                                             <p>{{event.location}}</p>
-                                            <p>  <a href="{{url_for('userportal.editmyevent',event_id=event.id)}}" class="get-ticket"><button class=' btn btn-primary btn-sm btn-icon' style="	color: #fff;background-color: #b77733;border-color: #402f23; ">Edit Event</button></a>                                            </p>
+                                            <p>  <a href="{{url_for('userportal.editmyevent',event_id=event.id)}}" class="get-ticket"><button class=' btn btn-primary btn-sm btn-icon' style="	color: #fff;background-color: #b77733;border-color: #402f23; ">Edit Event</button></a>                                           
+												<a href="{{url_for('userportal.addmyticket',event_id=event.id)}}" class="get-ticket"><button class=' btn btn-primary btn-sm btn-icon' style="	color: #fff;background-color: #b77733;border-color: #402f23; ">Add Ticket</button></a> 
+											</p>
 
 										</div>
 									</li>

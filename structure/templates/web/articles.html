@@ -27,7 +27,7 @@
 											</div>-->
 
 											{% if article.image%}
-											<a href="{{ url_for('web.article',article_id=article.id)}}"><img style="height:230px;"src="{{article.image}}" alt="image"></a>
+											<a href="{{ url_for('web.article',article_id=article.id)}}" style="width: 100%;"><img style="height:230px;"src="{{article.image}}" alt="image"></a>
 											{%else%}
 											<a href="#"><img src="static/images/nm.jpg" alt="image"></a>
 											{% endif%}

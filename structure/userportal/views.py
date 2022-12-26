@@ -1,23 +1,25 @@
-from flask import render_template,request,Blueprint,redirect,url_for,session,current_app
+from flask import render_template,request,Blueprint,redirect,url_for,session,current_app # type: ignore        
 from structure.models import User ,WebFeature,Event , Ticket ,Article ,NewsletterEmails ,Newsletter ,About, Cart,Item
 from structure import db,app,photos 
 from structure.web.forms import NewsletterSubForm 
 from structure.core.forms import AddEvent, AddTicket 
 from sqlalchemy.orm import load_only 
-from flask_login import login_required 
+from flask_login import login_required  # type: ignore        
 import secrets
 import os
 import datetime 
 import calendar
 from sqlalchemy import extract,func,and_,text
 from sqlalchemy.types import Unicode
-from flask_mail import Message,Mail
+from flask_mail import Message,Mail # type: ignore        
 import random
+import qrcode # type: ignore      
 
 userportal = Blueprint('userportal',__name__)
 
 
 @userportal.route('/mytickets')
+@login_required
 def mytickets():
     user = User.query.filter_by(id=session['id']).first()
     print(user.email)
@@ -47,6 +49,7 @@ def hostedevents():
 
 
 @userportal.route('/hostevent',methods=['GET', 'POST'])
+@login_required
 def hostevent():
     form  =AddEvent()
     if request.method == 'POST' :
@@ -84,14 +87,30 @@ def hostevent():
 
         # Print the result
         print(status)
-        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,status=status)
+        qr_idd = int(random.randint(100, 999))
+        qr_id = email + str(qr_idd)
+        eventurl = 'http://127.0.0.1:5000/eventdetails/' + qr_id 
+        image_name = f"{secrets.token_hex(100)}.png"
+        qrcode_location = f"{app.config['UPLOAD_PATH']}/images/qrcodes/{image_name}"
+        qrcodeloc = "static/images/qrcodes/" + image_name
+        try:
+            my_qrcode = qrcode.make(str(eventurl))
+            print(my_qrcode)
+            my_qrcode.save(qrcode_location)
+        except Exception as e:
+            print(e)
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,status=status,qrcode=qrcodeloc,qr_id=qr_id,user_id=session['id'])
         db.session.add(event)
         db.session.commit()
         # flash(f'Meme added successfully','success')
-        return redirect(url_for('web.homepage'))
+        return redirect(url_for('userportal.addmyticket',event_id=event.id))
 
     return render_template('userportal/addevent.html',form=form)
 
+@userportal.route('/qrcode/<qr_id>')
+def qrcode(qr_id):
+    event = Event.query.filter(Event.qr_id == qr_id).first()
+    return redirect(url_for('web.eventdetails',event_id=event.id))
 
 
 @userportal.route('/editmyevent/<int:event_id>', methods=['GET', 'POST'])
@@ -178,6 +197,7 @@ def tickets():
 
 # Add event 
 @userportal.route('/addmyticket/<int:event_id>',methods=['GET', 'POST'])
+@login_required
 def addmyticket(event_id):
     # if ticket.event.user_id == session['id']:
     tickets = Ticket.query.all()
@@ -188,6 +208,7 @@ def addmyticket(event_id):
     user_id = session['id']
     print(user_id)
     form = AddTicket()
+    event = Event.query.filter_by(id=event_id).first()
     #process data and save it to db 
     if request.method == 'POST' :
         # name = form.name.data
@@ -210,12 +231,13 @@ def addmyticket(event_id):
         # if check_file_extension(image_1):
         ticket = Ticket(day=day,price=price,quantity=quantity,event_id=event_id,name=name,image=image,features=features)
         db.session.add(ticket)
+        event.hastickets = "yes"
         db.session.commit()
         # flash(f'Meme added successfully','success')
-        return redirect(url_for('web.homepage'))
+        return redirect(url_for('userportal.event',event_id=event_id))
 
 
-    return render_template('userportal/addticket.html',tickets=tickets,form=form)
+    return render_template('userportal/addticket.html',tickets=tickets,form=form,event=event)
 
 
 
@@ -250,6 +272,7 @@ def editticket(ticket_id):
         form.quantity.data = ticket.quantity
         form.day.data = ticket.day
         form.name.data = ticket.name
+    
     return render_template('userportal/editticket.html', form=form,ticket=ticket)
 
 
@@ -283,3 +306,26 @@ def delete_ticket(ticket_id):
 def not_allowed():
     test = "test"
     return render_template('userportal/notallowed.html',test=test)
+
+
+#How do you write a route to add tickets to database ?
+
+
+
+@userportal.context_processor
+def inject_cartlength():
+    about = About.query.filter_by(id=1).first()
+    context = {
+        "siteinfo": {
+            "name": about.name,
+            "number": about.number,
+            "email": about.email,
+            "url": "https://example.com",
+            "globalcart" : len(session['cart'])
+        }
+    }
+    # if len(session['id']) > 0:
+    #     logged_in = "yes"
+    # else:
+    #     logged_in = "no"
+    return dict(globalcart=len(session['cart']))

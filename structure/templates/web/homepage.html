@@ -1,21 +1,22 @@
 
 {% extends "web/homebase.html" %}
 {% block content %}
+
 		<section class="section-todays-schedule">
 			<div class="container">
 				<div class="row">
 					<div class="section-header">
-						<h2>Upcoming Events</h2>
-						<span class="todays-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}}</span>
+						<h2 style="color: white;">Upcoming Events</h2>
+						<span class="todays-date" style="color: white;"><i class="fa fa-calendar" aria-hidden="true" style="color: white;"></i> {{date}}</span>
 					</div>
 					<div class="section-content">
 						<ul class="clearfix">
 							{% for event in events[0:5] %}
 							<li class="event-1">
 								<img src="{{event.image1}}"  alt="image" style="height:50px;">
-								<strong class="event-name">{{event.name}} </strong>
+								<strong class="event-name">{{event.name[0:15]}}... </strong>
 								<strong class="event-name">{{event.date.strftime("%m %b %Y")}}</strong>
-								<a href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
+								<a href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket" style="background-color: black;">Get Ticket</a>
 							</li>
 							{% endfor %}
 						</ul>
@@ -27,57 +28,55 @@
 		</section>
 		
 
-
-
-<br>
-<br>
-<br>		
-<section class="section-upcoming-events">
-	<div class="container">
-		<div class="row">
-			<div class="section-header">
-				<h2>Featured Events</h2>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.</p>
-				<a  href="{{ url_for('web.eventsschedule')}}" >See all upcoming events</a>
-			</div>				
-			<br>
-			<br>
-			<br>
-			<div class="section-content">
-				<ul class="clearfix">
-					{%for event in events %}
-					<li>
-						<div class="date">
-							<a href="#">
-								<a href="#">
-									<span style="font-size:12px;" class="day">{{event.baseprice}} cedis</span>
 	
-									<span  class="month">{{event.date.strftime("%m %b %Y") }}</span>
-								</a>
-							</a>
-						</div>
-						<a href="{{ url_for('web.event',event_id=event.id)}}">
-							<img src="{{event.image1}}" alt="image" style="height:300px;">
-						</a>
-						<div class="info">
-							<p>{{event.name}}<span>{{event.location}}</span></p>
-							<a  href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
-						</div>
-					</li>
-					{% endfor %}
-		
-				</ul>
+
+
+
+
+<section style="margin-bottom:10%;margin-top:10%">
+<div class="row" style="margin-right:10%;margin-left:10%;">
+	<h2 class="rvwh2">Featured Events</h2>
+	<div class="row col-lg-12 col-sm-12">
+	<p class="col-lg-6">Check out our hottest events</p>
+	
+  </div>
+
+	{%for event in events %}
+	{% if event.hastickets == "yes" %}
+	<div class="col-lg-4 col-md-12" style="margin-bottom:3%;">
+		<div class="card" style="max-height: 400px;min-height: 400px;">
+			<div class="row">
+				<h4  style="position: absolute;padding: 15px;background: rgba(36,36,36, 0.8);position: absolute;top: 0;left: 20px;text-align: center;text-transform: uppercase;color: #fff;width: 20%;font-size: 12px;">₵{{event.baseprice}} </h4>
+				<h4  style="position: absolute;padding: 15px;background: rgba(36,36,36, 0.8);position: absolute;top: 0;right: 20px;text-align: center;text-transform: uppercase;color: #fff;width: 40%;font-size: 12px;">{{event.date.strftime("%m %b %Y") }}</h4>
+	
+			</div>
+
+			<img class="" src="{{event.image1}}" alt="Card image cap" style="max-height:250px;max-width: 250px;min-height: 250px;min-width: 250px;object-fit: contain;inset: 0px;width: 100%;height: 100%;object-fit: cover;will-change: opacity;transition: opacity 0.6s ease-in-out 0s;opacity: 1;">
+			<div class="card-body" style="background-color: rgba(0,0,0,.03);">
+				<div class="row">
+				<h4 class="card-title col-sm-6" style="font-size: 16px;font-family: Montserrat-Regular">{{event.name}}</h4>
+				<h6 class="card-title col-sm-6 text-right" style="float:right font-size: 16px;font-family: Montserrat-Regular">{{event.location}}</h6>
+				</div>
+				<div class="text-center" style="margin-right:auto;margin-left:auto">
+				<a  href="{{ url_for('web.event',event_id=event.id)}}" class="ud-main-btn ud-link-btn text-center"  style="background-color:black;color:white">Get Ticket</a>
 			</div>
 		</div>
+			
+				</div>
+			</div>
+			{% endif %}
+
+			{% endfor %}
+	
 	</div>
+</div>
+</div>
+<div class=" text-center" style="margin-bottom: 100px;">
+   <a href="{{ url_for('web.eventsschedule')}}"> <button class="btn btn-primary text-center" style="color: white;background-color:black;border-color:black;font-size:20px;">View all Events </button></a>
+    </div>
 </section>
-<br>
-<br>
-<br>
 
-
-
-<section class="section-call-to-action">
+<section class="section-call-to-action" style="margin-bottom:100px;">
 	<div class="container">
 		<div class="row">
 			<div class="section-content">
@@ -95,129 +94,36 @@
 	</div>
 </section>
 
-		<section class="section-calendar-events col-lg-12">
-			<div class="container"> 
-				<div class="row ">
-					<div class="section-header ">
-						<h2>Events by Month</h2>
-
-						<ul class="nav nav-tabs event-tabs" role="tablist">
-							{%for month in upcoming_months%}
- 
-							<li role="presentation">
-								<a style="font-size:18px;background-color: antiquewhite;" href="#{{month}}" role="tab" data-toggle="tab">{{month}}</a>
-							</li>
-							{% endfor %}
-						
-						</ul>
-					</div>
-
-
-
-					<div class="section-content">
-						<div class="tab-content">
-						    <div role="tabpanel" class="tab-pane active" id="{{upcoming_months[0]}}">
-							
-								<ul class="clearfix">
-									
-									{% for event in current_month_events %}
-									<li>
-										<div class="date">
-											<a href="#">
-												{{event.date.strftime("%m %b %Y")}}
-											</a>
-										</div>
-										<a href="#">
-											<img src="{{event.image1}}"  alt="image" style="height:250px;">
-										</a>
-										<div class="info">
-											<p>{{event.name}}<span>{{event.location}}</span></p>
-											<a href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
-										</div>
-									</li> 
-									{% endfor %}
-									
-								</ul>
-							</div>
-						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[1]}}">
-								<ul class="clearfix">
-									{% for event in one_month_events %}
-									<li>
-										<div class="date">
-											<a href="#">
-												
-												{{event.date.strftime("%m %b %Y")}}
-											</a>
-										</div>
-										<a href="#">
-											<img src="{{event.image1}}"  alt="image" style="height:250px;">
-										</a>
-										<div class="info">
-											<p>{{event.name}}<span>{{event.location}}</span></p>
-											<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
-										</div>
-									</li> 
-									{% endfor %}
-								</ul>
-							
-							</div>
-						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[2]}}">
-								<ul class="clearfix">
-									{% for event in two_month_events %}
-									<li>
-										<div class="date">
-											<a href="#">
-												{{event.date.strftime("%m %b %Y")}}
-											</a>
-										</div>
-										<a href="#">
-											<img src="{{event.image1}}"  alt="image" style="height:250px;">
-										</a>
-										<div class="info">
-											<p>{{event.name}}<span>{{event.location}}</span></p>
-											<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
-										</div>
-									</li> 
-									{% endfor %}
-								</ul>
-							</div>
-						   
-						  
-						   
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
 		
 		
-		<section class="section-event-category">
+		
+		<section class="section-event-category" style="margin-bottom:100px;">
 			<div class="spacer-35"></div>
 			<div class="container">
 				<div class="row">
-					<div class="section-header">
-						<h2>Events by Categories</h2>
+					<div class="">
+						<h2 class="rvwh2">Events by Categories</h2>
 					</div>
 					<div class="section-content">
 						<ul class="row clearfix">
-							<li class="category-1 col-sm-4">
-								<img style="height: 270px;" src="static/images/festivals.jpg" alt="image">
+							<li class=" col-sm-4">
+								<img style="height: 270px; filter: grayscale(100%);" src="static/images/festivals.jpg" alt="image" >
 								<a href="/events/filter?categories=yes&tags=concerts"><span>Concerts</span></a>
 							</li>
-							<li class="category-2 col-sm-4">
-								<img style="height: 270px;" src="static/images/parties.jpg" alt="image">
+							<li class=" col-sm-4">
+								<img style="height: 270px; filter: grayscale(100%);" src="static/images/parties.jpg" alt="image" >
 								<a href="/events/filter?categories=yes&tags=parties"><span>Parties</span></a>
 							</li>
-							<li class="category-3 col-sm-4">
-								<img style="height: 270px;" src="static/images/beach.jpg" alt="image">
+							<li class="col-sm-4">
+								<img style="height: 270px; filter: grayscale(100%);" src="static/images/beach.jpg" alt="image" >
 								<a href="/events/filter?categories=yes&tags=beach"><span>Beach</span></a>
 							</li>
-							<li class="category-4 col-sm-4">
-								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
+							<li class="col-sm-4">
+								<img style="height: 270px; filter: grayscale(100%);" src="static/images/hangouts.jpg" alt="image" >
 								<a href="/events/filter?categories=yes&tags=hangouts"><span>Hangouts</span></a>
 							</li>
-							<li class="category-4 col-sm-4">
-								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
+							<li class=" col-sm-4">
+								<img style="height: 270px; filter: grayscale(100%);" src="static/images/hangouts.jpg" alt="image" >
 								<a href="/events/filter?categories=yes&tags=music"><span>Music</span></a>
 							</li>
 						</ul>
@@ -231,38 +137,21 @@
 				<div class="section-content">
 					<h2>3Tickets</h2>
 					<p>Book events from anywhere</p>
-					<a href="#"><img src="images/play-btn.png" alt="image"></a>
+					<a href=""><img src="url('https://images.pexels.com/photos/761543/pexels-photo-761543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');" alt="image"></a>
 				</div>
 			</div>
 		</section>
 		
-		<br>
 		
-		<section class="section-call-to-action">
-			<div class="container">
-				<div class="row">
-					<div class="section-content">
-						<ul class="row clearfix">
-							<li class="col-sm-12 col-md-9">
-								<h3>Ad Space</h3>
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</p>
-							</li>
-							<li class="col-sm-12 col-md-3">
-								<a href="#" class="action-btn">Learn More</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
 		
-		<section class="section-latest">
+		
+		<section class="section-latest" style="margin-bottom:100px;">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12 col-md-8">
 						<div class="latest-news">
-							<div class="section-header">
-								<h2>Articles</h2>
+							<div class="">
+								<h2 class="rvwh2">Articles</h2>
 							</div>
 							<div class="section-content">
 								<ul class="clearfix">
@@ -382,32 +271,109 @@
 			</div>
 		</section>
 		
-		
+		<section class="section-calendar-events col-lg-12">
+			<div class="container"> 
+				<div class="row ">
+					<div class="">
+						<h2 class="rvwh2">Events by Month</h2>
+
+						<ul class="nav nav-tabs event-tabs" role="tablist">
+							{%for month in upcoming_months%}
+						
+ 
+							<li role="presentation">
+								<a style="font-size:18px;background-color: black; color:white" href="#{{month}}" role="tab" data-toggle="tab">{{month}}</a>
+							</li>
+							{% endfor %}
+						
+						</ul>
+					</div>
+
+
+
+					<div class="section-content" style="margin-bottom:100px;">
+						<div class="tab-content">
+						    <div role="tabpanel" class="tab-pane active" id="{{upcoming_months[0]}}">
+							
+								<ul class="clearfix">
+									
+									{% for event in current_month_events %}
+									{% if event.hastickets == "yes"%}
+									<li>
+										<div class="date">
+											<a href="#">
+												{{event.date.strftime("%m %b %Y")}}
+											</a>
+										</div>
+										<a href="#">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
+										</a>
+										<div class="info">
+											<p>{{event.name}}<span>{{event.location}}</span></p>
+											<a href="{{ url_for('web.event',event_id=event.id)}}" style="background: black;color:white" class="get-ticket">Get Ticket</a>
+										</div>
+									</li> 
+									{%endif %}
+									{% endfor %}
+									
+								</ul>
+							</div>
+						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[1]}}">
+								<ul class="clearfix">
+									{% for event in one_month_events %}
+									<li>
+										<div class="date">
+											<a href="#">
+												
+												{{event.date.strftime("%m %b %Y")}}
+											</a>
+										</div>
+										<a href="#">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
+										</a>
+										<div class="info">
+											<p>{{event.name}}<span>{{event.location}}</span></p>
+											<a  href="{{ url_for('web.event',event_id=event.id)}}" style="background: black;color:white"  class="get-ticket">Get Ticket</a>
+										</div>
+									</li> 
+									{% endfor %}
+								</ul>
+							
+							</div>
+						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[2]}}">
+								<ul class="clearfix">
+									{% for event in two_month_events %}
+									<li>
+										<div class="date">
+											<a href="#">
+												{{event.date.strftime("%m %b %Y")}}
+											</a>
+										</div>
+										<a href="#">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
+										</a>
+										<div class="info">
+											<p>{{event.name}}<span>{{event.location}}</span></p>
+											<a  href="{{ url_for('web.event',event_id=event.id)}}" style="background: black;color:white" >Get Ticket</a>
+										</div>
+									</li> 
+									{% endfor %}
+								</ul>
+							</div>
+
+							
+						   
+						  
+						   
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>		
 		<section class="section-sponsors">
 			<div class="container">
 				<div class="section-content">
-					<ul class="row">
-						<li class="col-sm-3">
-							<a href="#">
-								<img src="static/images/sponsor1.jpg" alt="image">
-							</a>
-						</li>
-						<li class="col-sm-3">
-							<a href="#">
-								<img src="static/images/sponsor2.jpg"  alt="image">
-							</a>
-						</li>
-						<li class="col-sm-3">
-							<a href="#">
-								<img src="static/images/sponsor3.png"  alt="image">
-							</a>
-						</li>
-						<li class="col-sm-3">
-							<a href="#">
-								<img src="static/images/sponsor4.jpg"  alt="image">
-							</a>
-						</li>
-					</ul>
+					
 				</div>
 			</div>
 		</section>

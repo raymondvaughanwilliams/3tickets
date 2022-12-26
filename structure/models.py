@@ -1,12 +1,12 @@
 #models.py
 from structure import db,login_manager,app
-from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import UserMixin
+from werkzeug.security import generate_password_hash,check_password_hash # type: ignore        
+from flask_login import UserMixin # type: ignore        
 from datetime import datetime
 # from sqlalchemy import create_engine, Table, MetaData
 # metadata = MetaData()
 
-class User(db.Model,UserMixin):
+class User(db.Model,UserMixin): # type: ignore        
 
     __tablename__ = 'users'
 
@@ -37,7 +37,7 @@ class User(db.Model,UserMixin):
         return f"Username {self.username}"
 
 
-class WebFeature(db.Model):
+class WebFeature(db.Model): # type: ignore        
 
 
     id = db.Column(db.Integer,primary_key=True)
@@ -54,7 +54,7 @@ class WebFeature(db.Model):
         return f"Post ID: {self.id} -- Date: {self.date} --- {self.title}---{self.text}"
 
 
-class Event(db.Model):
+class Event(db.Model): # type: ignore        
     # __table__ = Table('event', metadata, schema='public')
     __tablename__ = "event"
     id = db.Column(db.Integer, primary_key=True)
@@ -74,12 +74,15 @@ class Event(db.Model):
     tags = db.Column(db.JSON,nullable=True)
     eventtags = db.Column(db.String(200))
     baseprice = db.Column(db.Integer, nullable=True)
+    qrcode =db.Column(db.String(200), nullable=True)
+    qr_id = db.Column(db.String(200), nullable=True)
     users = db.relationship('User',backref='event',lazy=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
+    hastickets = db.Column(db.String(5), nullable=True)
 
 
 # Define the database schema for tickets
-class Ticket(db.Model):
+class Ticket(db.Model): # type: ignore        
     __tablename__ = "tickets"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=True)
@@ -93,7 +96,7 @@ class Ticket(db.Model):
 
 
 
-class Article(db.Model):
+class Article(db.Model): # type: ignore        
     __tablename__ = 'articles'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
@@ -108,7 +111,7 @@ class Article(db.Model):
 
 
 
-class About(db.Model):
+class About(db.Model): # type: ignore        
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     address = db.Column(db.String(50))
@@ -118,13 +121,13 @@ class About(db.Model):
     email = db.Column(db.String(30))
     
     
-class NewsletterEmails(db.Model):
+class NewsletterEmails(db.Model): # type: ignore        
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=True)
     status = db.Column(db.String(5),nullable=True)
     
 
-class Newsletter(db.Model):
+class Newsletter(db.Model): # type: ignore        
     id = db.Column(db.Integer, primary_key=True)
     subject = db.Column(db.String(60))
     body = db.Column(db.String(20))
@@ -139,7 +142,7 @@ class Newsletter(db.Model):
 #     ticket = db.relationship('Ticket', backref=db.backref('purchases', lazy=True))
     
 
-class Cart(db.Model):
+class Cart(db.Model): # type: ignore        
     __tablename__ = "carts"
 
     cart_id = db.Column(db.Integer, primary_key=True)
@@ -164,7 +167,7 @@ class Cart(db.Model):
         }
 
 
-class Item(db.Model):
+class Item(db.Model): # type: ignore        
     __tablename__ = "items"
 
     item_id = db.Column(db.Integer, primary_key=True)

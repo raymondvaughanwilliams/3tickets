@@ -126,9 +126,12 @@
                                     <input type="hidden" name="currency" value="NGN" />
                                     <input type="hidden" name="customer[phone]" value="233551660436" />
                                     <input type="hidden" name="meta[token]" value="54" />
-                                    <input type="hidden" name="redirect_url" value="https://tickets-n9oa.onrender.com/confirmravepayment?amount={{total}}&tickets={{cart}}" />
+                                    <input type="hidden" name="redirect_url" value="http://127.0.0.1:5000/confirmravepayment?amount={{total}}&" />
+
+
+
                                   <!----  <a ><button class="btn btn-primary offset-5"><i class="fas fa-download"></i> Book</button></a>-->
-                                  <a class="primary-link" href="#"><button>Proceed Checkout</button></a>
+                                  <button><a class="primary-link" href="#">Pay</a></button>
                                   </form>
                             </div>
                         </div>
@@ -142,5 +145,34 @@
 </section>
 </div>
 </div>
+<button onclick="makePayment()">Pay</button>
+
+
+<script>
+    function makePayment() {
+      FlutterwaveCheckout({
+        public_key: "FLWPUBK_TEST-SANDBOXDEMOKEY-X",
+        tx_ref: "{{ ref }}",
+        amount: {{ total }},
+        currency: "NGN",
+        payment_options: "card, banktransfer, ussd",
+        redirect_url: "http://127.0.0.1:5000/confirmravepayment?amount={{total}}&",
+        meta: {
+          consumer_id: 23,
+          consumer_mac: "92a3-912ba-1192a",
+        },
+        customer: {
+          email: "{{ user.email }}",
+          phone_number: "08102909304",
+          name: "{{ user.username }}",
+        },
+        customizations: {
+          title: "The Titanic Store",
+          description: "Payment for an awesome cruise",
+          logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+        },
+      });
+    }
+  </script>
 
 {%endblock %}

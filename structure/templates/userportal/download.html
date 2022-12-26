@@ -1,0 +1,80 @@
+
+{% extends "userportal/base.html" %}
+{% block content %}
+
+<!-- CSS only -->
+
+
+
+<section class="section-page-header">
+    <div class="container">
+        <h1 class="entry-title">    Thank you for your purchase. Download your tickets below</h1>
+    </div>
+</section>
+
+
+<section class="section-artist-content">
+    <div class="container">
+        <div class="row">
+            <div id="primary" class="col-sm-12 col-md-8" style="margin-left: 15%;">
+                {%if paid%}
+            {% for ticket in cart%}
+                <div class="artist-event-item">
+                    <div class="row">
+                        <div style="background-image: /{{ticket.image}} ;" class="artist-event-item-info col-sm-9">
+                            <h3><a href="{{url_for('web.event',event_id = ticket.event_id)}}">{{ticket.eventname}} <span> {{ticket.name}}</span> ticket</a></h3>
+                            <ul class="row">
+                                <li class="col-sm-5">
+                                   <img style="height:120px;width:200px;" src="/{{ticket.image}}" />
+                                </li>
+                                <li class="col-sm-4">
+                                    <span>Venue</span>
+                                   {{ticket.location}}
+                                </li>
+                                <li class="col-sm-3">
+                                    <span>Date</span>
+                                   {{ticket.date}}
+                                </li>
+                            
+                            </ul>
+                        </div>
+                        <div class="artist-event-item-price col-sm-3">
+\                            <a href="/{{ticket.image}} " style="margin-top: 50px;"download>Download</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {%else %}
+                <p style="font-size:30px;"><b>You have not purchased any tickets.</b></p>
+                {% endif %}
+              
+                
+                <div class="artist-event-footer">
+                    
+                    <a href=""><button class="btn btn-primary " style="background-color: #ff6600"> My Tickets </button></a>
+                </div>
+            </div>
+            
+            <div id="secondary" class="col-sm-12 col-md-4">
+        
+                
+            
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+

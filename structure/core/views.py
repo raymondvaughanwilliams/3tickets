@@ -1,10 +1,12 @@
-from flask import render_template,request,Blueprint,redirect,url_for,session,current_app
+from flask import render_template,request,Blueprint,redirect,url_for,session,current_app # type: ignore      
 from structure.models import User ,WebFeature,Event , Ticket ,Article
-from structure import db,photos
+from structure import db,photos,app
 from structure.core.forms import AddEvent,AddTicket,AddArticle
 from sqlalchemy.orm import load_only
-from flask_login import login_required
+from flask_login import login_required # type: ignore      
 import secrets
+import qrcode # type: ignore      
+import random
 import os
 import datetime
 core = Blueprint('core',__name__)
@@ -104,13 +106,27 @@ def addevent():
         image_3 = photos.save(request.files['image3'], name=secrets.token_hex(10) + ".")
         image3= "static/images/events/"+image_3
 
-        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,user_id=session['id'],status=status)
+        qr_idd = int(random.randint(100, 999))
+        qr_id = str(qr_idd)
+        eventurl = 'http://127.0.0.1:5000/pay/'  + name + '/' + qr_id 
+        image_name = f"{secrets.token_hex(100)}.png"
+        qrcode_location = f"{app.config['UPLOAD_PATH']}/images/qrcodes/{image_name}"
+        qrcodeloc = "static/images/qrcodes" + image_name
+        try:
+            my_qrcode = qrcode.make(str(eventurl))
+            print(my_qrcode)
+            my_qrcode.save(qrcode_location)
+        except Exception as e:
+            print(e)
+
+        # pmethod = PaymentMethod(name=name,mobile=mobile,user_id=session['id'],qrcode=qrcodeloc,bank=bank,unique=qr_id)
+        event = Event(name=name,date=date,time=time,location=location,description=description,days=days,email=email,number=number,image1=image1,image2=image2,image3=image3,eventtags=tags,baseprice=baseprice,user_id=session['id'],status=status,qrcode=qrcodeloc,qr_id=qr_id)
         db.session.add(event)
         db.session.commit()
         # flash(f'Meme added successfully','success')
         return redirect(url_for('core.index'))
 
-
+ 
     return render_template('events/addevent.html',events=events,form=form)
 
 
@@ -215,6 +231,7 @@ def addticket(event_id):
     Example view of any other "core" page. Such as a info page, about page,
     contact page. Any page that doesn't really sync with one of the models.
     '''
+    event = Event.query.filter_by(id=event_id).first()
     user_id = session['id']
     print(user_id)
     form = AddTicket()
@@ -239,6 +256,7 @@ def addticket(event_id):
         #check file format 
         # if check_file_extension(image_1):
         ticket = Ticket(day=day,price=price,quantity=quantity,event_id=event_id,name=name,image=image,features=features)
+        event.hastickets = "yes"
         db.session.add(ticket)
         db.session.commit()
         # flash(f'Meme added successfully','success')

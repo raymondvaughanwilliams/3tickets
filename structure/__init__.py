@@ -49,6 +49,10 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 # patch_request_class(app)
 
 
+app.config.update(
+    UPLOAD_PATH = os.path.join(basedir, 'static')
+)
+
 #########################
 # LOGIN CONFIGS
 login_manager = LoginManager()

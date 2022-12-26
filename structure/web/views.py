@@ -1,21 +1,21 @@
-from flask import render_template,request,Blueprint,redirect,url_for,session,current_app
+from flask import render_template,request,Blueprint,redirect,url_for,session,current_app # type: ignore        
 from structure.models import User ,WebFeature,Event , Ticket ,Article ,NewsletterEmails ,Newsletter ,About, Cart,Item
 from structure import db,app
 from structure.web.forms import NewsletterSubForm
 from sqlalchemy.orm import load_only
-from flask_login import login_required
+from flask_login import login_required # type: ignore        
 import secrets
 import os
 import datetime
 import calendar
 from sqlalchemy import extract,func,and_,text
 from sqlalchemy.types import Unicode
-from flask_mail import Message,Mail
+from flask_mail import Message,Mail # type: ignore        
 import random
-from sqlalchemy import  and_, or_ ,desc ,asc
+from sqlalchemy import  and_, or_ ,desc ,asc 
 web = Blueprint('web',__name__)
 
- 
+  
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
@@ -129,7 +129,8 @@ def event(event_id):
     print(event)
     event.views =event.views + 1
     db.session.commit()
-    return render_template('web/event.html',event=event,tickets=tickets)
+    title = event.name
+    return render_template('web/event.html',event=event,tickets=tickets,title=title)
 
 
 @web.before_request
@@ -137,6 +138,7 @@ def create_cart():
     # If the cart doesn't exist in the session, create it
     if 'cart' not in session:
         session['cart'] = []
+        session['paid'] = False
 
 
 # cart =[]
@@ -162,7 +164,7 @@ def add_to_cart():
 @login_required
 def cart():
     print(session['id'])
-    user = User.query.filter(User.id == session['id']).first()
+    user = User.query.filter(User.id == session['id']).first() # type: ignore      
     carttickets= []
     for item in session['cart']:
         print(item['ticket_id'])
@@ -172,7 +174,8 @@ def cart():
     for item in session['cart']:
         total += int(float(item['price'])) * int(item['quantity'])
     reference = user.email[0:6]+ str(random.randint(1,10000))
-    return render_template('web/cart.html', cart=session['cart'] ,total=total,ref=reference,user=user)
+    title = "Cart"
+    return render_template('web/cart.html', cart=session['cart'] ,total=total,ref=reference,user=user,title=title)
 
 
 
@@ -203,16 +206,24 @@ def orderdetails():
     item_id = request.args.get('id')
     ticket = Ticket.query.filter(Ticket.id==item_id).first()
     print(item_name)
-    return render_template('web/orderdetails.html',ticket=ticket)
+    title = "Cart"
+    return render_template('web/orderdetails.html',ticket=ticket,title=title)
 
 
-@web.route("/confirmravepayment")
+@web.route("/confirmravepayment",methods=["GET", "POST"])
 @login_required
 def confirmravepayment():
     user = User.query.filter_by(id=session['id']).first()
     # uid = user.id
-    
+    statuss = request.args.get('status')
+    print('hjhk')
+    print(statuss)
     if request.args.get('status') == "successful":
+        print("cart:")
+        print (session['cart'])
+        session['paid']= True
+        print("paid:")
+        print (session['paid'])
         transaction_id = request.args.get('transaction_id')
         # user = User.query.filter_by(email=session['email']).first()
         status = request.args.get('status')
@@ -232,22 +243,21 @@ def confirmravepayment():
         cartitems = session['cart']
         print(cartitems)
         for thing in cartitems:
-            print("ai")
-            print(tx_ref)
-            item = Item(event_id=thing['event_id'], quantity=thing['quantity'],ticket_id=thing['ticket_id'], price=thing['price'],reference=tx_ref,cart_id=0,user_id=user.id)
+            item = Item(event_id=thing['event_id'], quantity=thing['quantity'],ticket_id=thing['ticket_id'], price=thing['price'],reference=tx_ref,cart_id=0,user_id=user.id,tickets_id=thing['ticket_id'],events_id=thing['event_id'])
             db.session.add(item)
             db.session.commit()
             msg = Message(
             sender = "no-reply@3ticket.com",
-            subject="Verify your email address",
+            subject="3tickets Tickets",
             recipients=[user.email],
             html="<p>Thank you for using 3tickets. Your ticket details are below:<br>Event" + thing['eventname'] + "<br> Date:" + thing['date'] + "<br>location" + thing['location'] ,
             )
             mail.send(msg)
-        session.pop('cart')            
-    
-        return redirect(url_for('web.cart'))
-    
+        # session.pop('cart')            
+
+        return redirect(url_for('web.download',cart=session['cart']))
+    else:
+        return "failed"
     
     
 @web.route("/events/filter", methods=["GET", "POST"])
@@ -320,7 +330,7 @@ def filter_events():
             for tag in tags:
                 tag_conditions.append(
             Event.tags.like(f"%{tag}%"),
-            Event.tags.like(f"{tag}%"),
+            Event.tags.like(f"{tag}%"),  # type: ignore        
             Event.tags.like(f"%{tag}"),
             )
             # Use the OR operator to combine the conditions into a single
@@ -336,8 +346,9 @@ def filter_events():
 
 
     print (events)
+    title = "Events"
 # Render the events-filter.html template, passing the events as a variable
-    return render_template("web/filter.html", events=events)
+    return render_template("web/filter.html", events=events,title=title)
 
 
 
@@ -346,9 +357,9 @@ def filter_events():
 def eventsschedule():
     # events= Event.query.order_by(Event.date).all()
     events = Event.query.filter(and_(Event.date > datetime.date.today())).order_by(desc(Event.date)).all()
-
+    title = "Upcoming Events"
     
-    return render_template("web/events.html",events=events)
+    return render_template("web/events.html",events=events,title=title)
 
 
 @web.route('/allarticles')
@@ -363,6 +374,35 @@ def article(article_id):
     title = article.title
     
     return render_template("web/article.html",article=article,title=title)
+
+
+@web.route('/download/')
+@login_required
+def download():
+    
+    title = "Download Tickets"
+    paid = session['paid']
+    cart =session['cart']
+    print(paid)
+    print(cart)
+    session['paid'] = False
+    # session.pop('cart', None)
+    return render_template("userportal/download.html",cart=cart,paid=paid,title=title)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @web.context_processor

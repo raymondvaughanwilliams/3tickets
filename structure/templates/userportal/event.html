@@ -8,12 +8,13 @@
 				<h1>{{event.name}}</h1>
 				<ul class="ticket-purchase">
 					<li>
+						<img src="/{{event.qrcode}}" alt="image" style="height: 200px;"/>	
+					</li>
+					<li>
 						<a href="#">Edit</a>
 					</li>
 
-					<li>
-						<a href="#">Delete</a>
-					</li>
+				
 				
 				</ul>
 			</div>
@@ -31,33 +32,28 @@
 										<div id="slider" class="flexslider">
 											<ul class="slides">
                                                 <li>
-													<img src="/static/images/festivals.jpg" alt="image"/>
+													<img src="/{{event.image1}}" alt="image"/>
 												</li>
 												<li>
-													<img src="/static/images/beach.jpg" alt="image"/>
+													<img src="/{{event.image2}}" alt="image"/>
 												</li>
 												<li>
-													<img src="/static/images/hangouts.jpg" alt="image"/>
-												</li>
-												<li>
-													<img src="/static/images/parties.jpg" alt="image"/>
+													<img src="/{{event.image3}}" alt="image"/>
 												</li>
 											</ul>
 										</div>
 										<div id="carousel" class="flexslider">
 											<ul class="slides">
                                                 <li>
-													<img src="/static/images/festivals.jpg" alt="image"/>
+													<img src="/{{event.image1}}" alt="image" style="height: 200px;"/>
 												</li>
 												<li>
-													<img src="/static/images/beach.jpg" alt="image"/>
+													<img src="/{{event.image2}}" alt="image" style="height: 200px;"/>
 												</li>
 												<li>
-													<img src="/static/images/hangouts.jpg" alt="image"/>
+													<img src="/{{event.image3}}" alt="image" style="height: 200px;"/>
 												</li>
-												<li>
-													<img src="/static/images/parties.jpg" alt="image"/>
-												</li>
+												
 											</ul>
 										</div>									
 									</div>
@@ -92,55 +88,56 @@
                                           <div id="blogCarousel" class="carousel slide container-blog" data-ride="carousel">
                                            
                                             <!-- Carousel items -->
-                                            <div class="carousel-inner">
-                                              <div class="carousel-item active">
-                                                <div class="row">
-                                                    {% for ticket in tickets %}
-                                                  <div class="col-md-4" >
-                                                    <div class="item-box-blog">
-                                                      <div class="item-box-blog-image">
-                                                        <!--Date-->
-                                                        <!--Image-->
-                                                        <figure> <img alt="" style="max-width:200px;height:200px;" src="/{{ticket.image}}"> </figure>
-                                                      </div>
-                                                      <div class="item-box-blog-body">
-                                                        <!--Heading-->
-                                                        <div class="item-box-blog-heading">
-                                                          <a href="#" tabindex="0">
-                                                            <h5>{{ticket.name}}</h5>
-                                                          </a>
-                                                        </div>
-                                                        <!--Data-->
-                                                        <div class="item-box-blog-data" style="padding: px 15px;">
-                                                          <p> {{ticket.quantity}} left</p>
-                                                        </div>
-                                                        <!--Text-->
-                                                        <div class="item-box-blog-text">
-                                                            <ul>
-                                                                {% for val in ticket.features | split(",") %}
-                                                                    <li>{{ val }}</li>
-                                                                {% endfor %}
-                                                                </ul>
-                                                          <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
-                                                        </div>
-                                                        <div class="mt"> <a href="{{url_for('userportal.editticket',ticket_id=ticket.id)}}" tabindex="0" class="btn bg-blue-ui white read">Edit</a> </div>
-                                                        <div class="mt"> <a href="/add_to_cart?name={{ ticket.name }}&price={{ ticket.price }}&id={{ ticket.id }}" tabindex="0" class="btn bg-blue-ui white read">Delete</a> </div>
-                                                        <!--Read More Button-->
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  {% endfor %}
-                                                 
-                                                </div>
-                                                <!--.row-->
-                                              </div>
-                                              <!--.item-->
-                                            </div>
-                                            <!--.carousel-inner-->
-                                          </div>
-                                          <!--.Carousel-->
-                                        </div>
-                                    </div>
+											<div class="carousel-inner">
+												<div class="carousel-item active">
+												  <div class="row">
+													  {% for ticket in tickets %}
+													<div class="col-md-4" >
+													  <div class="item-box-blog">
+														<div class="item-box-blog-image">
+														  <!--Date-->
+														  <!--Image-->
+														  <figure> <img alt="" style="max-width:200px;height:200px;" src="/{{ticket.image}}"> </figure>
+														</div>
+														<div class="item-box-blog-body">
+														  <!--Heading-->
+														  <div class="item-box-blog-heading">
+															<a href="#" tabindex="0">
+															  <h5>{{ticket.name}}</h5>
+															</a>
+														  </div>
+														  <!--Data-->
+														  <div class="item-box-blog-data" style="padding: px 15px;">
+															<p> {{ticket.quantity}} left</p>
+														  </div>
+														  <!--Text-->
+														  <div class="item-box-blog-text">
+															  <ul>{%if ticket.features %}
+																  {% for val in ticket.features | split(",") %}
+																	  <li>{{ val }}</li>
+																  {% endfor %}
+																  {%else%}
+																  <li> Features/Grants not listed </li>
+																  {% endif %}
+																  </ul>
+															<p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
+														  </div>
+														  <div class="mt"> <a href="/add_to_cart?name={{ ticket.name }}&price={{ ticket.price }}&id={{ ticket.id }}" tabindex="0" class="btn bg-blue-ui white read">Add to cart</a> </div>
+														  <!--Read More Button-->
+														</div>
+													  </div>
+													</div>
+													</div>
+													{% endfor %}
+													
+												  </div>
+												  <!--.row-->
+												</div>
+												<!--.item-->
+											  </div>
+											</div>
+										</div>
+											  <!--.carousel-->
 
 
                         </div>
@@ -148,12 +145,21 @@
 						<div class="event-location">
 							<h2>Location</h2>
 							<p><span>{{event.location}}</span></p>
+
+						</div>
+
+						<div class="event-location">
+							<h2>QR Code</h2>
+							<img src="/{{event.qrcode}}" alt="image" style="height: 200px;"/>
+							<p>
+							<a href="/{{event.qrcode}}" download><button class="btn btn-primary" download>Download</button></a>
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-	
+		
 {% endblock %}
 
 

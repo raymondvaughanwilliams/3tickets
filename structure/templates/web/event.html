@@ -14,7 +14,6 @@
 						<span>{{event.baseprice}} cedis</span>
 					</li>
 					<li>
-						<a href="#">Purchase Ticket</a>
 					</li>
 				</ul>
 			</div>
@@ -32,33 +31,28 @@
 										<div id="slider" class="flexslider">
 											<ul class="slides">
                                                 <li>
-													<img src="/static/images/festivals.jpg" alt="image"/>
+													<img src="/{{event.image1}}" alt="image"/>
 												</li>
 												<li>
-													<img src="/static/images/beach.jpg" alt="image"/>
+													<img src="/{{event.image2}}" alt="image"/>
 												</li>
 												<li>
-													<img src="/static/images/hangouts.jpg" alt="image"/>
-												</li>
-												<li>
-													<img src="/static/images/parties.jpg" alt="image"/>
+													<img src="/{{event.image3}}" alt="image"/>
 												</li>
 											</ul>
 										</div>
 										<div id="carousel" class="flexslider">
 											<ul class="slides">
                                                 <li>
-													<img src="/static/images/festivals.jpg" alt="image"/>
+													<img src="/{{event.image1}}" alt="image" style="height: 200px;"/>
 												</li>
 												<li>
-													<img src="/static/images/beach.jpg" alt="image"/>
+													<img src="/{{event.image2}}" alt="image" style="height: 200px;"/>
 												</li>
 												<li>
-													<img src="/static/images/hangouts.jpg" alt="image"/>
+													<img src="/{{event.image3}}" alt="image" style="height: 200px;"/>
 												</li>
-												<li>
-													<img src="/static/images/parties.jpg" alt="image"/>
-												</li>
+												
 											</ul>
 										</div>									
 									</div>
@@ -80,7 +74,7 @@
                                     <div class="row blog">
                                         <div class="col-md-12">
                                           <div id="blogCarousel" class="carousel slide container-blog" data-ride="carousel">
-                                           
+                                            
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                               <div class="carousel-item active">
@@ -103,6 +97,7 @@
                                                         <!--Data-->
                                                         <div class="item-box-blog-data" style="padding: px 15px;">
                                                           <p> {{ticket.quantity}} left</p>
+                                                          <p> {{ticket.price}} cedis </p>
                                                         </div>
                                                         <!--Text-->
                                                         <div class="item-box-blog-text">

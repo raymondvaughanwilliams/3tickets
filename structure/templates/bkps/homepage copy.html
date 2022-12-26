@@ -1,0 +1,517 @@
+
+{% extends "web/mainbase.html" %}
+{% block content %}
+<section class="ud-hero" id="home" style="background-image: url('https://images.pexels.com/photos/5699475/pexels-photo-5699475.jpeg'); background-size: 100%;margin-top: -80px;margin-bottom: -80px; height: 600px;">
+	<div class="container">
+	  <div class="row" style="margin-top: -100px;">
+		<div class="col-lg-12" style=" padding-left:-100px;">
+		  <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s" style="float:left; padding-left:-50px;">
+			<h1 class="ud-hero-title">
+			 3Tickets
+			</h1>
+			<p class="ud-hero-desc">
+			Browse through our catalog of events and buy tickets	
+			</p>
+			<ul class="ud-hero-buttons">
+			 <!----<li>
+				<a href="https://links.uideck.com/play-bootstrap-download" rel="nofollow noopener" target="_blank" class="ud-main-btn ud-white-btn">
+				  Download Now
+				</a>
+			  </li>-->
+			  <li>
+				<a href="" rel="nofollow noopener" target="_blank" class="ud-main-btn ud-link-btn">
+				  Learn More <i class="lni lni-arrow-right"></i>
+				</a>
+				<button  data-toggle="modal" data-target="#exampleModal" target="_blank"  class="ud-main-btn ud-link-btn">
+				  Join Waitlist <i class="lni lni-arrow-right"></i>
+				</button>
+				
+			  </li>
+			</ul>
+		  </div>
+		 
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </section>
+		<section class="section-todays-schedule">
+			<div class="container">
+				<div class="row">
+					<div class="section-header">
+						<h2>Upcoming Events</h2>
+						<span class="todays-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}}</span>
+					</div>
+					<div class="section-content">
+						<ul class="clearfix">
+							{% for event in events[0:7] %}
+							<li class="event-1">
+								<img src="{{event.image1}}"  alt="image" style="height:50px;">
+								<strong class="event-name">{{event.name[0:15]}}... </strong>
+								<strong class="event-name">{{event.date.strftime("%m %b %Y")}}</strong>
+								<a href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
+							</li>
+							{% endfor %}
+						</ul>
+					
+						<a href="{{ url_for('web.eventsschedule')}}" ><strong class="event-list-label">Full Event <span>Schedule</span></strong></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+
+	
+
+
+
+<br>
+<br>
+<br>		
+<section class="section-upcoming-events" style="margin-bottom:100px;">
+	<div class="container">
+		<div class="row">
+			<div class="">
+				<h2 class="rvwh2">Featured Events</h2>
+				<p>Check out our hottest events</p>
+				
+				<a class="get-ticket" style="float:right" href="{{ url_for('web.eventsschedule')}}" > <button class="get-ticket">See all upcoming events</button></a>
+			</div>				
+			<br>
+			<br>
+			<br>
+			<div class="section-content">
+				<ul class="clearfix">
+					{%for event in events %}
+					{% if event.hastickets == "yes" %}
+					<li>
+						<div class="date">
+							<a href="#">
+								<a href="#">
+									<span style="font-size:12px;" class="day">{{event.baseprice}} cedis</span>
+	
+									<span  class="month">{{event.date.strftime("%m %b %Y") }}</span>
+								</a>
+							</a>
+						</div>
+						<a href="{{ url_for('web.event',event_id=event.id)}}">
+							<img src="{{event.image1}}" alt="image" style="height:300px;">
+						</a>
+						<div class="info">
+							<p>{{event.name}}<span>{{event.location}}</span></p>
+								<a  href="{{ url_for('web.event',event_id=event.id)}}" class="get-ticket">Get Ticket</a>
+						
+						</div>
+					</li>
+					{% endif %}
+
+					{% endfor %}
+		
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+<div class="row" style="margin-right:10%;margin-left:10%;">
+	<h2 class="rvwh2">Featured Events</h2>
+	<div class="row col-lg-12 col-sm-12">
+	<p class="col-lg-6">Check out our hottest events</p>
+	
+	<a class="get-ticket" style="float:right" href="{{ url_for('web.eventsschedule')}}" > <button class="get-ticket">See all upcoming events</button></a>
+  </div>
+
+	{%for event in events %}
+	{% if event.hastickets == "yes" %}
+	<div class="col-lg-4 col-md-12" style="margin-bottom:3%;">
+		<div class="card">
+			<div class="row">
+				<h4  style="position: absolute;padding: 15px;background: rgba(36,36,36, 0.8);position: absolute;top: 0;left: 20px;text-align: center;text-transform: uppercase;color: #fff;width: 20%;font-size: 18px;">₵{{event.baseprice}} </h4>
+				<h4  style="position: absolute;padding: 15px;background: rgba(36,36,36, 0.8);position: absolute;top: 0;right: 20px;text-align: center;text-transform: uppercase;color: #fff;width: 40%;font-size: 18px;">{{event.date.strftime("%m %b %Y") }}</h4>
+	
+			</div>
+
+			<img class="" src="{{event.image1}}" alt="Card image cap" style="max-height:300px;">
+			<div class="card-body" style="background-color: rgba(0,0,0,.03);">
+				<div class="row">
+				<h4 class="card-title col-sm-6" style="font-size: 16px;font-family: Montserrat-Regular">{{event.name}}</h4>
+				<h6 class="card-title col-sm-6 text-right" style="float:right font-size: 16px;font-family: Montserrat-Regular">{{event.location}}</h6>
+				</div>
+				<div class="text-center" style="margin-right:auto;margin-left:auto">
+				<a  href="{{ url_for('web.event',event_id=event.id)}}" class="ud-main-btn ud-link-btn text-center"  style="background-color:#ff6600;color:white">Get Ticket</a>
+			</div>
+		</div>
+			
+				</div>
+			</div>
+			{% endif %}
+
+			{% endfor %}
+	
+	</div>
+</div>
+</div>
+<div class=" text-center" style="margin-bottom: 100px;">
+    <button class="btn btn-primary text-center" style="color: #0F9B93;background-color:white;border-color:#0F9B93">View all Events </button>
+    </div>
+</section>
+
+<!--<section class="section-call-to-action" style="margin-bottom:100px;">
+	<div class="container">
+		<div class="row">
+			<div class="section-content">
+				<ul class="row clearfix">
+					<li class="col-sm-12 col-md-9">
+						<h3>AD space</h3>
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</p>
+					</li>
+					<li class="col-sm-12 col-md-3">
+						<a href="#" class="action-btn">Learn More</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>-->
+
+		<section class="section-calendar-events col-lg-12">
+			<div class="container"> 
+				<div class="row ">
+					<div class="">
+						<h2 class="rvwh2">Events by Month</h2>
+
+						<ul class="nav nav-tabs event-tabs" role="tablist">
+							{%for month in upcoming_months%}
+						
+ 
+							<li role="presentation">
+								<a style="font-size:18px;background-color: antiquewhite; color:orange" href="#{{month}}" role="tab" data-toggle="tab">{{month}}</a>
+							</li>
+							{% endfor %}
+						
+						</ul>
+					</div>
+
+
+
+					<div class="section-content" style="margin-bottom:100px;">
+						<div class="tab-content">
+						    <div role="tabpanel" class="tab-pane active" id="{{upcoming_months[0]}}">
+							
+								<ul class="clearfix">
+									
+									{% for event in current_month_events %}
+									{% if event.hastickets == "yes"%}
+									<li>
+										<div class="date">
+											<a href="#">
+												{{event.date.strftime("%m %b %Y")}}
+											</a>
+										</div>
+										<a href="#">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
+										</a>
+										<div class="info">
+											<p>{{event.name}}<span>{{event.location}}</span></p>
+											<a href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
+										</div>
+									</li> 
+									{%endif %}
+									{% endfor %}
+									
+								</ul>
+							</div>
+						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[1]}}">
+								<ul class="clearfix">
+									{% for event in one_month_events %}
+									<li>
+										<div class="date">
+											<a href="#">
+												
+												{{event.date.strftime("%m %b %Y")}}
+											</a>
+										</div>
+										<a href="#">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
+										</a>
+										<div class="info">
+											<p>{{event.name}}<span>{{event.location}}</span></p>
+											<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
+										</div>
+									</li> 
+									{% endfor %}
+								</ul>
+							
+							</div>
+						    <div role="tabpanel" class="tab-pane" id="{{upcoming_months[2]}}">
+								<ul class="clearfix">
+									{% for event in two_month_events %}
+									<li>
+										<div class="date">
+											<a href="#">
+												{{event.date.strftime("%m %b %Y")}}
+											</a>
+										</div>
+										<a href="#">
+											<img src="{{event.image1}}"  alt="image" style="height:250px;">
+										</a>
+										<div class="info">
+											<p>{{event.name}}<span>{{event.location}}</span></p>
+											<a  href="{{ url_for('web.event',event_id=event.id)}}"  class="get-ticket">Get Ticket</a>
+										</div>
+									</li> 
+									{% endfor %}
+								</ul>
+							</div>
+
+							
+						   
+						  
+						   
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		
+		<section class="section-event-category" style="margin-bottom:100px;">
+			<div class="spacer-35"></div>
+			<div class="container">
+				<div class="row">
+					<div class="">
+						<h2 class="rvwh2">Events by Categories</h2>
+					</div>
+					<div class="section-content">
+						<ul class="row clearfix">
+							<li class="category-1 col-sm-4">
+								<img style="height: 270px;" src="static/images/festivals.jpg" alt="image">
+								<a href="/events/filter?categories=yes&tags=concerts"><span>Concerts</span></a>
+							</li>
+							<li class="category-2 col-sm-4">
+								<img style="height: 270px;" src="static/images/parties.jpg" alt="image">
+								<a href="/events/filter?categories=yes&tags=parties"><span>Parties</span></a>
+							</li>
+							<li class="category-3 col-sm-4">
+								<img style="height: 270px;" src="static/images/beach.jpg" alt="image">
+								<a href="/events/filter?categories=yes&tags=beach"><span>Beach</span></a>
+							</li>
+							<li class="category-4 col-sm-4">
+								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
+								<a href="/events/filter?categories=yes&tags=hangouts"><span>Hangouts</span></a>
+							</li>
+							<li class="category-4 col-sm-4">
+								<img style="height: 270px;" src="static/images/hangouts.jpg" alt="image">
+								<a href="/events/filter?categories=yes&tags=music"><span>Music</span></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="section-video-parallax">
+			<div class="container">
+				<div class="section-content">
+					<h2>3Tickets</h2>
+					<p>Book events from anywhere</p>
+					<a href="#"><img src="images/play-btn.png" alt="image"></a>
+				</div>
+			</div>
+		</section>
+		
+		<br>
+		
+		<section class="section-call-to-action" style="margin-bottom:100px;">
+			<div class="container">
+				<div class="row">
+					<div class="section-content">
+						<ul class="row clearfix">
+							<li class="col-sm-12 col-md-9">
+								<h3>Ad Space</h3>
+								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</p>
+							</li>
+							<li class="col-sm-12 col-md-3">
+								<a href="#" class="action-btn">Learn More</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="section-latest" style="margin-bottom:100px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 col-md-8">
+						<div class="latest-news">
+							<div class="">
+								<h2 class="rvwh2">Articles</h2>
+							</div>
+							<div class="section-content">
+								<ul class="clearfix">
+									{% for article in articles %}
+									<li class="row news-item">
+										<div class="col-sm-5 news-item-img">
+											<!----<div class="date">
+												<a href="#">
+													<span class="day"></span>
+												</a>
+											</div>-->
+
+											{% if article.image%}
+											<a href="{{ url_for('web.article',article_id=article.id)}}"><img style="height:230px;"src="{{article.image}}" alt="image"></a>
+											{%else%}
+											<a href="#"><img src="static/images/nm.jpg" alt="image"></a>
+											{% endif%}
+										</div>
+										<div class="col-sm-7 news-item-info">
+											<h3><a href="{{ url_for('web.article',article_id=article.id)}}">{{article.title}}</a></h3>
+									<span class="meta-data">{{article.date}} by <a href="#">Admin</a></span>
+											<p>{{article.content}}</p>
+										</div>
+									</li>
+									{%endfor%}
+									
+								</ul>
+								<div class="new-item-pagination">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<li class="active"><a href="#">1</a></li>
+											<li><a href="#">2</a></li>
+											<li><a href="#">3</a></li>
+											<li><a href="#">4</a></li>
+											<li><a href="#">5</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-12 col-md-4">
+						<div class="latest-tweets">
+							<div class="section-header">
+								<h2>Our Tweets</h2>
+							</div>
+							<div class="section-content">
+								<div class="twitter-header clearfix">
+									<div class="twitter-name">
+										<a href="{{about.twitter}}" target="_blank">
+											<img style="height:50px;"src="static/images/3img.jpg" alt="image">
+											<strong>myticket.com</strong>
+											<span>@{{about.twitter[12:]}}</span>
+										</a>
+									</div>
+									<div class="twitter-btn">
+										<a href="#">Follow</a>
+									</div>
+								</div>
+								<div class="tweet-list clearfix">
+									<ul class="clearfix">
+										<li class="row tweet-item">
+											<div class="col-sm-10">
+												<p><a href="#">@myticket</a> Lorem ipsum dolor sit amet, consecter adipiscing elit, sed diam nonummy nibh euismod dolore magna aliquam <a href="#">#EratVolutpat</a>.</p>
+											</div>
+											<div class="col-sm-2">
+												<span>17 min</span>
+											</div>
+										</li>
+										<li class="row tweet-item">
+											<div class="col-sm-10">
+												<p><a href="#">@myticket</a>Lorem ipsum dolor sit amet, consecter adipiscing elit, sed diam<a href="#">#EratVolutpat</a>.</p>
+											</div>
+											<div class="col-sm-2">
+												<span>18 min</span>
+											</div>
+										</li>
+										<li class="row tweet-item">
+											<div class="col-sm-10">
+												<p><a href="#">@myticket</a> Lorem ipsum dolor sit amet, consecter adipiscing elit, sed diam nonummy nibh euismod dolore magna aliquam <a href="#">#EratVolutpat</a>.</p>
+											</div>
+											<div class="col-sm-2">
+												<span>19 min</span>
+											</div>
+										</li>
+										<li class="row tweet-item">
+											<div class="col-sm-10">
+												<p><a href="#">@myticket</a>Lorem ipsum dolor sit amet, consecter adipiscing elit, sed diam<a href="#">#EratVolutpat</a>.</p>
+											</div>
+											<div class="col-sm-2">
+												<span>19 min</span>
+											</div>
+										</li>
+										<li class="row tweet-item">
+											<div class="col-sm-10">
+												<p><a href="#">@myticket</a> Lorem ipsum dolor sit amet, consecter adipiscing elit, sed diam nonummy nibh euismod dolore magna aliquam <a href="#">#EratVolutpat</a>.</p>
+											</div>
+											<div class="col-sm-2">
+												<span>20 min</span>
+											</div>
+										</li>
+										<li class="row tweet-item">
+											<div class="col-sm-10">
+												<p><a href="#">@myticket</a>Lorem ipsum dolor sit amet, consecter adipiscing elit, sed diam<a href="#">#EratVolutpat</a>.</p>
+											</div>
+											<div class="col-sm-2">
+												<span>22 min</span>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		
+		<section class="section-sponsors">
+			<div class="container">
+				<div class="section-content">
+					<ul class="row">
+						<li class="col-sm-3">
+							<a href="#">
+								<img src="static/images/sponsor1.jpg" alt="image">
+							</a>
+						</li>
+						<li class="col-sm-3">
+							<a href="#">
+								<img src="static/images/sponsor2.jpg"  alt="image">
+							</a>
+						</li>
+						<li class="col-sm-3">
+							<a href="#">
+								<img src="static/images/sponsor3.png"  alt="image">
+							</a>
+						</li>
+						<li class="col-sm-3">
+							<a href="#">
+								<img src="static/images/sponsor4.jpg"  alt="image">
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		
+		<section class="section-newsletter">
+			<div class="container">
+				<div class="section-content">
+					<h2>Stay Up to date With Your Favorite Events!</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh <br> euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+					<div class="newsletter-form clearfix">
+						<form method="POST" enctype="multipart/form-data" action="{{url_for('web.suscribetonewsletter')}}">
+							{{ newsletterform.hidden_tag() }}
+						<input type="email" name = "email" placeholder="Your Email Address">
+						<input type="submit" value="Subscribe">
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		
+{% endblock %}

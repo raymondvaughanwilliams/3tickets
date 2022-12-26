@@ -9,7 +9,7 @@
 				<ul class="ticket-purchase">
 					
 					<li>
-						<span>{{article.date}} </span>
+						<span>  </span>
 					</li>
 				
 				</ul>
@@ -27,18 +27,15 @@
 									<div class="event-info-img">
 										<div id="slider" class="flexslider">
 											<ul class="slides">
-                                                <li>
-													<img src="/static/images/festivals.jpg" alt="image"/>
-												</li>
 												<li>
-													<img src="/static/images/beach.jpg" alt="image"/>
+												{% if article.image%}
+												<a href="{{ url_for('web.article',article_id=article.id)}}" style="width: 100%;"><img src="/{{article.image}}" alt="image"></a>
+												{%else%}
+												<a href="#"><img src="/static/images/nm.jpg" alt="image"></a>
+												{% endif%}
+                                              
 												</li>
-												<li>
-													<img src="/static/images/hangouts.jpg" alt="image"/>
-												</li>
-												<li>
-													<img src="/static/images/parties.jpg" alt="image"/>
-												</li>
+												
 											</ul>
 										</div>
 																		
